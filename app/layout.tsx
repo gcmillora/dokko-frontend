@@ -1,4 +1,8 @@
-import "../styles/globals.css";
+import '../styles/globals.css';
+
+import { Poppins } from '@next/font/google';
+
+const customFont = Poppins({ weight: '400', display: 'swap' });
 
 export default function RootLayout({
   children,
@@ -6,9 +10,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
+    <html className="h-full bg-gray-50 mt-16">
       <head></head>
-      <body>{children}</body>
+      <body className={customFont.className + 'h-full'}>{children}</body>
     </html>
   );
 }

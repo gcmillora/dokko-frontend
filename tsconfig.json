@@ -21,6 +21,7 @@
     "plugins": [
       {
         "name": "next"
+        
       }
     ]
   },
