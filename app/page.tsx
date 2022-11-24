@@ -1,56 +1,85 @@
 'use client';
 
-import { ThemeProvider, Typography } from '@mui/material';
+import Link from 'next/link';
 import React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 
 export default function Page() {
   return (
-    <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8">
-        <div>
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          />
-        </div>
-        <div>
-          <p className="text-4xl text-center mt-6 font-bold tracking-tight text-gray-900">
-            Sign in to your account
-          </p>
-          <p className="text-center text-2xl mt-2 tracking-tight text-gray-900">
-            Hello. Welcome back! 👋
-          </p>
-        </div>
+    <section className="overflow-hidden bg-white h-full lg:py-[160px]">
+      <div className="container mx-auto">
+        <div className="-mx-4 flex flex-wrap">
+          <div className="w-full px-4">
+            <div className="relative z-10 mx-auto w-full max-w-[470px]">
+              <div className="bg-primary py-10 px-6 text-center sm:p-[70px]">
+                <div className="mx-auto mb-5 max-w-[160px] text-center flex">
+                  <img
+                    src="https://res.cloudinary.com/ddfbgrq44/image/upload/v1669311884/dokko-white_xmz8y3.png"
+                    alt="logo"
+                    style={{ width: '40px', height: '40px' }}
+                  />
 
-        <form className="mt-8 space-y-6" action="#" method="POST">
-          <div className="-space-y-px rounded-md shadow-sm">
-            <div className="my-5">
-              <p>Email address</p>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              ></input>
-            </div>
-            <div className="my-5">
-              <p>Password</p>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="password"
-                required
-                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              ></input>
+                  <p className="mx-auto align-middle text-white text-4xl">
+                    dokko
+                  </p>
+                </div>
+                <h3 className="mb-2 text-2xl font-bold text-white sm:text-[28px]">
+                  Sign in to your account
+                </h3>
+                <p className="mb-7 text-base font-medium text-white text-opacity-70">
+                  Welcome back!
+                </p>
+                <form>
+                  <div className="-mx-2 flex flex-wrap text-left">
+                    <div className="w-full px-2">
+                      <div className="mb-4">
+                        <label
+                          htmlFor="email"
+                          className="mb-2 block text-sm font-medium text-white"
+                        >
+                          Username or Email
+                        </label>
+                        <input
+                          type="text"
+                          name="email"
+                          placeholder="exam@mail.com"
+                          className="placeholder-white border-form-stroke w-full border bg-transparent p-3 text-base font-medium text-white placeholder-opacity-70 outline-none"
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full px-2">
+                      <div className="mb-8">
+                        <label
+                          htmlFor="password"
+                          className="mb-2 block text-sm font-medium text-white"
+                        >
+                          Password
+                        </label>
+                        <input
+                          type="password"
+                          name="email"
+                          placeholder="Enter your password"
+                          className="placeholder-white border-form-stroke w-full border bg-transparent p-3 text-base font-medium text-white placeholder-opacity-70 outline-none"
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full px-2">
+                      <button className="text-primary flex w-full items-center justify-center bg-white py-[14px] px-14 text-base font-semibold">
+                        Sign in
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <p className="pt-8 text-center text-base font-medium text-white">
+                  Don't have an account?
+                </p>
+                <Link href="/signup" className="hover:underline">
+                  <p className="text-white">Sign Up</p>
+                </Link>
+              </div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
