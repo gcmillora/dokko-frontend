@@ -10,9 +10,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html className="h-full bg-gray-50 mt-16">
+    <html>
       <head></head>
-      <body className={customFont.className + 'h-full'}>{children}</body>
+      <body className={customFont.className}>{children}</body>
     </html>
   );
 }
