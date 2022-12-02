@@ -1,3 +1,9 @@
+import AppointmentsTable from '../../../components/doctor_appointments/table';
+
 export default function Page() {
-  return <div>This is the appointments duh</div>;
+  return (
+    <div>
+      <AppointmentsTable />
+    </div>
+  );
 }

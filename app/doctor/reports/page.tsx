@@ -1,3 +1,9 @@
+import ReportsTable from '../../../components/doctor_reports/table';
+
 export default function Page() {
-  return <div>This is reports</div>;
+  return (
+    <div>
+      <ReportsTable />
+    </div>
+  );
 }

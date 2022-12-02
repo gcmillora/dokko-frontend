@@ -1,7 +1,7 @@
 export default function Sidebar() {
   return (
     <section x-data="{openDropDown: false}" className="h-screen bg-white">
-      <div className="flex h-screen w-[300px] flex-col justify-between overflow-y-auto bg-primary">
+      <div className="flex h-full w-[280px] flex-col justify-between overflow-y-auto bg-primary">
         <div>
           <div className="p-10 pb-9">
             <a href="javascript:void(0)" className="block">
@@ -22,7 +22,7 @@ export default function Sidebar() {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+                    href="/doctor"
                     className="flex w-full items-center rounded py-[10px] px-[15px] text-base font-medium text-white text-opacity-50 hover:bg-white hover:bg-opacity-10 hover:text-opacity-100"
                   >
                     <span className="mr-[10px]">

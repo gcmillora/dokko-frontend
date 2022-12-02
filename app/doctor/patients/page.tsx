@@ -1,3 +1,5 @@
+import PatientsTable from '../../../components/doctor_patients/table';
+
 export default function Page() {
-  return <div>This is patients</div>;
+  return <PatientsTable />;
 }
