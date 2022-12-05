@@ -1,4 +1,12 @@
+'use client';
+import Link from 'next/link';
+import Router, { useRouter } from 'next/navigation';
+
 export default function RecentAppointments() {
+  const router = useRouter();
+  function actionChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    router.push(`/doctor/request/${e.target.value}`);
+  }
   return (
     <div className="container">
       <div className="text-2xl px-3 py-6 p font-semibold">
@@ -49,11 +57,14 @@ export default function RecentAppointments() {
                   </td>
                   <td className="border-t py-5 px-4 pr-11 text-center">
                     <div className="relative">
-                      <select className="shadow-card text-body-color appearance-none rounded border-0 bg-white py-[6px] pl-3 pr-8 text-sm font-semibold outline-none">
+                      <select
+                        className="shadow-card text-body-color appearance-none rounded border-0 bg-white py-[6px] pl-3 pr-8 text-sm font-semibold outline-none"
+                        onChange={actionChange}
+                      >
                         <option value="" selected disabled>
                           Action
                         </option>
-                        <option value="">Edit</option>
+                        <option value="1">Link</option>
                         <option value="">Delete</option>
                         <option value="">Details</option>
                       </select>
