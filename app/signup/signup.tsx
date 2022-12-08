@@ -94,14 +94,14 @@ export default function Signup() {
                 </div>
               </div>
               <p className="text-body-color text-sm font-medium">
-                By creating account means you agree to the
+                By creating account means you agree to the&nbsp;
                 <a
                   href="javascript:void(0)"
                   className="text-primary hover:underline"
                 >
                   Terms and Conditions
                 </a>
-                , and our
+                , and our&nbsp;
                 <a
                   href="javascript:void(0)"
                   className="text-primary hover:underline"
