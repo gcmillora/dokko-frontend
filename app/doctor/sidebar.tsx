@@ -1,6 +1,6 @@
 export default function Sidebar() {
   return (
-    <section x-data="{openDropDown: false}" className="h-screen bg-white">
+    <section x-data="{openDropDown: false}" className="h-full bg-white">
       <div className="flex h-full w-[280px] flex-col justify-between overflow-y-auto bg-primary">
         <div>
           <div className="p-10 pb-9">

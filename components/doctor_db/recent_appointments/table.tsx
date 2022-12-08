@@ -2,7 +2,8 @@
 import Link from 'next/link';
 import Router, { useRouter } from 'next/navigation';
 
-export default function RecentAppointments() {
+export default function RecentAppointments(props: any) {
+  console.log(props.data);
   const router = useRouter();
   function actionChange(e: React.ChangeEvent<HTMLSelectElement>) {
     router.push(`/doctor/request/${e.target.value}`);
@@ -36,201 +37,41 @@ export default function RecentAppointments() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="border-t py-5 px-4 pl-11">
-                    <h5 className="text-body-color text-sm font-medium">
-                      Musharof Chowdhury
-                    </h5>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      Multidisciplinary Web Entrepreneur
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      musharof@example.com
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">Owner</p>
-                  </td>
-                  <td className="border-t py-5 px-4 pr-11 text-center">
-                    <div className="relative">
-                      <select
-                        className="shadow-card text-body-color appearance-none rounded border-0 bg-white py-[6px] pl-3 pr-8 text-sm font-semibold outline-none"
-                        onChange={actionChange}
-                      >
-                        <option value="" selected disabled>
-                          Action
-                        </option>
-                        <option value="1">Link</option>
-                        <option value="">Delete</option>
-                        <option value="">Details</option>
-                      </select>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border-t py-5 px-4 pl-11">
-                    <h5 className="text-body-color text-sm font-medium">
-                      Naimur Rahman
-                    </h5>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      Website Front-end Developer
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      naimurrahman@example.com
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">Member</p>
-                  </td>
-                  <td className="border-t py-5 px-4 pr-11 text-center">
-                    <div className="relative">
-                      <select className="shadow-card text-body-color appearance-none rounded border-0 bg-white py-[6px] pl-3 pr-8 text-sm font-semibold outline-none">
-                        <option value="" selected disabled>
-                          Action
-                        </option>
-                        <option value="">Edit</option>
-                        <option value="">Delete</option>
-                        <option value="">Details</option>
-                      </select>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border-t py-5 px-4 pl-11">
-                    <h5 className="text-body-color text-sm font-medium">
-                      Shafiq Hammad
-                    </h5>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      Regional Paradigm Technician
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      shafiq.hd@example.com
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">Moderator</p>
-                  </td>
-                  <td className="border-t py-5 px-4 pr-11 text-center">
-                    <div className="relative">
-                      <select className="shadow-card text-body-color appearance-none rounded border-0 bg-white py-[6px] pl-3 pr-8 text-sm font-semibold outline-none">
-                        <option value="" selected disabled>
-                          Action
-                        </option>
-                        <option value="">Edit</option>
-                        <option value="">Delete</option>
-                        <option value="">Details</option>
-                      </select>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border-t py-5 px-4 pl-11">
-                    <h5 className="text-body-color text-sm font-medium">
-                      Alex Semuyel
-                    </h5>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      Applications Engineer
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      alex.semuel@example.com
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">Admin</p>
-                  </td>
-                  <td className="border-t py-5 px-4 pr-11 text-center">
-                    <div className="relative">
-                      <select className="shadow-card text-body-color appearance-none rounded border-0 bg-white py-[6px] pl-3 pr-8 text-sm font-semibold outline-none">
-                        <option value="" selected disabled>
-                          Action
-                        </option>
-                        <option value="">Edit</option>
-                        <option value="">Delete</option>
-                        <option value="">Details</option>
-                      </select>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border-t py-5 px-4 pl-11">
-                    <h5 className="text-body-color text-sm font-medium">
-                      Sulium Keliym
-                    </h5>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      Lead Implementation Liaison
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      suliym.info@example.com
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">Member</p>
-                  </td>
-                  <td className="border-t py-5 px-4 pr-11 text-center">
-                    <div className="relative">
-                      <select className="shadow-card text-body-color appearance-none rounded border-0 bg-white py-[6px] pl-3 pr-8 text-sm font-semibold outline-none">
-                        <option value="" selected disabled>
-                          Action
-                        </option>
-                        <option value="">Edit</option>
-                        <option value="">Delete</option>
-                        <option value="">Details</option>
-                      </select>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border-t py-5 px-4 pl-11">
-                    <h5 className="text-body-color text-sm font-medium">
-                      Devid Deekook
-                    </h5>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      Central Security Manager
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">
-                      devid.decok@example.com
-                    </p>
-                  </td>
-                  <td className="border-t py-5 px-4">
-                    <p className="text-body-color text-sm">Moderator</p>
-                  </td>
-                  <td className="border-t py-5 px-4 pr-11 text-center">
-                    <div className="relative">
-                      <select className="shadow-card text-body-color appearance-none rounded border-0 bg-white py-[6px] pl-3 pr-8 text-sm font-semibold outline-none">
-                        <option value="" selected disabled>
-                          Action
-                        </option>
-                        <option value="">Edit</option>
-                        <option value="">Delete</option>
-                        <option value="">Details</option>
-                      </select>
-                    </div>
-                  </td>
-                </tr>
+                {props.data.map((item: any) => (
+                  <tr key={item.id}>
+                    <td className="border-t py-5 px-4 pl-11">
+                      <h5 className="text-body-color text-sm font-medium">
+                        {item.fullName}
+                      </h5>
+                    </td>
+                    <td className="border-t py-5 px-4">
+                      <p className="text-body-color text-sm">
+                        {item.condition}
+                      </p>
+                    </td>
+                    <td className="border-t py-5 px-4">
+                      <p className="text-body-color text-sm">{item.schedule}</p>
+                    </td>
+                    <td className="border-t py-5 px-4">
+                      <p className="text-body-color text-sm">{item.status}</p>
+                    </td>
+                    <td className="border-t py-5 px-4 pr-11 text-center">
+                      <div className="relative">
+                        <select
+                          className="shadow-card text-body-color appearance-none rounded border-0 bg-white py-[6px] pl-3 pr-8 text-sm font-semibold outline-none"
+                          onChange={actionChange}
+                        >
+                          <option value="" selected disabled>
+                            Action
+                          </option>
+                          <option value={item.id}>Link</option>
+                          <option value="2">Link</option>
+                          <option value="3">Link</option>
+                        </select>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

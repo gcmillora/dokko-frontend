@@ -1,7 +1,8 @@
-export default function ReportsTable() {
+export default function ReportsTable(props: any) {
+  console.log(props.data);
   return (
     <div className="container">
-      <div className="text-2xl px-6 py-6 mt-10 p font-semibold">Reports</div>
+      <div className="text-2xl px-6 py-6 font-semibold">Reports</div>
       <section className="bg-white ">
         <div className="mx-auto px-4 lg:container">
           <div className="mb-8 items-center justify-between rounded-lg bg-[#F8F9FD] py-4 px-5 md:flex">
@@ -36,7 +37,6 @@ export default function ReportsTable() {
                 </span>
               </div>
             </div>
-
             <div className="w-full">
               <div className="items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4 md:justify-end">
                 <button className="flex h-[50px] items-center justify-center rounded-md border border-stroke bg-white px-5">
@@ -69,7 +69,7 @@ export default function ReportsTable() {
                         Patient
                       </p>
                     </th>
-                    <th className="min-w-[260px] py-5 px-4">
+                    <th className="min-w-[160px] py-5 px-4">
                       <p className="text-left text-base font-medium text-black">
                         Condition
                       </p>
@@ -98,136 +98,40 @@ export default function ReportsTable() {
                 </thead>
 
                 <tbody>
-                  <tr className="border-b border-stroke">
-                    <td className="py-6 pr-4 pl-9">
-                      <h5 className="text-base font-medium text-body-color">
-                        Musharof Chowdhury
-                      </h5>
-                      <p className="text-sm text-body-color">
-                        musharof@gmail.com
-                      </p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <h5 className="text-base font-medium text-body-color">
-                        Apple Macbook Pro M1
-                      </h5>
-                      <p className="text-sm text-body-color">8/256 GB</p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">#WE234343</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">25 Dec 2024</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="inline-flex items-center justify-center rounded-full bg-[#FFA70B] bg-opacity-10 py-1 px-[14px] text-sm font-medium text-[#FFA70B]">
-                        <span className="mr-2 block h-2 w-2 rounded-full bg-[#FFA70B]"></span>
-                        Pending
-                      </p>
-                    </td>
-                    <td className="py-6 pl-4 pr-9 text-right">
-                      <button className="inline-flex items-center justify-center rounded border border-primary py-2 px-4 text-base font-medium text-primary hover:bg-primary hover:text-white">
-                        . . .
-                      </button>
-                    </td>
-                  </tr>
-
-                  <tr className="border-b border-stroke">
-                    <td className="py-6 pr-4 pl-9">
-                      <h5 className="text-base font-medium text-body-color">
-                        Shafiq Hammad
-                      </h5>
-                      <p className="text-sm text-body-color">
-                        shafiq@gmail.com
-                      </p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <h5 className="text-base font-medium text-body-color">
-                        iPhone 13 Pro Max
-                      </h5>
-                      <p className="text-sm text-body-color">4/256 GB</p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">#WE234343</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">25 Dec 2024</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="inline-flex items-center justify-center rounded-full bg-[#FFA70B] bg-opacity-10 py-1 px-[14px] text-sm font-medium text-[#FFA70B]">
-                        <span className="mr-2 block h-2 w-2 rounded-full bg-[#FFA70B]"></span>
-                        Pending
-                      </p>
-                    </td>
-                    <td className="py-6 pl-4 pr-9 text-right">
-                      <button className="inline-flex items-center justify-center rounded border border-primary py-2 px-4 text-base font-medium text-primary hover:bg-primary hover:text-white">
-                        . . .
-                      </button>
-                    </td>
-                  </tr>
-
-                  <tr className="border-b border-stroke">
-                    <td className="py-6 pr-4 pl-9">
-                      <h5 className="text-base font-medium text-body-color">
-                        Naimur Rahman
-                      </h5>
-                      <p className="text-sm text-body-color">naim@gmail.com</p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <h5 className="text-base font-medium text-body-color">
-                        Apple watch series 7
-                      </h5>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">#WE234343</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">25 Dec 2024</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="inline-flex items-center justify-center rounded-full bg-[#D34053] bg-opacity-10 py-1 px-[14px] text-sm font-medium text-[#D34053]">
-                        <span className="mr-2 block h-2 w-2 rounded-full bg-[#D34053]"></span>
-                        Cancelled
-                      </p>
-                    </td>
-                    <td className="py-6 pl-4 pr-9 text-right"></td>
-                  </tr>
-
-                  <tr className="border-b border-transparent">
-                    <td className="py-6 pr-4 pl-9">
-                      <h5 className="text-base font-medium text-body-color">
-                        Jhon Smith
-                      </h5>
-                      <p className="text-sm text-body-color">smith@gmail.com</p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <h5 className="text-base font-medium text-body-color">
-                        Apple Macbook air M1
-                      </h5>
-                      <p className="text-sm text-body-color">8/256 GB</p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">#WE234343</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">25 Dec 2024</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="inline-flex items-center justify-center rounded-full bg-success bg-opacity-10 py-1 px-[14px] text-sm font-medium text-success">
-                        <span className="mr-2 block h-2 w-2 rounded-full bg-success"></span>
-                        Shipped
-                      </p>
-                    </td>
-                    <td className="py-6 pl-4 pr-9 text-right"></td>
-                  </tr>
+                  {props.data.map((item: any) => (
+                    <tr className="border-b border-stroke" key={item.reportId}>
+                      <td className="py-6 pr-4 pl-9">
+                        <h5 className="text-base font-medium text-body-color">
+                          {item.fullName}
+                        </h5>
+                      </td>
+                      <td className="py-6 px-4">
+                        <h5 className="text-base font-medium text-body-color">
+                          {item.condition}
+                        </h5>
+                      </td>
+                      <td className="py-6 px-4">
+                        <a className="text-base text-primary" href="">
+                          View
+                        </a>
+                      </td>
+                      <td className="py-6 px-4">
+                        <p className="text-base text-body-color">
+                          {item.schedule}
+                        </p>
+                      </td>
+                      <td className="py-6 px-4">
+                        <p className="inline-flex items-center justify-center rounded-full bg-[#FFA70B] bg-opacity-10 py-1 px-[14px] text-sm font-medium text-[#FFA70B]">
+                          {item.status}
+                        </p>
+                      </td>
+                      <td className="py-6 pl-4 pr-9 text-right">
+                        <button className="inline-flex items-center justify-center rounded border border-primary py-2 px-4 text-base font-medium text-primary hover:bg-primary hover:text-white">
+                          . . .
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

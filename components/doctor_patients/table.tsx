@@ -1,4 +1,4 @@
-export default function PatientsTable() {
+export default function PatientsTable({ patients }: any) {
   return (
     <div className="container">
       <div className="text-2xl px-6 py-6 mt-10 p font-semibold">Patients</div>
@@ -71,17 +71,17 @@ export default function PatientsTable() {
                     </th>
                     <th className="min-w-[260px] py-5 px-4">
                       <p className="text-left text-base font-medium text-black">
-                        Condition
+                        Email
                       </p>
                     </th>
                     <th className="min-w-[160px] py-5 px-4">
                       <p className="text-left text-base font-medium text-black">
-                        Record
+                        Address
                       </p>
                     </th>
                     <th className="min-w-[170px] py-5 px-4">
                       <p className="text-left text-base font-medium text-black">
-                        Date
+                        Contact
                       </p>
                     </th>
                     <th className="min-w-[150px] py-5 px-4">
@@ -98,136 +98,34 @@ export default function PatientsTable() {
                 </thead>
 
                 <tbody>
-                  <tr className="border-b border-stroke">
-                    <td className="py-6 pr-4 pl-9">
-                      <h5 className="text-base font-medium text-body-color">
-                        Musharof Chowdhury
-                      </h5>
-                      <p className="text-sm text-body-color">
-                        musharof@gmail.com
-                      </p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <h5 className="text-base font-medium text-body-color">
-                        Apple Macbook Pro M1
-                      </h5>
-                      <p className="text-sm text-body-color">8/256 GB</p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">#WE234343</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">25 Dec 2024</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="inline-flex items-center justify-center rounded-full bg-[#FFA70B] bg-opacity-10 py-1 px-[14px] text-sm font-medium text-[#FFA70B]">
-                        <span className="mr-2 block h-2 w-2 rounded-full bg-[#FFA70B]"></span>
-                        Pending
-                      </p>
-                    </td>
-                    <td className="py-6 pl-4 pr-9 text-right">
-                      <button className="inline-flex items-center justify-center rounded border border-primary py-2 px-4 text-base font-medium text-primary hover:bg-primary hover:text-white">
-                        . . .
-                      </button>
-                    </td>
-                  </tr>
-
-                  <tr className="border-b border-stroke">
-                    <td className="py-6 pr-4 pl-9">
-                      <h5 className="text-base font-medium text-body-color">
-                        Shafiq Hammad
-                      </h5>
-                      <p className="text-sm text-body-color">
-                        shafiq@gmail.com
-                      </p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <h5 className="text-base font-medium text-body-color">
-                        iPhone 13 Pro Max
-                      </h5>
-                      <p className="text-sm text-body-color">4/256 GB</p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">#WE234343</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">25 Dec 2024</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="inline-flex items-center justify-center rounded-full bg-[#FFA70B] bg-opacity-10 py-1 px-[14px] text-sm font-medium text-[#FFA70B]">
-                        <span className="mr-2 block h-2 w-2 rounded-full bg-[#FFA70B]"></span>
-                        Pending
-                      </p>
-                    </td>
-                    <td className="py-6 pl-4 pr-9 text-right">
-                      <button className="inline-flex items-center justify-center rounded border border-primary py-2 px-4 text-base font-medium text-primary hover:bg-primary hover:text-white">
-                        . . .
-                      </button>
-                    </td>
-                  </tr>
-
-                  <tr className="border-b border-stroke">
-                    <td className="py-6 pr-4 pl-9">
-                      <h5 className="text-base font-medium text-body-color">
-                        Naimur Rahman
-                      </h5>
-                      <p className="text-sm text-body-color">naim@gmail.com</p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <h5 className="text-base font-medium text-body-color">
-                        Apple watch series 7
-                      </h5>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">#WE234343</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">25 Dec 2024</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="inline-flex items-center justify-center rounded-full bg-[#D34053] bg-opacity-10 py-1 px-[14px] text-sm font-medium text-[#D34053]">
-                        <span className="mr-2 block h-2 w-2 rounded-full bg-[#D34053]"></span>
-                        Cancelled
-                      </p>
-                    </td>
-                    <td className="py-6 pl-4 pr-9 text-right"></td>
-                  </tr>
-
-                  <tr className="border-b border-transparent">
-                    <td className="py-6 pr-4 pl-9">
-                      <h5 className="text-base font-medium text-body-color">
-                        Jhon Smith
-                      </h5>
-                      <p className="text-sm text-body-color">smith@gmail.com</p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <h5 className="text-base font-medium text-body-color">
-                        Apple Macbook air M1
-                      </h5>
-                      <p className="text-sm text-body-color">8/256 GB</p>
-                    </td>
-
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">#WE234343</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="text-base text-body-color">25 Dec 2024</p>
-                    </td>
-                    <td className="py-6 px-4">
-                      <p className="inline-flex items-center justify-center rounded-full bg-success bg-opacity-10 py-1 px-[14px] text-sm font-medium text-success">
-                        <span className="mr-2 block h-2 w-2 rounded-full bg-success"></span>
-                        Shipped
-                      </p>
-                    </td>
-                    <td className="py-6 pl-4 pr-9 text-right"></td>
-                  </tr>
+                  {patients.map((item: any) => (
+                    <tr className="border-b border-stroke" key={item.uid}>
+                      <td className="py-6 pr-4 pl-9">
+                        <h5 className="text-base font-medium text-body-color">
+                          {item.fullName}
+                        </h5>
+                      </td>
+                      <td>
+                        <p className="text-sm text-body-color">{item.email}</p>
+                      </td>
+                      <td>
+                        <p className="text-sm text-body-color">
+                          {item.address}
+                        </p>
+                      </td>
+                      <td></td>
+                      <td>
+                        <p className="text-sm text-body-color">
+                          {item.status ? 'Active' : 'Inactive'}
+                        </p>
+                      </td>
+                      <td className="py-6 pl-4 pr-9 text-right">
+                        <button className="inline-flex items-center justify-center rounded border border-primary py-2 px-4 text-base font-medium text-primary hover:bg-primary hover:text-white">
+                          . . .
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
