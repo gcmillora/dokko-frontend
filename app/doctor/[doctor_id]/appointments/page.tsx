@@ -1,4 +1,4 @@
-import AppointmentsTable from '../../../components/doctor_appointments/table';
+import AppointmentsTable from '../../../../components/doctor_appointments/table';
 
 export default function Page() {
   return (

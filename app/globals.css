@@ -1,16 +1,12 @@
 @tailwind base;
 @tailwind components;
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .text-field-normal {
-  @apply text-base focus:outline-none focus:border-violet-200 focus:ring-1 focus:ring-violet-500 w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default;
+  @apply border-form-stroke text-base focus:outline-none focus:border-blue-200 focus:ring-1 focus:ring-blue-500 w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default border;
 }
 
 .text-area-normal {
-  @apply text-base focus:outline-none focus:border-violet-200 focus:ring-1 focus:ring-violet-500 w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default;
+  @apply border-form-stroke text-base focus:outline-none focus:border-blue-200 focus:ring-1 focus:ring-blue-500 w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default;
 }
 
 .dropdown-normal {
@@ -26,19 +22,11 @@
 }
 
 .continue-button {
-  @apply w-full bg-violet-600 inline-flex items-center justify-center rounded-md py-4 px-8 text-center text-base font-normal text-white hover:bg-opacity-90;
+  @apply w-full bg-primary inline-flex items-center justify-center rounded-md py-4 px-8 text-center text-base font-normal text-white hover:bg-opacity-90;
 }
 
 .dropdown-input {
   @apply text-base focus:outline-none focus:border-violet-200 focus:ring-1 focus:ring-violet-500 w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default;
-}
-@layer utilities {
-  .border-sd {
-    border-color: rgb(221 214 254);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-      0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --tw-shadow-color: #c4b5fd;
-  }
 }
 
 @tailwind utilities;

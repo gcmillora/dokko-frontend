@@ -1,7 +1,5 @@
-import './globals.css';
-import 'react-datepicker/dist/react-datepicker.css';
-
 import { Poppins } from '@next/font/google';
+import Sidebar from './sidebar';
 
 const customFont = Poppins({ weight: '400', display: 'swap' });
 
@@ -11,9 +9,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
-      <head></head>
-      <body className={customFont.className}>{children}</body>
-    </html>
+    <main className="flex h-full w-screen">
+      <div className="">
+        <Sidebar />
+      </div>
+      <div className="w-full">{children}</div>
+    </main>
   );
 }
