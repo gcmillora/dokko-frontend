@@ -1,4 +1,99 @@
+import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
+import { Cookie } from '@next/font/google';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import Router from 'next/router';
+import { useState } from 'react';
+import { uuid } from 'uuidv4';
+import { CreatePatientInput } from '../../utils/types';
+
 export default function Signup() {
+  const router = useRouter();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [address, setAddress] = useState('hh');
+  const [status, setStatus] = useState(false);
+
+  const createPatient = async () => {
+    const uid = uuid();
+    const patient: CreatePatientInput = {
+      fullName: fullName,
+      email: email,
+      address: address,
+      status: true,
+    };
+    console.log(uid);
+    const client = new ApolloClient({
+      uri: 'http://127.0.0.1:1337/graphql',
+      cache: new InMemoryCache(),
+    });
+    console.log(patient);
+    const { data } = await client.mutate({
+      variables: {
+        fullName: fullName,
+        email: email,
+        address: address,
+        status: true,
+        uid: uid,
+      },
+      mutation: gql`
+        mutation (
+          $fullName: String!
+          $email: String!
+          $address: String!
+          $status: Boolean!
+          $uid: String!
+        ) {
+          createPatient(
+            data: {
+              fullName: $fullName
+              email: $email
+              address: $address
+              status: $status
+              uid: $uid
+            }
+          ) {
+            data {
+              attributes {
+                uid
+                fullName
+                email
+                address
+                status
+              }
+            }
+          }
+        }
+      `,
+    });
+    console.log(data);
+    return data;
+  };
+
+  const registerUser = async (e: any) => {
+    e.preventDefault();
+    axios
+      .post('http://localhost:1337/api/auth/local/register', {
+        username: username,
+        email: email,
+        password: password,
+        level: 'patient',
+      })
+      .then(async (response) => {
+        console.log('Well done!');
+        console.log('User profile', response.data.user);
+        console.log('User token', response.data.jwt);
+        localStorage.setItem('jwtToken', response.data.jwt);
+        const res = await createPatient();
+        router.push('/');
+      })
+      .catch((error) => {
+        console.log('An error occurred:', error.response);
+      });
+  };
+
   return (
     <form>
       <div className="-mx-2 flex flex-wrap">
@@ -11,6 +106,8 @@ export default function Signup() {
               Full Name
             </label>
             <input
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               type="text"
               name="name"
               className="border-form-stroke text-body-color focus:border-primary w-full rounded border bg-[#F5F6F7] p-3 text-sm font-medium outline-none"
@@ -28,6 +125,8 @@ export default function Signup() {
             <input
               type="text"
               name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="border-form-stroke text-body-color focus:border-primary w-full rounded border bg-[#F5F6F7] p-3 text-sm font-medium outline-none"
             />
           </div>
@@ -43,6 +142,8 @@ export default function Signup() {
             <input
               type="email"
               name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="border-form-stroke text-body-color focus:border-primary w-full rounded border bg-[#F5F6F7] p-3 text-sm font-medium outline-none"
             />
           </div>
@@ -58,6 +159,8 @@ export default function Signup() {
             <input
               type="password"
               name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="border-form-stroke text-body-color focus:border-primary w-full rounded border bg-[#F5F6F7] p-3 text-sm font-medium outline-none"
             />
           </div>
@@ -94,14 +197,14 @@ export default function Signup() {
                 </div>
               </div>
               <p className="text-body-color text-sm font-medium">
-                By creating account means you agree to the
+                By creating account means you agree to the&nbsp;
                 <a
                   href="javascript:void(0)"
                   className="text-primary hover:underline"
                 >
                   Terms and Conditions
                 </a>
-                , and our
+                , and our&nbsp;
                 <a
                   href="javascript:void(0)"
                   className="text-primary hover:underline"
@@ -113,7 +216,10 @@ export default function Signup() {
           </div>
         </div>
         <div className="w-full px-2">
-          <button className="bg-primary flex items-center justify-center rounded py-[14px] px-14 text-sm font-semibold text-white">
+          <button
+            className="bg-primary flex items-center justify-center rounded py-[14px] px-14 text-sm font-semibold text-white"
+            onClick={registerUser}
+          >
             Create Account
           </button>
         </div>

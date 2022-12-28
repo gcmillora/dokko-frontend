@@ -1,9 +1,96 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
+  const router = useRouter();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const findOneDoctor = async () => {
+    const client = new ApolloClient({
+      uri: 'http://127.0.0.1:1337/graphql',
+      cache: new InMemoryCache(),
+    });
+    const { data } = await client.query({
+      variables: {
+        email: email,
+      },
+      query: gql`
+        query ($email: String!) {
+          doctors(filters: { email: { eq: $email } }) {
+            data {
+              attributes {
+                uid
+                fullName
+                email
+              }
+            }
+          }
+        }
+      `,
+    });
+    console.log(data);
+    return data;
+  };
+  const findOnePatient = async () => {
+    const client = new ApolloClient({
+      uri: 'http://127.0.0.1:1337/graphql',
+      cache: new InMemoryCache(),
+    });
+    const { data } = await client.query({
+      variables: {
+        email: email,
+      },
+      query: gql`
+        query ($email: String!) {
+          patients(filters: { email: { eq: $email } }) {
+            data {
+              attributes {
+                uid
+                fullName
+                email
+              }
+            }
+          }
+        }
+      `,
+    });
+    console.log(data);
+    return data;
+  };
+
+  const Login = async (e: any) => {
+    e.preventDefault();
+    axios
+      .post('http://localhost:1337/api/auth/local', {
+        identifier: email,
+        password: password,
+      })
+      .then(async (response) => {
+        console.log('User profile', response.data.user);
+        console.log('User token', response.data.jwt);
+        if (response.data.user.level === 'patient') {
+          const patient = await findOnePatient();
+          console.log(patient);
+          localStorage.setItem('uid', patient.patients.data[0].attributes.uid);
+          router.push(`/patient/${patient.patients.data[0].attributes.uid}`);
+        } else if (response.data.user.level === 'doctor') {
+          const doctor = await findOneDoctor();
+          console.log(doctor);
+          localStorage.setItem('uid', doctor.doctors.data[0].attributes.uid);
+          router.push(`/doctor/${doctor.doctors.data[0].attributes.uid}`);
+        }
+      })
+      .catch((error) => {
+        console.log('An error occurred:', error.response);
+      });
+  };
   return (
     <section className="overflow-hidden bg-white h-full lg:py-[160px]">
       <div className="container mx-auto">
@@ -36,12 +123,14 @@ export default function Page() {
                           htmlFor="email"
                           className="mb-2 block text-sm font-medium text-white"
                         >
-                          Username or Email
+                          Email
                         </label>
                         <input
                           type="text"
                           name="email"
-                          placeholder="exam@mail.com"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="juandelacruz@gmail.com"
                           className="placeholder-white border-form-stroke w-full border bg-transparent p-3 text-base font-medium text-white placeholder-opacity-70 outline-none"
                         />
                       </div>
@@ -56,21 +145,26 @@ export default function Page() {
                         </label>
                         <input
                           type="password"
-                          name="email"
+                          name="password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
                           placeholder="Enter your password"
                           className="placeholder-white border-form-stroke w-full border bg-transparent p-3 text-base font-medium text-white placeholder-opacity-70 outline-none"
                         />
                       </div>
                     </div>
                     <div className="w-full px-2">
-                      <button className="text-primary flex w-full items-center justify-center bg-white py-[14px] px-14 text-base font-semibold">
+                      <button
+                        className="text-primary flex w-full items-center justify-center bg-white py-[14px] px-14 text-base font-semibold"
+                        onClick={Login}
+                      >
                         Sign in
                       </button>
                     </div>
                   </div>
                 </form>
                 <p className="pt-8 text-center text-base font-medium text-white">
-                  Don't have an account?
+                  Don&apos;t have an account?
                 </p>
                 <Link href="/signup" className="hover:underline">
                   <p className="text-white">Sign Up</p>

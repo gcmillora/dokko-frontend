@@ -1,20 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 
-const { fontFamily } = require('tailwindcss/defaultTheme')
+const { fontFamily } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
+    './app/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './node_modules/react-tailwindcss-datepicker/dist/index.esm.js',
   ],
-  theme: {
-    extend: {
-      
-    },
-  },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require("tailgrids/plugin")
-  ],
+
+  plugins: [require('@tailwindcss/forms'), require('tailgrids/plugin')],
 };
