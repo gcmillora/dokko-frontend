@@ -43,6 +43,6 @@ export const findUpcomingAppointments = async (patient_id: string) => {
       }
     `,
   });
-  console.log(data);
+
   return data;
 };

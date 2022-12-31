@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
 import { findOnePatient } from '../../../api/findOnePatient';
 import { findPastAppointments } from '../../../api/findPastAppointments';
@@ -12,19 +13,19 @@ import PastAppointmentsTable from '../../../components/patient/appointment/past_
 import PrescriptionCard from '../../../components/patient/prescription/card';
 
 import { Patient } from '../../../utils/types';
+import { validateUser } from '../../../utils/validateUser';
 
 interface pageProps {
   params: { patient_id: string };
 }
-interface prescriptionsProps {
-  prescriptions: [];
-}
 
 export default function Page({ params }: pageProps) {
+  const router = useRouter();
   const [patient, setPatient] = useState<Patient>({} as Patient);
   const [prescriptions, setPrescriptions] = useState([]);
   const [upcomingApp, setUpcomingApp] = useState([]);
   const [pastApp, setPastApp] = useState([]);
+  const [validate, setValidate] = useState(false);
 
   useEffect(() => {
     findOnePatient(params.patient_id).then((data) => {
@@ -61,6 +62,7 @@ export default function Page({ params }: pageProps) {
                 <p className="text-xl text-body-color font-semibold py-4 w-96">
                   Upcoming Appointments
                 </p>
+
                 <AppointmentCard data={upcomingApp} />
               </div>
               <div>
@@ -74,7 +76,11 @@ export default function Page({ params }: pageProps) {
               <p className="text-xl text-body-color font-semibold py-4">
                 Past Appointments
               </p>
-              <PastAppointmentsTable />
+              {pastApp.length === 0 ? (
+                <p className="text-body-color">No past appointments</p>
+              ) : (
+                <PastAppointmentsTable data={pastApp} />
+              )}
             </div>
           </div>
         </div>

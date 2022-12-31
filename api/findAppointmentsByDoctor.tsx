@@ -1,33 +1,29 @@
-// Description: This file is used to find prescriptions for a patient for dashboard
+//find all appointments of a doctor without pagination using graphql
+
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 
-export const findPrescriptions = async (patient_id: string) => {
+export const findAllAppointmentsByDoctor = async (
+  doctor_id: string,
+  page: number
+) => {
   const client = new ApolloClient({
     uri: 'http://127.0.0.1:1337/graphql',
     cache: new InMemoryCache(),
   });
   const { data } = await client.query({
     variables: {
-      uid: patient_id,
+      uid: doctor_id,
     },
     query: gql`
       query ($uid: String!) {
-        prescriptions(
-          filters: { patient: { uid: { eq: $uid } } }
-          pagination: { limit: 5 }
+        appointments(
+          filters: { doctor: { uid: { eq: $uid } } }
+          sort: "appointmentDate:desc"
         ) {
           data {
             id
             attributes {
               uid
-              patient {
-                data {
-                  attributes {
-                    uid
-                    fullName
-                  }
-                }
-              }
               doctor {
                 data {
                   attributes {
@@ -36,12 +32,21 @@ export const findPrescriptions = async (patient_id: string) => {
                   }
                 }
               }
+              appointmentDate
+              typeOfVisit
+              active
+              condition
+            }
+          }
+          meta {
+            pagination {
+              total
             }
           }
         }
       }
     `,
   });
-
+  console.log('appointments of a doctor: ', data);
   return data;
 };

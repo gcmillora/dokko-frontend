@@ -1,24 +1,28 @@
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 
-export const findOnePatient = async (patient_id: string) => {
+//using graphql
+export const findDoctors = async (jwtToken: string, selected: string) => {
+  //use graphql
   const client = new ApolloClient({
     uri: 'http://127.0.0.1:1337/graphql',
     cache: new InMemoryCache(),
+    headers: {
+      Authorization: `Bearer ${jwtToken}`,
+    },
   });
+  console.log(selected);
   const { data } = await client.query({
     variables: {
-      uid: patient_id,
+      specialty: selected,
     },
     query: gql`
-      query ($uid: String!) {
-        patients(filters: { uid: { eq: $uid } }) {
+      query ($specialty: String!) {
+        doctors(filters: { specialty: { eq: $specialty } }) {
           data {
             id
             attributes {
               uid
               fullName
-              email
-              address
             }
           }
         }
