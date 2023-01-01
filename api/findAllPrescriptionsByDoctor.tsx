@@ -1,8 +1,8 @@
-//find all appointments of a doctor without pagination using graphql
+//find all prescriptions of a doctor with pagination
 
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 
-export const findAllAppointmentsByDoctor = async (
+export const findAllPrescriptionsByDoctor = async (
   doctor_id: string,
   page: number
 ) => {
@@ -13,17 +13,26 @@ export const findAllAppointmentsByDoctor = async (
   const { data } = await client.query({
     variables: {
       uid: doctor_id,
+      page: page,
     },
     query: gql`
-      query ($uid: String!) {
-        appointments(
+      query ($uid: String!, $page: Int!) {
+        prescriptions(
           filters: { doctor: { uid: { eq: $uid } } }
-          sort: "appointmentDate:desc"
+          pagination: { page: $page, pageSize: 10 }
         ) {
           data {
             id
             attributes {
               uid
+              patient {
+                data {
+                  attributes {
+                    uid
+                    fullName
+                  }
+                }
+              }
               doctor {
                 data {
                   attributes {
@@ -32,10 +41,6 @@ export const findAllAppointmentsByDoctor = async (
                   }
                 }
               }
-              appointmentDate
-              typeOfVisit
-              active
-              condition
             }
           }
           meta {
@@ -47,6 +52,6 @@ export const findAllAppointmentsByDoctor = async (
       }
     `,
   });
-  console.log('appointments of a doctor: ', data);
+
   return data;
 };

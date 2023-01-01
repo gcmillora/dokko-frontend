@@ -1,10 +1,14 @@
 'use client';
 import { useEffect, useState } from 'react';
+import setHours from 'date-fns/setHours';
+import setMinutes from 'date-fns/setMinutes';
+import moment from 'moment';
 
 import DatePicker from 'react-datepicker';
 import { findDoctors } from '../../../../../api/findDoctors';
 import { findOnePatient } from '../../../../../api/findOnePatient';
 import { insertOneAppointment } from '../../../../../api/insertOneAppointment';
+import { findAllAppointmentsByDoctor } from '../../../../../api/findAllAppointmentsByDoctor';
 
 interface pageProps {
   params: { patient_id: string };
@@ -21,6 +25,7 @@ export default function Page({ params }: pageProps) {
     'Pediatrician',
     'Psychiatrist',
     'Surgeon',
+    'General Physician',
   ];
   const [value, onChange] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
@@ -32,8 +37,9 @@ export default function Page({ params }: pageProps) {
   const [condition, setCondition] = useState('New');
   const [notes, setNotes] = useState('');
   const [generalPurpose, setGeneralPurpose] = useState('');
-
+  const [appointmentsBooked, setAppointmentsBooked] = useState<any>([]);
   const [selectedSpecialty, setSelectedSpecialty] = useState(specialty[0]);
+  const [excludedTimes, setExcludedTimes] = useState<any[]>([]);
 
   useEffect(() => {
     if (jwtToken) {
@@ -47,6 +53,55 @@ export default function Page({ params }: pageProps) {
     }
   }, [selectedSpecialty]);
 
+  useEffect(() => {
+    if (jwtToken && selectedDoctor) {
+      findAllAppointmentsByDoctor(
+        selectedDoctor?.attributes.uid,
+        jwtToken
+      ).then((data) => {
+        setAppointmentsBooked(data.appointments.data);
+      });
+    }
+  }, [selectedDoctor]);
+
+  //update excluded times when date changes
+  useEffect(() => {
+    setExcludedTimes(getExcludedTime(startDate));
+  }, [startDate]);
+
+  const getExcludedDates = () => {
+    const excludedDates: Date[] = [];
+    appointmentsBooked.forEach((appointment: any) => {
+      excludedDates.push(new Date(appointment.attributes.appointmentDate));
+    });
+    console.log('excludedDates: ', excludedDates);
+    return excludedDates;
+  };
+
+  const getExcludedTime = (date: any) => {
+    let specificDates = getExcludedDates();
+    let arrSpecificDates = [];
+    let arrExcludedTimes = [];
+    for (let i = 0; i < specificDates.length; i++) {
+      if (specificDates[i].toDateString() === date.toDateString()) {
+        arrSpecificDates.push(
+          moment(specificDates[i], moment.ISO_8601).toObject()
+        );
+      }
+    }
+    for (let i = 0; i < specificDates.length; i++) {
+      arrExcludedTimes.push(
+        setHours(
+          setMinutes(new Date(), arrSpecificDates[i].minutes),
+          arrSpecificDates[i].hours
+        )
+      );
+      setExcludedTimes(arrExcludedTimes);
+    }
+    console.log('arrExcludedTimes: ', arrExcludedTimes);
+    return arrExcludedTimes;
+  };
+
   const handleChange = (e: any) => {
     setSelectedSpecialty(e.target.value);
   };
@@ -57,8 +112,6 @@ export default function Page({ params }: pageProps) {
 
   const insertAppointment = async (e: any) => {
     e.preventDefault();
-    console.log('patient_id: ', patient.id);
-    console.log('doctor_id: ', selectedDoctor.id);
     const data = {
       patient_id: patient.id,
       doctor_id: selectedDoctor?.id,
@@ -78,7 +131,6 @@ export default function Page({ params }: pageProps) {
       data.notes,
       data.generalPurpose
     );
-    console.log(response);
   };
 
   return (
@@ -129,8 +181,12 @@ export default function Page({ params }: pageProps) {
               <DatePicker
                 className="text-field-normal text-body-color"
                 selected={startDate}
+                excludeTimes={excludedTimes}
                 onChange={(date) => setStartDate(date || new Date())}
-                locale="pt-BR"
+                onSelect={(date) => setStartDate(date || new Date())}
+                minDate={new Date()} // only allow future dates
+                minTime={setHours(setMinutes(new Date(), 0), 8)} // only allow 8am - 5pm
+                maxTime={setHours(setMinutes(new Date(), 0), 17)}
                 showTimeSelect
                 timeFormat="p"
                 timeIntervals={60}

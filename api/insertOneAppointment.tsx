@@ -40,7 +40,7 @@ export const insertOneAppointment = async (
         $typeOfVisit: String!
         $condition: String!
         $uid: String!
-        $notes: String!
+        $notes: String
         $generalPurpose: String!
       ) {
         createAppointment(

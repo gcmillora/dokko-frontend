@@ -2,10 +2,11 @@
 
 import { useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
+import { uuid, isUuid } from 'uuidv4';
 import { findOnePatient } from '../../../api/findOnePatient';
-import { findPastAppointments } from '../../../api/findPastAppointments';
-import { findPrescriptions } from '../../../api/findPrescriptions';
-import { findUpcomingAppointments } from '../../../api/findUpcomingAppointments';
+import { findPastAppointments } from '../../../api/findPastAppointmentsPatient';
+import { findPrescriptions } from '../../../api/findPrescriptionsPatients';
+import { findUpcomingAppointments } from '../../../api/findUpcomingAppointmentsPatients';
 
 import AppointmentCard from '../../../components/patient/appointment/card';
 import CreateAppointmentCard from '../../../components/patient/appointment/create_card';
@@ -21,6 +22,7 @@ interface pageProps {
 
 export default function Page({ params }: pageProps) {
   const router = useRouter();
+
   const [patient, setPatient] = useState<Patient>({} as Patient);
   const [prescriptions, setPrescriptions] = useState([]);
   const [upcomingApp, setUpcomingApp] = useState([]);
@@ -28,18 +30,22 @@ export default function Page({ params }: pageProps) {
   const [validate, setValidate] = useState(false);
 
   useEffect(() => {
-    findOnePatient(params.patient_id).then((data) => {
-      setPatient(data.patients.data[0].attributes);
-    });
-    findPrescriptions(params.patient_id).then((data) => {
-      setPrescriptions(data.prescriptions.data);
-    });
-    findUpcomingAppointments(params.patient_id).then((data) => {
-      setUpcomingApp(data.appointments.data);
-    });
-    findPastAppointments(params.patient_id).then((data) => {
-      setPastApp(data.appointments.data);
-    });
+    if (isUuid(params.patient_id)) {
+      findOnePatient(params.patient_id).then((data) => {
+        setPatient(data.patients.data[0].attributes);
+      });
+      findPrescriptions(params.patient_id).then((data) => {
+        setPrescriptions(data.prescriptions.data);
+      });
+      findUpcomingAppointments(params.patient_id).then((data) => {
+        setUpcomingApp(data.appointments.data);
+      });
+      findPastAppointments(params.patient_id).then((data) => {
+        setPastApp(data.appointments.data);
+      });
+    } else {
+      alert('Invalid Patient ID');
+    }
   }, []);
 
   return (

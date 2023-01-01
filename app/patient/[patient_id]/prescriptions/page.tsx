@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { findAllAppointments } from '../../../../api/findAllAppointmentsByPatients';
+import { findAllPrescriptions } from '../../../../api/findAllPrescriptionsByPatient';
 
 interface pageProps {
   params: {
@@ -11,16 +11,16 @@ interface pageProps {
 }
 
 export default function Page({ params }: pageProps) {
-  const [appointments, setAppointments] = useState<any>([]);
+  const [prescriptions, setPrescriptions] = useState<any>([]);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [pageNo, setPageNo] = useState(1);
 
   const router = useRouter();
   useEffect(() => {
-    findAllAppointments(params.patient_id, page).then((data) => {
-      setAppointments(data.appointments.data);
-      setCount(data.appointments.count);
+    findAllPrescriptions(params.patient_id, page).then((data) => {
+      setPrescriptions(data.prescriptions.data);
+      setCount(data.prescriptions.count);
     });
   }, [page]);
 
@@ -28,7 +28,7 @@ export default function Page({ params }: pageProps) {
     <div className="mx-auto px-16 mt-24">
       <div className="flex flex-row justify-between">
         <div>
-          <p className="text-4xl font-bold text-body-color">Appointments</p>
+          <p className="text-4xl font-bold text-body-color">Prescriptions</p>
         </div>
         <div>
           <Link
@@ -78,39 +78,41 @@ export default function Page({ params }: pageProps) {
 
                 <th className="min-w-[130px] py-6 px-4">
                   <p className="text-left text-base font-medium text-body-color">
-                    Type
+                    Condition
                   </p>
                 </th>
 
-                <th className="min-w-[150px] py-6 px-4">
+                <th className="min-w-[200px] py-6 px-4">
                   <p className="text-left text-base font-medium text-body-color">
-                    Status
+                    Prescription
                   </p>
                 </th>
 
-                <th className="min-w-[150px] py-6 pl-4 pr-10">
+                <th className="min-w-[100px] py-6 pl-4 pr-10">
                   <p className="text-right text-base font-medium text-body-color">
-                    Prescription
+                    Action
                   </p>
                 </th>
               </tr>
             </thead>
 
             <tbody>
-              {appointments.map((appointment: any, index: number) => (
+              {prescriptions.map((prescription: any, index: number) => (
                 <tr key={index} className="border-b border-stroke">
                   <td className="py-5 pl-10 pr-3">
                     <div className="flex items-center space-x-4">
-                      {
-                        appointment.attributes?.doctor?.data?.attributes
-                          ?.fullName
-                      }
+                      <p className="text-body text-body-color">
+                        {
+                          prescription?.attributes?.doctor?.data?.attributes
+                            ?.fullName
+                        }
+                      </p>
                     </div>
                   </td>
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
                       {
-                        appointment?.attributes?.doctor?.data?.attributes
+                        prescription?.attributes?.doctor?.data?.attributes
                           ?.specialty
                       }
                     </p>
@@ -118,25 +120,22 @@ export default function Page({ params }: pageProps) {
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
                       {new Date(
-                        appointment.attributes.appointmentDate
+                        prescription?.attributes?.appointment?.data?.attributes?.appointmentDate
                       ).toLocaleString()}
                     </p>
                   </td>
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
-                      {appointment.attributes.typeOfVisit}
+                      {
+                        prescription.attributes?.appointment?.data?.attributes
+                          ?.condition
+                      }
                     </p>
                   </td>
                   <td className="py-5 px-4">
-                    {appointment.attributes.status ? (
-                      <span className="inline-flex h-8 items-center justify-center rounded bg-[#42B757] px-5 text-base text-white">
-                        Accepted
-                      </span>
-                    ) : (
-                      <span className="inline-flex h-8 items-center justify-center rounded bg-[#eb4034] px-5 text-base text-white">
-                        Pending
-                      </span>
-                    )}
+                    <p className="text-base text-body-color">
+                      {prescription.attributes?.prescription}
+                    </p>
                   </td>
                 </tr>
               ))}
