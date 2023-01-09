@@ -1,6 +1,7 @@
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 
-export const findOnePatient = async (patient_id: string) => {
+export const findUpcomingAppointments = async (patient_id: string) => {
+  const today = new Date();
   const client = new ApolloClient({
     uri: 'http://127.0.0.1:1337/graphql',
     cache: new InMemoryCache(),
@@ -11,22 +12,31 @@ export const findOnePatient = async (patient_id: string) => {
     },
     query: gql`
       query ($uid: String!) {
-        patients(filters: { uid: { eq: $uid } }) {
+        appointments(filters: { patient: { uid: { eq: $uid } }, appointmentDate: { gt: "${today.toISOString()}"}}) {
           data {
             id
             attributes {
               uid
-              fullName
-              email
-              address
-              medical_redicord {
+              patient {
                 data {
-                  id
                   attributes {
                     uid
+                    fullName
                   }
                 }
               }
+              doctor {
+                data {
+                  attributes {
+                    uid
+                    fullName
+                  }
+                }
+              }
+              appointmentDate
+              typeOfVisit
+              active
+              condition
             }
           }
         }

@@ -56,7 +56,9 @@ export default function CreateAppointmentCard({ patient_id }: any) {
       <p className="text-body-color mb-8 text-base font-medium"></p>
       <div className="flex items-center justify-center space-x-4">
         <button className="bg-primary xs:px-8 inline-flex items-center justify-center rounded-md py-[10px] px-5 text-center text-base font-semibold text-white hover:bg-opacity-90">
-          <Link href={`/patient/${patient_id}/appointment/create`}>Create</Link>
+          <Link href={`/patient/${patient_id}/appointments/create`}>
+            Create
+          </Link>
         </button>
       </div>
     </div>

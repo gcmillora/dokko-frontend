@@ -7,7 +7,20 @@ export default function AppointmentCard({ data }: any) {
     (patient_uid: string, uid: string) => (event: any) => {
       router.push(`/patient/${patient_uid}/appointments/${uid}`);
     };
-
+  if (data.length === 0)
+    return (
+      <div className="mx-auto">
+        <div>
+          <div className="flex items-center border-stroke min-h-[358px] max-w-[370px] border bg-white py-[10px]">
+            <div className="w-full">
+              <p className="text-base font-medium text-body-color text-center">
+                No upcoming appointments
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   return (
     <div className="mx-auto">
       <div>
@@ -21,10 +34,10 @@ export default function AppointmentCard({ data }: any) {
                 <div className="flex items-center">
                   <div>
                     <h4 className="text-base font-medium text-black">
-                      {item.attributes.doctor.data.attributes.fullName}
+                      {item?.attributes?.doctor?.data?.attributes?.fullName}
                     </h4>
                     <p className="text-body-color text-base">
-                      {item.attributes.appointmentDate.split('T')[0]}
+                      {item?.attributes?.appointmentDate?.split('T')[0]}
                     </p>
                   </div>
                 </div>

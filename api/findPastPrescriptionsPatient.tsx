@@ -1,7 +1,8 @@
+//find past prescriptions of a patient with limit 5
+
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 
-export const findPastAppointments = async (patient_id: string) => {
-  const today = new Date();
+export const findPastPrescriptions = async (patient_id: string) => {
   const client = new ApolloClient({
     uri: 'http://127.0.0.1:1337/graphql',
     cache: new InMemoryCache(),
@@ -12,7 +13,10 @@ export const findPastAppointments = async (patient_id: string) => {
     },
     query: gql`
       query ($uid: String!) {
-        appointments(filters: { patient: { uid: { eq: $uid } }, appointmentDate: { lt: "${today.toISOString()}"}}) {
+        prescriptions(
+          filters: { patient: { uid: { eq: $uid } } }
+          pagination: { limit: 5 }
+        ) {
           data {
             id
             attributes {
@@ -30,20 +34,26 @@ export const findPastAppointments = async (patient_id: string) => {
                   attributes {
                     uid
                     fullName
-                    specialty
                   }
                 }
               }
-              appointmentDate
-              typeOfVisit
-              active
-              condition
+              appointment {
+                data {
+                  attirbutes {
+                    uid
+                    appointmentDate
+                    condition
+                    typeOfVisit
+                  }
+                }
+              }
+              prescription
             }
           }
         }
       }
     `,
   });
-  console.log(data);
+
   return data;
 };

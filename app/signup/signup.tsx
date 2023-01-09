@@ -18,6 +18,7 @@ export default function Signup() {
 
   const createPatient = async () => {
     const uid = uuid();
+    const medical_uuid = uuid();
     const patient: CreatePatientInput = {
       fullName: fullName,
       email: email,
@@ -56,12 +57,53 @@ export default function Signup() {
             }
           ) {
             data {
+              id
               attributes {
                 uid
                 fullName
                 email
                 address
                 status
+              }
+            }
+          }
+        }
+      `,
+    });
+    console.log(data);
+    const record = await createMedicalRecord(data);
+    console.log(record);
+    return data;
+  };
+
+  const createMedicalRecord = async (patientRecord: any) => {
+    const medical_uuid = uuid();
+    const client = new ApolloClient({
+      uri: 'http://127.0.0.1:1337/graphql',
+      cache: new InMemoryCache(),
+    });
+    console.log(medical_uuid);
+    console.log(patientRecord.createPatient);
+    const { data } = await client.mutate({
+      variables: {
+        uid: medical_uuid,
+        patient: patientRecord.createPatient.data.id,
+      },
+      mutation: gql`
+        mutation ($uid: String!, $patient: ID!) {
+          createMedicalRedicord(data: { uid: $uid, patient: $patient }) {
+            data {
+              attributes {
+                uid
+                patient {
+                  data {
+                    id
+                    attributes {
+                      uid
+                      fullName
+                    }
+                  }
+                }
               }
             }
           }

@@ -75,6 +75,7 @@ export default function Page() {
       .then(async (response) => {
         console.log('User profile', response.data.user);
         console.log('User token', response.data.jwt);
+        localStorage.setItem('jwtToken', response.data.jwt);
         if (response.data.user.level === 'patient') {
           const patient = await findOnePatient();
           console.log(patient);

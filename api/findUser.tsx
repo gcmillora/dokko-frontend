@@ -7,6 +7,6 @@ export const findUser = async (jwtToken: string) => {
       Authorization: `Bearer ${jwtToken}`,
     },
   });
-  console.log(response.data);
+
   return response.data;
 };

@@ -1,18 +1,24 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { findOnePatient } from '../../../api/findOnePatient';
 import { findUser } from '../../../api/findUser';
 
 export default function Sidebar() {
   const router = useRouter();
   const [uid, setUid] = useState('');
+  const [patient, setPatient] = useState<any>();
 
   useEffect(() => {
     setUid(localStorage.getItem('uid') || '');
+    findOnePatient(localStorage.getItem('uid') || '').then((data) => {
+      setPatient(data.patients.data[0].attributes);
+      console.log(data.patients.data[0].attributes);
+    });
   }, []);
 
   return (
-    <div className="flex h-full w-[320px] flex-col justify-between overflow-y-auto bg-primary">
+    <div className="flex h-full min-h-screen w-full flex-col justify-between overflow-y-auto bg-primary">
       <div>
         <div className="p-10 pb-9">
           <a href="javascript:void(0)" className="block">
@@ -143,6 +149,30 @@ export default function Sidebar() {
                 <p className="mb-[20px] mt-[30px] px-[15px] text-sm font-semibold uppercase text-white">
                   SUPPORT
                 </p>
+              </li>
+              <li>
+                <a
+                  href={`/patient/${uid}/medical-record/${patient?.medical_redicord?.data?.attributes?.uid}`}
+                  className="flex w-full items-center rounded py-[10px] px-[15px] text-base font-medium text-white text-opacity-50 hover:bg-white hover:bg-opacity-10 hover:text-opacity-100"
+                >
+                  <span className="mr-[10px]">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-[18px] h-[18px]"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"
+                      />
+                    </svg>
+                  </span>
+                  Medical Record
+                </a>
               </li>
               <li>
                 <a
