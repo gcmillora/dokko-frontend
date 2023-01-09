@@ -48,6 +48,8 @@ export const findAllPrescriptionsByDoctor = async (
               total
             }
           }
+          diagnosis
+          prescription
         }
       }
     `,

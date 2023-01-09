@@ -92,8 +92,8 @@ export default function Page({ params }: pageProps) {
     for (let i = 0; i < specificDates.length; i++) {
       arrExcludedTimes.push(
         setHours(
-          setMinutes(new Date(), arrSpecificDates[i].minutes),
-          arrSpecificDates[i].hours
+          setMinutes(new Date(), arrSpecificDates[i]?.minutes),
+          arrSpecificDates[i]?.hours
         )
       );
       setExcludedTimes(arrExcludedTimes);
@@ -134,102 +134,95 @@ export default function Page({ params }: pageProps) {
   };
 
   return (
-    <div>
-      <div className="flex flex-row justify-center py-24">
-        <div className="w-[524px]">
-          <p className="text-center text-primary text-3xl font-bold">
-            Book an Appointment
-          </p>
-          <p className="text-center text-body-color">
-            Please fill-in all the details with *.
-          </p>
+    <div className="items-center flex flex-row justify-center py-24">
+      <div className="w-[524px]">
+        <p className="text-center text-primary text-3xl font-bold">
+          Book an Appointment
+        </p>
+        <p className="text-center text-body-color">
+          Please fill-in all the details with *.
+        </p>
+        <div className="mt-6">
           <div className="mt-6">
-            <div className="mt-6">
-              <label className="text-base text-body-color ">Specialty</label>
-              <select className="text-field-normal" onChange={handleChange}>
-                {specialty.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="text-base text-body-color ">Doctor Name</label>
-              <select
-                className="text-field-normal"
-                onChange={handleDoctorChange}
-              >
-                {doctors.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.attributes.fullName}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="mt-6">
-              <label className="text-base text-body-color ">Condition</label>
-              <input
-                className="text-field-normal"
-                value={condition}
-                onChange={(e) => setCondition(e.target.value)}
-              />
-            </div>
-            <div className="mt-6">
-              <label className="text-base text-body-color ">Schedule</label>
+            <label className="text-base text-body-color ">Specialty</label>
+            <select className="text-field-normal" onChange={handleChange}>
+              {specialty.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="text-base text-body-color ">Doctor Name</label>
+            <select className="text-field-normal" onChange={handleDoctorChange}>
+              {doctors.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.attributes.fullName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mt-6">
+            <label className="text-base text-body-color ">Condition</label>
+            <input
+              className="text-field-normal"
+              value={condition}
+              onChange={(e) => setCondition(e.target.value)}
+            />
+          </div>
+          <div className="mt-6">
+            <label className="text-base text-body-color ">Schedule</label>
 
-              <DatePicker
-                className="text-field-normal text-body-color"
-                selected={startDate}
-                excludeTimes={excludedTimes}
-                onChange={(date) => setStartDate(date || new Date())}
-                onSelect={(date) => setStartDate(date || new Date())}
-                minDate={new Date()} // only allow future dates
-                minTime={setHours(setMinutes(new Date(), 0), 8)} // only allow 8am - 5pm
-                maxTime={setHours(setMinutes(new Date(), 0), 17)}
-                showTimeSelect
-                timeFormat="p"
-                timeIntervals={60}
-                dateFormat="Pp"
-              />
-            </div>
-            <div className="mt-6">
-              <label className="text-base text-body-color ">
-                Type of Visit
-              </label>
-              <input
-                className="text-field-normal"
-                value={typeOfVisit}
-                onChange={(e) => setTypeOfVisit(e.target.value)}
-              />
-            </div>
-            <div className="mt-6">
-              <label className="text-base text-body-color ">
-                General Purpose
-              </label>
-              <input
-                className="text-field-normal"
-                value={generalPurpose}
-                onChange={(e) => setGeneralPurpose(e.target.value)}
-              />
-            </div>
-            <div className="mt-6">
-              <label className="text-base text-body-color ">
-                Additional Notes
-              </label>
-              <textarea
-                className="text-area-normal"
-                rows={5}
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-              />
-            </div>
+            <DatePicker
+              className="text-field-normal text-body-color"
+              selected={startDate}
+              excludeTimes={excludedTimes}
+              onChange={(date) => setStartDate(date || new Date())}
+              onSelect={(date) => setStartDate(date || new Date())}
+              minDate={new Date()} // only allow future dates
+              minTime={setHours(setMinutes(new Date(), 0), 8)} // only allow 8am - 5pm
+              maxTime={setHours(setMinutes(new Date(), 0), 17)}
+              showTimeSelect
+              timeFormat="p"
+              timeIntervals={60}
+              dateFormat="Pp"
+            />
           </div>
-          <div className="mt-12">
-            <button className="continue-button" onClick={insertAppointment}>
-              Book
-            </button>
+          <div className="mt-6">
+            <label className="text-base text-body-color ">Type of Visit</label>
+            <input
+              className="text-field-normal"
+              value={typeOfVisit}
+              onChange={(e) => setTypeOfVisit(e.target.value)}
+            />
           </div>
+          <div className="mt-6">
+            <label className="text-base text-body-color ">
+              General Purpose
+            </label>
+            <input
+              className="text-field-normal"
+              value={generalPurpose}
+              onChange={(e) => setGeneralPurpose(e.target.value)}
+            />
+          </div>
+          <div className="mt-6">
+            <label className="text-base text-body-color ">
+              Additional Notes
+            </label>
+            <textarea
+              className="text-area-normal"
+              rows={5}
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="mt-12">
+          <button className="continue-button" onClick={insertAppointment}>
+            Book
+          </button>
         </div>
       </div>
     </div>

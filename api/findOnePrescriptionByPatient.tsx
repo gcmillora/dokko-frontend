@@ -1,32 +1,28 @@
-//find all prescriptions for a patient with pagination
+//find one prescription by patient
 
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 
-export const findAllPrescriptions = async (
-  patient_id: string,
-  page: number
-) => {
+export const findOnePrescription = async (uid: string) => {
   const client = new ApolloClient({
     uri: 'http://127.0.0.1:1337/graphql',
     cache: new InMemoryCache(),
   });
+  console.log('uid:', uid);
+
   const { data } = await client.query({
     variables: {
-      uid: patient_id,
-      page: page,
+      uid: uid,
     },
     query: gql`
-      query ($uid: String!, $page: Int!) {
-        prescriptions(
-          filters: { patient: { uid: { eq: $uid } } }
-          pagination: { page: $page, pageSize: 10 }
-        ) {
+      query ($uid: String!) {
+        prescriptions(filters: { uid: { eq: $uid } }) {
           data {
             id
             attributes {
               uid
               patient {
                 data {
+                  id
                   attributes {
                     uid
                     fullName
@@ -35,6 +31,7 @@ export const findAllPrescriptions = async (
               }
               doctor {
                 data {
+                  id
                   attributes {
                     uid
                     fullName
@@ -59,6 +56,6 @@ export const findAllPrescriptions = async (
       }
     `,
   });
-  console.log('prescription data: ', data);
+
   return data;
 };

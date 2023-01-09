@@ -25,7 +25,7 @@ export default function Page({ params }: pageProps) {
   }, [page]);
 
   return (
-    <div className="mx-auto px-16 mt-24">
+    <div className="px-16 mt-24">
       <div className="flex flex-row justify-between">
         <div>
           <p className="text-4xl font-bold text-body-color">Appointments</p>

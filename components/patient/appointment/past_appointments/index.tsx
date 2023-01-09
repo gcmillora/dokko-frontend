@@ -71,7 +71,7 @@ export default function PastAppointmentsTable({ data }: any) {
                   </td>
                   <td className="py-6 px-4">
                     <Link
-                      href={`/patient/${item.attributes.patient.data.attributes.uid}/prescriptions/${item.attributes.uid}`}
+                      href={`/patient/${item.attributes.patient.data.attributes.uid}/appointments/${item.attributes.uid}`}
                     >
                       View
                     </Link>

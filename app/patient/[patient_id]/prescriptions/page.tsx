@@ -133,9 +133,12 @@ export default function Page({ params }: pageProps) {
                     </p>
                   </td>
                   <td className="py-5 px-4">
-                    <p className="text-base text-body-color">
+                    <Link
+                      className="text-base text-body-color"
+                      href={`/patient/${params.patient_id}/prescriptions/${prescription.attributes.uid}`}
+                    >
                       {prescription.attributes?.prescription}
-                    </p>
+                    </Link>
                   </td>
                 </tr>
               ))}
