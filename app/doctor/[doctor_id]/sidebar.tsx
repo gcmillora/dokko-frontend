@@ -1,7 +1,26 @@
+'use client';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { findOneDoctor } from '../../../api/findOneDoctor';
+
 export default function Sidebar() {
+  const router = useRouter();
+  const [uid, setUid] = useState('');
+  const [patient, setDoctor] = useState<any>();
+
+  useEffect(() => {
+    setUid(localStorage.getItem('uid') || '');
+    if (localStorage.getItem('uid')) {
+      findOneDoctor(localStorage.getItem('uid') || '').then((data) => {
+        setDoctor(data.doctors.data[0].attributes);
+        console.log(data.doctors.data[0].attributes);
+      });
+    }
+  }, []);
+
   return (
     <section x-data="{openDropDown: false}" className="h-full bg-white">
-      <div className="flex h-full w-[280px] flex-col justify-between overflow-y-auto bg-primary">
+      <div className="flex h-full min-h-screen w-full flex-col justify-between overflow-y-auto bg-primary">
         <div>
           <div className="p-10 pb-9">
             <a href="javascript:void(0)" className="block">
@@ -22,7 +41,7 @@ export default function Sidebar() {
                 </li>
                 <li>
                   <a
-                    href="/doctor"
+                    href={`/doctor/${uid}`}
                     className="flex w-full items-center rounded py-[10px] px-[15px] text-base font-medium text-white text-opacity-50 hover:bg-white hover:bg-opacity-10 hover:text-opacity-100"
                   >
                     <span className="mr-[10px]">
@@ -52,7 +71,7 @@ export default function Sidebar() {
                 </li>
                 <li>
                   <a
-                    href="/doctor/patients"
+                    href={`/doctor/${uid}/patients`}
                     className="flex w-full items-center rounded py-[10px] px-[15px] text-base font-medium text-white text-opacity-50 hover:bg-white hover:bg-opacity-10 hover:text-opacity-100"
                   >
                     <span className="mr-[10px]">
@@ -94,7 +113,7 @@ export default function Sidebar() {
                 </li>
                 <li>
                   <a
-                    href="/doctor/appointments"
+                    href={`/doctor/${uid}/appointments`}
                     className="flex w-full items-center rounded py-[10px] px-[15px] text-base font-medium text-white text-opacity-50 hover:bg-white hover:bg-opacity-10 hover:text-opacity-100"
                   >
                     <span className="mr-[10px]">
@@ -136,7 +155,7 @@ export default function Sidebar() {
                 </li>
                 <li>
                   <a
-                    href="/doctor/reports"
+                    href={`/doctor/${uid}/prescriptions`}
                     className="flex w-full items-center rounded py-[10px] px-[15px] text-base font-medium text-white text-opacity-50 hover:bg-white hover:bg-opacity-10 hover:text-opacity-100"
                   >
                     <span className="mr-[10px]">

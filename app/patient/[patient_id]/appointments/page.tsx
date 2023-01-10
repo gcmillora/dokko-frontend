@@ -20,7 +20,7 @@ export default function Page({ params }: pageProps) {
   useEffect(() => {
     findAllAppointments(params.patient_id, page).then((data) => {
       setAppointments(data.appointments.data);
-      setCount(data.appointments.count);
+      setCount(data.appointments.meta.total);
     });
   }, [page]);
 

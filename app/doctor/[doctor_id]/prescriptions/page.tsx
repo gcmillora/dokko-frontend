@@ -2,11 +2,12 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { findAllPrescriptions } from '../../../../api/findAllPrescriptionsByPatient';
+import { findAllAppointmentsDoctorPgn } from '../../../../api/findAllAppointmentsByDoctorPagination';
+import { findAllPrescriptionsByDoctor } from '../../../../api/findAllPrescriptionsByDoctor';
 
 interface pageProps {
   params: {
-    patient_id: string;
+    doctor_id: string;
   };
 }
 
@@ -18,41 +19,24 @@ export default function Page({ params }: pageProps) {
 
   const router = useRouter();
   useEffect(() => {
-    findAllPrescriptions(params.patient_id, page).then((data) => {
-      setPrescriptions(data.prescriptions.data);
-      setCount(data.prescriptions.meta.total);
+    findAllPrescriptionsByDoctor(params.doctor_id, page).then((response) => {
+      setPrescriptions(response.prescriptions.data);
+      setCount(response.prescriptions.meta.total);
     });
   }, [page]);
 
   return (
-    <div className="mx-auto px-16 mt-24">
-      <div className="flex flex-row justify-between">
-        <div>
-          <p className="text-4xl font-bold text-body-color">Prescriptions</p>
-        </div>
-        <div>
-          <Link
-            href={`/patient/${params.patient_id}/appointments/create`}
-            className="bg-primary inline-flex items-center justify-center rounded-[5px] py-3 px-6 text-center text-base font-medium text-white hover:bg-opacity-90"
-          >
-            <span className="mr-[10px]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 4.5v15m7.5-7.5h-15"
-                />
-              </svg>
-            </span>
-            Book an Appointment
-          </Link>
+    <div className="px-16 mt-24">
+      <div className="border-stroke border-b flex flex-row">
+        <div className="w-3/4">
+          <p className="mb-2 text-2xl font-semibold text-black">
+            Prescriptions
+          </p>
+          <p className="text-body-color mb-6 text-sm font-medium">
+            Please fill-in the records below to save your medical record. This
+            will be used to generate your medical report and have a better
+            understanding of your health.
+          </p>
         </div>
       </div>
       <div className="rounded-lg bg-white mt-12 border-form-stroke border">
@@ -62,12 +46,12 @@ export default function Page({ params }: pageProps) {
               <tr className="bg-[#F6F8FB]">
                 <th className="min-w-[210px] py-6 pl-10 pr-4">
                   <p className="text-left text-base font-medium text-body-color">
-                    Doctor
+                    Patient
                   </p>
                 </th>
                 <th className="min-w-[150px] py-6 px-4">
                   <p className="text-left text-base font-medium text-body-color">
-                    Specialty
+                    Condition
                   </p>
                 </th>
                 <th className="min-w-[250px] py-6 px-4">
@@ -78,67 +62,61 @@ export default function Page({ params }: pageProps) {
 
                 <th className="min-w-[130px] py-6 px-4">
                   <p className="text-left text-base font-medium text-body-color">
-                    Condition
+                    Type
                   </p>
                 </th>
 
-                <th className="min-w-[200px] py-6 px-4">
+                <th className="min-w-[150px] py-6 px-4">
                   <p className="text-left text-base font-medium text-body-color">
-                    Prescription
+                    Status
                   </p>
                 </th>
 
-                <th className="min-w-[100px] py-6 pl-4 pr-10">
+                <th className="min-w-[150px] py-6 pl-4 pr-10">
                   <p className="text-right text-base font-medium text-body-color">
-                    Action
+                    Prescription
                   </p>
                 </th>
               </tr>
             </thead>
-
             <tbody>
-              {prescriptions.map((prescription: any, index: number) => (
+              {prescriptions.map((appointment: any, index: number) => (
                 <tr key={index} className="border-b border-stroke">
                   <td className="py-5 pl-10 pr-3">
                     <div className="flex items-center space-x-4">
-                      <p className="text-body text-body-color">
-                        {
-                          prescription?.attributes?.doctor?.data?.attributes
-                            ?.fullName
-                        }
-                      </p>
+                      {
+                        appointment.attributes?.patient?.data?.attributes
+                          ?.fullName
+                      }
                     </div>
                   </td>
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
-                      {
-                        prescription?.attributes?.doctor?.data?.attributes
-                          ?.specialty
-                      }
+                      {appointment?.attributes?.condition}
                     </p>
                   </td>
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
                       {new Date(
-                        prescription?.attributes?.appointment?.data?.attributes?.appointmentDate
+                        appointment.attributes.appointmentDate
                       ).toLocaleString()}
                     </p>
                   </td>
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
-                      {
-                        prescription.attributes?.appointment?.data?.attributes
-                          ?.condition
-                      }
+                      {appointment.attributes.typeOfVisit}
                     </p>
                   </td>
                   <td className="py-5 px-4">
-                    <Link
-                      className="text-base text-body-color"
-                      href={`/patient/${params.patient_id}/prescriptions/${prescription.attributes.uid}`}
-                    >
-                      {prescription.attributes?.prescription}
-                    </Link>
+                    {appointment.attributes.status ? (
+                      <span className="inline-flex h-8 items-center justify-center rounded bg-[#42B757] px-5 text-base text-white">
+                        Accepted
+                      </span>
+                    ) : (
+                      <span className="inline-flex h-8 items-center justify-center rounded bg-[#eb4034] px-5 text-base text-white">
+                        Pending
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}

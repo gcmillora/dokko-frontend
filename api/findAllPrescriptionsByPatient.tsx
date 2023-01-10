@@ -55,6 +55,11 @@ export const findAllPrescriptions = async (
               diagnosis
             }
           }
+          meta {
+            pagination {
+              total
+            }
+          }
         }
       }
     `,
