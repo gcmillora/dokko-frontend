@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { findOneAppointment } from '../../../../../api/findOneAppointment';
-import { insertPrescriptionDoctor } from '../../../../../api/insertAppointmentDoctor';
+import { insertPrescriptionDoctor } from '../../../../../api/insertPrescriptionDoctor';
 import { updateOneAppointment } from '../../../../../api/updateOneAppointment';
+import { searchPrescription } from '../../../../../api/searchPrescription';
 import showToastMessage from '../../../../../utils/error';
 
 interface pageProps {
@@ -17,6 +18,7 @@ interface pageProps {
 export default function Page({ params }: pageProps) {
   const [appointment, setAppointment] = useState<any>();
   const jwtToken = localStorage.getItem('jwtToken') || '';
+  const [exist, setExist] = useState(false);
 
   const approveAppointment = async (e: any) => {
     //save medical record using graphl
@@ -61,6 +63,21 @@ export default function Page({ params }: pageProps) {
       setAppointment(response.appointments.data[0]);
     };
     getAppointment();
+    const search = async () => {
+      const response = await searchPrescription(params.appointment_id);
+      console.log(response);
+      if (response.prescriptions.data.length > 0) {
+        setExist(true);
+      }
+    };
+    search();
+  }, []);
+
+  useEffect(() => {
+    console.log(appointment);
+    if (exist) {
+      setExist(true);
+    }
   }, []);
 
   const createPrescription = async (e: any) => {
@@ -96,7 +113,11 @@ export default function Page({ params }: pageProps) {
             </p>
           </div>
           <div className="w-1/4 ">
-            <button className="continue-button" onClick={createPrescription}>
+            <button
+              className={exist ? 'disabled-button' : 'continue-button'}
+              onClick={createPrescription}
+              disabled={exist ? true : false}
+            >
               Create Report
             </button>
           </div>

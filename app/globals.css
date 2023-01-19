@@ -25,6 +25,10 @@
   @apply w-full bg-primary inline-flex items-center justify-center rounded-md py-4 px-8 text-center text-base font-normal text-white hover:bg-opacity-90;
 }
 
+.disabled-button {
+  @apply w-full bg-body-color inline-flex items-center justify-center rounded-md py-4 px-8 text-center text-base font-normal text-white;
+}
+
 .approve-button {
   @apply w-full bg-secondary inline-flex items-center justify-center rounded-md py-4 px-8 text-center text-base font-normal text-white hover:bg-opacity-90;
 }

@@ -45,6 +45,16 @@ export const findAllPrescriptionsByDoctor = async (
               prescription
               diagnosis
               notes
+              appointment {
+                data {
+                  attributes {
+                    uid
+                    appointmentDate
+                    condition
+                    typeOfVisit
+                  }
+                }
+              }
             }
           }
           meta {

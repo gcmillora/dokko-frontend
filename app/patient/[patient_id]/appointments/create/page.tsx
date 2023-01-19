@@ -9,6 +9,8 @@ import { findDoctors } from '../../../../../api/findDoctors';
 import { findOnePatient } from '../../../../../api/findOnePatient';
 import { insertOneAppointment } from '../../../../../api/insertOneAppointment';
 import { findAllAppointmentsByDoctor } from '../../../../../api/findAllAppointmentsByDoctor';
+import showToastMessage from '../../../../../utils/error';
+import { ToastContainer } from 'react-toastify';
 
 interface pageProps {
   params: { patient_id: string };
@@ -63,6 +65,11 @@ export default function Page({ params }: pageProps) {
       });
     }
   }, [selectedDoctor]);
+
+  useEffect(() => {
+    setExcludedTimes(getExcludedTime(new Date()));
+    console.log('excludedTime: ', excludedTimes);
+  }, []);
 
   //update excluded times when date changes
   useEffect(() => {
@@ -131,12 +138,15 @@ export default function Page({ params }: pageProps) {
       data.notes,
       data.generalPurpose
     );
+    console.log('response: ', response);
+    showToastMessage('success', 'Appointment booked successfully.');
+    setStartDate(new Date());
   };
 
   return (
-    <div className="items-center flex flex-row justify-center py-24">
+    <div className="items-center flex flex-row justify-center py-16">
       <div className="w-[524px]">
-        <p className="text-center text-primary text-3xl font-bold">
+        <p className="text-center text-primary text-3xl font-black">
           Book an Appointment
         </p>
         <p className="text-center text-body-color">
@@ -223,6 +233,7 @@ export default function Page({ params }: pageProps) {
           <button className="continue-button" onClick={insertAppointment}>
             Book
           </button>
+          <ToastContainer />
         </div>
       </div>
     </div>

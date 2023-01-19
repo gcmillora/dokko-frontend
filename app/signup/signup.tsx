@@ -4,7 +4,9 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Router from 'next/router';
 import { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { uuid } from 'uuidv4';
+import showToastMessage from '../../utils/error';
 import { CreatePatientInput } from '../../utils/types';
 
 export default function Signup() {
@@ -73,6 +75,7 @@ export default function Signup() {
     console.log(data);
     const record = await createMedicalRecord(data);
     console.log(record);
+
     return data;
   };
 
@@ -129,10 +132,14 @@ export default function Signup() {
         console.log('User token', response.data.jwt);
         localStorage.setItem('jwtToken', response.data.jwt);
         const res = await createPatient();
-        router.push('/');
+        showToastMessage('success', 'Patient created successfully');
+        setTimeout(() => {
+          router.push('/signin');
+        }, 2000);
       })
       .catch((error) => {
         console.log('An error occurred:', error.response);
+        showToastMessage('error', "Error: Couldn't create patient");
       });
   };
 
@@ -264,6 +271,7 @@ export default function Signup() {
           >
             Create Account
           </button>
+          <ToastContainer />
         </div>
       </div>
     </form>

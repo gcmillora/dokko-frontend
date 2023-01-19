@@ -22,6 +22,7 @@ export default function Page({ params }: pageProps) {
     findAllPrescriptionsByDoctor(params.doctor_id, page).then((response) => {
       setPrescriptions(response.prescriptions.data);
       setCount(response.prescriptions.meta.total);
+      console.log(response.prescriptions.data[0]);
     });
   }, [page]);
 
@@ -30,12 +31,10 @@ export default function Page({ params }: pageProps) {
       <div className="border-stroke border-b flex flex-row">
         <div className="w-3/4">
           <p className="mb-2 text-2xl font-semibold text-black">
-            Prescriptions
+            Medical Diagnoses and Prescriptions
           </p>
           <p className="text-body-color mb-6 text-sm font-medium">
-            Please fill-in the records below to save your medical record. This
-            will be used to generate your medical report and have a better
-            understanding of your health.
+            List of all medical diagnoses and prescriptions.
           </p>
         </div>
       </div>
@@ -80,35 +79,41 @@ export default function Page({ params }: pageProps) {
               </tr>
             </thead>
             <tbody>
-              {prescriptions.map((appointment: any, index: number) => (
+              {prescriptions.map((prescription: any, index: number) => (
                 <tr key={index} className="border-b border-stroke">
                   <td className="py-5 pl-10 pr-3">
                     <div className="flex items-center space-x-4">
                       {
-                        appointment.attributes?.patient?.data?.attributes
+                        prescription.attributes?.patient?.data?.attributes
                           ?.fullName
                       }
                     </div>
                   </td>
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
-                      {appointment?.attributes?.condition}
+                      {
+                        prescription?.attributes?.appointment?.data?.attributes
+                          ?.condition
+                      }
                     </p>
                   </td>
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
                       {new Date(
-                        appointment.attributes.appointmentDate
+                        prescription?.attributes?.appointment?.data?.attributes?.appointmentDate
                       ).toLocaleString()}
                     </p>
                   </td>
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
-                      {appointment.attributes.typeOfVisit}
+                      {
+                        prescription.attributes.appointment.data.attributes
+                          .typeOfVisit
+                      }
                     </p>
                   </td>
                   <td className="py-5 px-4">
-                    {appointment.attributes.status ? (
+                    {prescription.attributes.status ? (
                       <span className="inline-flex h-8 items-center justify-center rounded bg-[#42B757] px-5 text-base text-white">
                         Accepted
                       </span>
@@ -116,6 +121,17 @@ export default function Page({ params }: pageProps) {
                       <span className="inline-flex h-8 items-center justify-center rounded bg-[#eb4034] px-5 text-base text-white">
                         Pending
                       </span>
+                    )}
+                  </td>
+                  <td className="py-5 px-4">
+                    {prescription.attributes.status ? (
+                      <Link
+                        href={`/doctor/${params.doctor_id}/prescriptions/${prescription.attributes.uid}`}
+                      >
+                        View
+                      </Link>
+                    ) : (
+                      '--'
                     )}
                   </td>
                 </tr>

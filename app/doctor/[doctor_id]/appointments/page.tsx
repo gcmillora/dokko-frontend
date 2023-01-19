@@ -116,15 +116,11 @@ export default function Page({ params }: pageProps) {
                     )}
                   </td>
                   <td className="py-5 px-4">
-                    {appointment.attributes.active ? (
-                      <Link
-                        href={`/doctor/${params.doctor_id}/appointments/${appointment.attributes.uid}`}
-                      >
-                        View
-                      </Link>
-                    ) : (
-                      '---'
-                    )}
+                    <Link
+                      href={`/doctor/${params.doctor_id}/appointments/${appointment.attributes.uid}`}
+                    >
+                      View
+                    </Link>
                   </td>
                 </tr>
               ))}

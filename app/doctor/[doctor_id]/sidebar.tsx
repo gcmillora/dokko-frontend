@@ -8,6 +8,12 @@ export default function Sidebar() {
   const [uid, setUid] = useState('');
   const [patient, setDoctor] = useState<any>();
 
+  const logout = () => {
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('uid');
+    router.push('/signin');
+  };
+
   useEffect(() => {
     setUid(localStorage.getItem('uid') || '');
     if (localStorage.getItem('uid')) {
@@ -226,7 +232,7 @@ export default function Sidebar() {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+                    onClick={logout}
                     className="flex w-full items-center rounded py-[10px] px-[15px] text-base font-medium text-white text-opacity-50 hover:bg-white hover:bg-opacity-10 hover:text-opacity-100"
                   >
                     <span className="mr-[10px]">

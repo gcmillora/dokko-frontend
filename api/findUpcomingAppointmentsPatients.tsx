@@ -12,7 +12,7 @@ export const findUpcomingAppointments = async (patient_id: string) => {
     },
     query: gql`
       query ($uid: String!) {
-        appointments(filters: { patient: { uid: { eq: $uid } }, appointmentDate: { gt: "${today.toISOString()}"}}) {
+        appointments(filters: { patient: { uid: { eq: $uid } }, appointmentDate: { gt: "${today.toISOString()}"}},pagination: {limit:4}) {
           data {
             id
             attributes {
