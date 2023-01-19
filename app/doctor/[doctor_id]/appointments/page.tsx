@@ -71,7 +71,7 @@ export default function Page({ params }: pageProps) {
 
                 <th className="min-w-[150px] py-6 pl-4 pr-10">
                   <p className="text-right text-base font-medium text-body-color">
-                    Prescription
+                    Action
                   </p>
                 </th>
               </tr>
@@ -105,7 +105,7 @@ export default function Page({ params }: pageProps) {
                     </p>
                   </td>
                   <td className="py-5 px-4">
-                    {appointment.attributes.status ? (
+                    {appointment.attributes.active ? (
                       <span className="inline-flex h-8 items-center justify-center rounded bg-[#42B757] px-5 text-base text-white">
                         Accepted
                       </span>
@@ -113,6 +113,17 @@ export default function Page({ params }: pageProps) {
                       <span className="inline-flex h-8 items-center justify-center rounded bg-[#eb4034] px-5 text-base text-white">
                         Pending
                       </span>
+                    )}
+                  </td>
+                  <td className="py-5 px-4">
+                    {appointment.attributes.active ? (
+                      <Link
+                        href={`/doctor/${params.doctor_id}/appointments/${appointment.attributes.uid}`}
+                      >
+                        View
+                      </Link>
+                    ) : (
+                      '---'
                     )}
                   </td>
                 </tr>

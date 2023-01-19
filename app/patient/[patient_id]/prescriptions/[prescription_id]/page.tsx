@@ -11,6 +11,7 @@ interface pageProps {
 
 export default function Page({ params }: pageProps) {
   const [prescription, setPrescription] = useState<any>();
+  //generate pdf using pdf generator api
 
   useEffect(() => {
     findOnePrescription(params.prescription_id).then((data) => {
@@ -24,7 +25,7 @@ export default function Page({ params }: pageProps) {
       <div className="grid grid-cols-2">
         <div>
           <div className="flex flex-col">
-            <p className="text-3xl font-black">Report</p>
+            <p className="text-3xl font-black">Medical Report</p>
             <span className="-pt-4 text-base text-body-color">{`ID#: ${prescription?.id}`}</span>
           </div>
           <div className="flex flex-col mt-8">
@@ -101,6 +102,31 @@ export default function Page({ params }: pageProps) {
               <div className="flex flex-col w-1/2">
                 <p className="text-base text-body-color ">
                   {`Address: ${prescription?.attributes.patient.data.attributes.address}`}
+                </p>
+              </div>
+              <div className="my-3">
+                <p className="text-base text-primary">
+                  Basic Medical Information
+                </p>
+              </div>
+              <div className="flex flex-col w-1/2">
+                <p className="text-base text-body-color ">
+                  {`Weight: ${prescription?.attributes.patient.data.attributes.medical_redicord.data.attributes.weight}`}
+                </p>
+              </div>
+              <div className="flex flex-col w-1/2">
+                <p className="text-base text-body-color ">
+                  {`Height: ${prescription?.attributes.patient.data.attributes.medical_redicord.data.attributes.height}`}
+                </p>
+              </div>
+              <div className="flex flex-col w-1/2">
+                <p className="text-base text-body-color ">
+                  {`Blood Type: ${prescription?.attributes.patient.data.attributes.medical_redicord.data.attributes.bloodtype}`}
+                </p>
+              </div>
+              <div className="flex flex-col w-1/2">
+                <p className="text-base text-body-color ">
+                  {`Allergies: ${prescription?.attributes.patient.data.attributes.medical_redicord.data.attributes.allergies}`}
                 </p>
               </div>
             </div>

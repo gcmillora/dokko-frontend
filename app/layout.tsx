@@ -1,5 +1,6 @@
 import './globals.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Poppins } from '@next/font/google';
 
@@ -13,7 +14,9 @@ export default function RootLayout({
   return (
     <html>
       <head></head>
-      <body className={customFont.className}>{children}</body>
+      <body className={customFont.className}>
+        <div>{children}</div>
+      </body>
     </html>
   );
 }

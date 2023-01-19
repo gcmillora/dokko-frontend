@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { findOneAppointment } from '../../../../../api/findOneAppointment';
 import { insertPrescriptionDoctor } from '../../../../../api/insertAppointmentDoctor';
 import { updateOneAppointment } from '../../../../../api/updateOneAppointment';
+import showToastMessage from '../../../../../utils/error';
 
 interface pageProps {
   params: {
@@ -30,7 +32,26 @@ export default function Page({ params }: pageProps) {
     };
     const response = await updateOneAppointment(appointment.id, jwtToken, data);
     console.log(response);
+    showToastMessage('success', 'Appointment approved.');
   };
+
+  const declineAppointment = async (e: any) => {
+    //save medical record using graphl
+    e.preventDefault();
+    console.log('save');
+    const data = {
+      id: appointment.id,
+      active: false,
+      condition: appointment.attributes.condition,
+      generalPurpose: appointment.attributes.generalPurpose,
+      notes: appointment.attributes.notes,
+      typeOfVisit: appointment.attributes.typeOfVisit,
+    };
+    const response = await updateOneAppointment(appointment.id, jwtToken, data);
+    console.log(response);
+    showToastMessage('error', 'Appointment declined.');
+  };
+
   useEffect(() => {
     const getAppointment = async () => {
       const response = await findOneAppointment(
@@ -171,9 +192,10 @@ export default function Page({ params }: pageProps) {
           <button className="approve-button mr-8" onClick={approveAppointment}>
             Approve
           </button>
-          <button className="decline-button" onClick={approveAppointment}>
+          <button className="decline-button" onClick={declineAppointment}>
             Decline
           </button>
+          <ToastContainer />
         </div>
       </div>
     </div>

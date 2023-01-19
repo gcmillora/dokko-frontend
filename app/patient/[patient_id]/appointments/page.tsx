@@ -56,7 +56,7 @@ export default function Page({ params }: pageProps) {
         </div>
       </div>
       <div className="rounded-lg bg-white mt-12 border-form-stroke border">
-        <div className="max-w-full overflow-x-auto">
+        <div className="max-w-full overflow-x-auto min-h-[520px]">
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-[#F6F8FB]">
@@ -128,7 +128,7 @@ export default function Page({ params }: pageProps) {
                     </p>
                   </td>
                   <td className="py-5 px-4">
-                    {appointment.attributes.status ? (
+                    {appointment.attributes.active ? (
                       <span className="inline-flex h-8 items-center justify-center rounded bg-[#42B757] px-5 text-base text-white">
                         Accepted
                       </span>
@@ -136,6 +136,18 @@ export default function Page({ params }: pageProps) {
                       <span className="inline-flex h-8 items-center justify-center rounded bg-[#eb4034] px-5 text-base text-white">
                         Pending
                       </span>
+                    )}
+                  </td>
+                  <td className="py-5 px-4">
+                    {appointment.attributes.prescription ? (
+                      <Link
+                        href={`/patient/${params.patient_id}/prescription/${appointment.attributes.prescription.data.attributes.uid}`}
+                        className="text-primary text-base font-medium"
+                      >
+                        View
+                      </Link>
+                    ) : (
+                      <p className="text-base text-body-color">-</p>
                     )}
                   </td>
                 </tr>

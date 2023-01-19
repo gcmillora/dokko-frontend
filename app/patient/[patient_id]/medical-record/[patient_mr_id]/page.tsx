@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
+import { ToastContainer } from 'react-toastify';
 import { findOneMedicalRecord } from '../../../../../api/findOneMedicalRecord';
 import { updateMedicalRecord } from '../../../../../api/updateOneMedicalRecord';
+import showToastMessage from '../../../../../utils/error';
 
 interface pageProps {
   params: { patient_id: string; patient_mr_id: string };
@@ -40,6 +42,7 @@ export default function Page({ params }: pageProps) {
       data.bloodtype,
       data.allergies
     );
+    if (response) showToastMessage('success', 'Medical record updated.');
   };
   useEffect(() => {
     const getMedicalRecord = async () => {
@@ -77,6 +80,7 @@ export default function Page({ params }: pageProps) {
             <button className="continue-button" onClick={saveMedicalRecord}>
               Save
             </button>
+            <ToastContainer />
           </div>
         </div>
         <div>
