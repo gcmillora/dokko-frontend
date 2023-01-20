@@ -158,10 +158,7 @@ export default function Page() {
               </a>
               <p className="mb-2 text-base text-[#adadad]">
                 Not a member yet?
-                <a
-                  href="javascript:void(0)"
-                  className="text-primary hover:underline"
-                >
+                <a href="/signup" className="text-primary hover:underline">
                   Sign Up
                 </a>
               </p>

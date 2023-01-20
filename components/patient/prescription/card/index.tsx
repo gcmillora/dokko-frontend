@@ -5,7 +5,7 @@ export default function PrescriptionCard({ data }: any) {
 
   const goToPrescription =
     (patient_uid: string, uid: string) => (event: any) => {
-      router.push(`/patient/${patient_uid}/prescription/${uid}`);
+      router.push(`/patient/${patient_uid}/prescriptions/${uid}`);
     };
 
   return (
@@ -24,7 +24,7 @@ export default function PrescriptionCard({ data }: any) {
                       {item.attributes.doctor.data.attributes.fullName}
                     </h4>
                     <p className="text-body-color text-base">
-                      {item.attributes.doctor.data.attributes.speciality ||
+                      {item.attributes.doctor.data.attributes.specialty ||
                         'Digital marketer'}
                     </p>
                   </div>

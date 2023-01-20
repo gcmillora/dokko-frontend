@@ -20,40 +20,6 @@ export default function Page({ params }: pageProps) {
   const jwtToken = localStorage.getItem('jwtToken') || '';
   const [exist, setExist] = useState(false);
 
-  const approveAppointment = async (e: any) => {
-    //save medical record using graphl
-    e.preventDefault();
-    console.log('save');
-    const data = {
-      id: appointment.id,
-      active: true,
-      condition: appointment.attributes.condition,
-      generalPurpose: appointment.attributes.generalPurpose,
-      notes: appointment.attributes.notes,
-      typeOfVisit: appointment.attributes.typeOfVisit,
-    };
-    const response = await updateOneAppointment(appointment.id, jwtToken, data);
-    console.log(response);
-    showToastMessage('success', 'Appointment approved.');
-  };
-
-  const declineAppointment = async (e: any) => {
-    //save medical record using graphl
-    e.preventDefault();
-    console.log('save');
-    const data = {
-      id: appointment.id,
-      active: false,
-      condition: appointment.attributes.condition,
-      generalPurpose: appointment.attributes.generalPurpose,
-      notes: appointment.attributes.notes,
-      typeOfVisit: appointment.attributes.typeOfVisit,
-    };
-    const response = await updateOneAppointment(appointment.id, jwtToken, data);
-    console.log(response);
-    showToastMessage('error', 'Appointment declined.');
-  };
-
   useEffect(() => {
     const getAppointment = async () => {
       const response = await findOneAppointment(
@@ -80,51 +46,31 @@ export default function Page({ params }: pageProps) {
     }
   }, []);
 
-  const createPrescription = async (e: any) => {
-    //insert one prescription with only uid
-    e.preventDefault();
-    console.log('create prescription');
-    const data = {
-      appointment_id: appointment.id,
-      doctor_id: appointment.attributes.doctor.data.id,
-      patient_id: appointment.attributes.patient.data.id,
-    };
-
-    const response = await insertPrescriptionDoctor(
-      data.appointment_id,
-      data.doctor_id,
-      data.patient_id
-    );
-    console.log(response);
-    showToastMessage('success', 'Prescription created.');
-    setExist(true);
-    setTimeout(() => {
-      window.location.reload(), 2000;
-    });
-  };
-
   return (
     <div>
       <div className="px-16 mt-16">
-        <div className="border-stroke border-b flex flex-row justify-end">
+        <div className="border-stroke border-b flex flex-row ">
           <div className="w-3/4">
             <p className="mb-2 text-2xl font-semibold text-black">
-              Appointment
+              Appointment # {appointment?.id}
             </p>
-            <p className="text-body-color mb-6 text-sm font-medium">
+            <p className="text-body-color mb-4 text-sm font-medium">
               Details of the appointment with the patient, including the
-              condition and general purpose of the appointment. Confirm the
-              appointment to proceed or decline to cancel the appointment.
+              condition and general purpose of the appointment.
             </p>
-          </div>
-          <div className="w-1/4 ">
-            <button
-              className={exist ? 'disabled-button' : 'continue-button'}
-              onClick={createPrescription}
-              disabled={exist ? true : false}
-            >
-              Create Report
-            </button>
+            <div>
+              <div
+                className={
+                  appointment?.attributes?.active === false
+                    ? 'text-body-color font-bold mb-2'
+                    : 'text-secondary font-semibold mb-2'
+                }
+              >
+                {appointment?.attributes?.active === false
+                  ? 'Request Status: PENDING'
+                  : 'Request Status: CONFIRMED'}
+              </div>
+            </div>
           </div>
         </div>
         <div>
@@ -213,15 +159,6 @@ export default function Page({ params }: pageProps) {
               </div>
             </div>
           </div>
-        </div>
-        <div className="w-1/4 flex flex-row mb-8">
-          <button className="approve-button mr-8" onClick={approveAppointment}>
-            Approve
-          </button>
-          <button className="decline-button" onClick={declineAppointment}>
-            Decline
-          </button>
-          <ToastContainer />
         </div>
       </div>
     </div>

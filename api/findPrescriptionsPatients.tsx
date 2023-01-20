@@ -33,6 +33,7 @@ export const findPrescriptions = async (patient_id: string) => {
                   attributes {
                     uid
                     fullName
+                    specialty
                   }
                 }
               }

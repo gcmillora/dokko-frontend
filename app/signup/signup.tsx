@@ -17,9 +17,8 @@ export default function Signup() {
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('hh');
   const [status, setStatus] = useState(false);
-
+  const uid = uuid();
   const createPatient = async () => {
-    const uid = uuid();
     const medical_uuid = uuid();
     const patient: CreatePatientInput = {
       fullName: fullName,
@@ -125,6 +124,7 @@ export default function Signup() {
         email: email,
         password: password,
         level: 'patient',
+        uid: uid,
       })
       .then(async (response) => {
         console.log('Well done!');
