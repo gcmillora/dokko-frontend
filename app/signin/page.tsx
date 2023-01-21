@@ -79,12 +79,12 @@ export default function Page() {
         localStorage.setItem('jwtToken', response.data.jwt);
         if (response.data.user.level === 'patient') {
           const patient = await findOnePatient();
-          console.log(patient);
+
           localStorage.setItem('uid', patient.patients.data[0].attributes.uid);
           router.push(`/patient/${patient.patients.data[0].attributes.uid}`);
         } else if (response.data.user.level === 'doctor') {
           const doctor = await findOneDoctor();
-          console.log(doctor);
+
           localStorage.setItem('uid', doctor.doctors.data[0].attributes.uid);
           router.push(`/doctor/${doctor.doctors.data[0].attributes.uid}`);
         }
