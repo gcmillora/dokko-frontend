@@ -47,6 +47,7 @@ export default function Page({ params }: pageProps) {
     if (jwtToken) {
       findDoctors(jwtToken, selectedSpecialty).then((data) => {
         setDoctors(data.doctors.data);
+        console.log('data: ', data);
         setSelectedDoctor(data.doctors.data[0]);
       });
       findOnePatient(params.patient_id).then((data) => {
@@ -114,7 +115,8 @@ export default function Page({ params }: pageProps) {
   };
 
   const handleDoctorChange = (e: any) => {
-    setSelectedDoctor(e.target.value);
+    const doctor = doctors.find((doctor) => doctor.id === e.target.value);
+    setSelectedDoctor(doctor);
   };
 
   const insertAppointment = async (e: any) => {

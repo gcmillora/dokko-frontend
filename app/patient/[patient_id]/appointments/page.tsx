@@ -26,9 +26,12 @@ export default function Page({ params }: pageProps) {
 
   return (
     <div className="px-16 mt-24">
-      <div className="flex flex-row justify-between">
-        <div>
-          <p className="text-4xl font-bold text-body-color">Appointments</p>
+      <div className="border-stroke border-b flex flex-row justify-between">
+        <div className="w-3/4">
+          <p className="mb-2 text-2xl font-semibold text-black">Appointments</p>
+          <p className="text-body-color mb-6 text-sm font-medium">
+            List of all your appointments with your doctors.
+          </p>
         </div>
         <div>
           <Link

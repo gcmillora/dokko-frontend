@@ -15,9 +15,82 @@ export default function DoctorSignup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
+  const [token, setToken] = useState('');
+  const [specialty, setSpecialty] = useState('');
   const [address, setAddress] = useState('hh');
   const [status, setStatus] = useState(false);
   const uid = uuid();
+
+  const handleSpecialtyChange = (event: any) => {
+    setSpecialty(event.target.value);
+  };
+
+  const option = [
+    'Dentist',
+    'Surgeon',
+    'Cardiologist',
+    'Dermatologist',
+    'Gynecologist',
+    'Ophthalmologist',
+    'Pediatrician',
+    'Psychiatrist',
+    'Urologist',
+    'Other',
+  ];
+
+  const roomProperties = {
+    name: uid,
+    privacy: 'private',
+    properties: {
+      start_audio_off: true,
+      start_video_off: true,
+    },
+  };
+
+  const createMeetingToken = async () => {
+    console.log('creating meeting token for doctor');
+    const data = fetch('https://api.daily.co/v1/meeting-tokens', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer 31b1e44009c810a075699272ddcbc6d9544cadd81244a1f7d6a22a0d1db55950`,
+      },
+      body: JSON.stringify({
+        properties: {
+          room_name: uid,
+        },
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+        console.log(data.token);
+        setToken(data.token);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
+  const createRoom = async () => {
+    //call api curl
+    console.log('creating room');
+    const data = fetch('https://api.daily.co/v1/rooms/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer 31b1e44009c810a075699272ddcbc6d9544cadd81244a1f7d6a22a0d1db55950`,
+      },
+      body: JSON.stringify(roomProperties),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 
   const createDoctor = async () => {
     const doctor: CreateDoctorInput = {
@@ -25,9 +98,10 @@ export default function DoctorSignup() {
       email: email,
       medicalId: '12345',
       status: true,
-      specialty: 'Dentist',
+      specialty: specialty,
     };
     console.log(uid);
+    console.log(token);
     const client = new ApolloClient({
       uri: 'http://127.0.0.1:1337/graphql',
       cache: new InMemoryCache(),
@@ -41,6 +115,7 @@ export default function DoctorSignup() {
         status: true,
         specialty: 'Dentist',
         uid: uid,
+        meeting_token: token,
       },
       mutation: gql`
         mutation (
@@ -50,6 +125,7 @@ export default function DoctorSignup() {
           $medicalId: String!
           $status: Boolean!
           $uid: String!
+          $meeting_token: String!
         ) {
           createDoctor(
             data: {
@@ -59,6 +135,7 @@ export default function DoctorSignup() {
               status: $status
               uid: $uid
               specialty: $specialty
+              meeting_token: $meeting_token
             }
           ) {
             data {
@@ -70,6 +147,7 @@ export default function DoctorSignup() {
                 medicalId
                 status
                 specialty
+                meeting_token
               }
             }
           }
@@ -92,12 +170,15 @@ export default function DoctorSignup() {
         uid: uid,
       })
       .then(async (response) => {
-        const res = await createDoctor();
         console.log('Well done!');
         console.log('User profile', response.data.user);
         console.log('User token', response.data.jwt);
         localStorage.setItem('jwtToken', response.data.jwt);
         showToastMessage('success', 'Doctor created successfully');
+        const room = await createRoom();
+        const token = await createMeetingToken();
+        const res = await createDoctor();
+
         setTimeout(() => {
           router.push('/signin');
         }, 2000);
@@ -177,6 +258,26 @@ export default function DoctorSignup() {
               onChange={(e) => setPassword(e.target.value)}
               className="border-form-stroke text-body-color focus:border-primary w-full rounded border bg-[#F5F6F7] p-3 text-sm font-medium outline-none"
             />
+          </div>
+        </div>
+        <div className="w-full px-2">
+          <div className="mb-6">
+            <label
+              htmlFor="password"
+              className="mb-2 block text-sm font-semibold text-black"
+            >
+              Specialty
+            </label>
+            <select
+              className="border-form-stroke text-body-color focus:border-primary w-full rounded border bg-[#F5F6F7] p-3 text-sm font-medium outline-none"
+              onChange={handleSpecialtyChange}
+            >
+              {option.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="w-full px-2">
