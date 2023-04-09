@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { findOnePatient } from '../../../api/findOnePatient';
 import { findUser } from '../../../api/findUser';
 
-export default function Sidebar() {
+export default function Sbardup() {
   const router = useRouter();
   const [uid, setUid] = useState('');
   const [patient, setPatient] = useState<any>();
@@ -24,8 +24,8 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <section x-data="{openDropDown: false}" className="h-full w-full bg-gray-2">
-      <div className="flex h-full max-h-full w-full flex-col justify-between overflow-y-scroll bg-white shadow-card">
+    <section x-data="{openDropDown: false}" className="h-screen bg-gray-2">
+      <div className="flex h-screen w-full max-w-[280px] flex-col justify-between overflow-y-scroll bg-white shadow-card">
         <div>
           <div className="flex items-center p-8">
             <div className="mr-4 h-[50px] w-full max-w-[50px] rounded-full">

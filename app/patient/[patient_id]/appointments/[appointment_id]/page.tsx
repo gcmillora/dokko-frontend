@@ -61,12 +61,12 @@ export default function Page({ params }: pageProps) {
             <div>
               <div
                 className={
-                  appointment?.attributes?.active === false
+                  appointment?.attributes?.status === false
                     ? 'text-body-color font-bold mb-2'
                     : 'text-secondary font-semibold mb-2'
                 }
               >
-                {appointment?.attributes?.active === false
+                {appointment?.attributes?.status === false
                   ? 'Request Status: PENDING'
                   : 'Request Status: CONFIRMED'}
               </div>

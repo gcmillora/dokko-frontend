@@ -37,6 +37,30 @@ export default function Page({ params }: pageProps) {
             List of all medical diagnoses and prescriptions.
           </p>
         </div>
+        <div className="w-1/4">
+          <Link
+            href={`/doctor/${params.doctor_id}/prescriptions/create`}
+            className="bg-primary inline-flex items-center justify-center rounded-[5px] py-3 px-6 text-center text-base font-medium text-white hover:bg-opacity-90"
+          >
+            <span className="mr-[10px]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
+            </span>
+            Create Report
+          </Link>
+        </div>
       </div>
       <div className="rounded-lg bg-white mt-12 border-form-stroke border">
         <div className="max-w-full overflow-x-auto">
@@ -107,8 +131,8 @@ export default function Page({ params }: pageProps) {
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
                       {
-                        prescription.attributes.appointment.data.attributes
-                          .typeOfVisit
+                        prescription.attributes?.appointment?.data?.attributes
+                          ?.typeOfVisit
                       }
                     </p>
                   </td>

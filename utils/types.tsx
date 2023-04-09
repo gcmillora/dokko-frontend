@@ -41,3 +41,25 @@ export type Prescription = {
   prescription: string;
   status: boolean;
 };
+
+export type CreateDoctorInput = {
+  fullName: String;
+  email: String;
+  medicalId: String;
+  status: Boolean;
+  specialty: String;
+};
+
+export enum DoctorSpecialization {
+  Dentist = 'Dentist',
+  Dermatologist = 'Dermatologist',
+  Gastroenterologist = 'Gastroenterologist',
+  General_Practitioner = 'General Practitioner',
+  Neurologist = 'Neurologist',
+  Obstetrician = 'Obstetrician',
+  Ophthalmologist = 'Ophthalmologist',
+  Orthopedic_Surgeon = 'Orthopedic Surgeon',
+  Pediatrician = 'Pediatrician',
+  Psychiatrist = 'Psychiatrist',
+  Surgeon = 'Surgeon',
+}

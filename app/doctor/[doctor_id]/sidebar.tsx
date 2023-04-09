@@ -25,7 +25,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <section x-data="{openDropDown: false}" className="h-full bg-white">
+    <section className="h-full bg-white">
       <div className="flex h-full min-h-screen w-full flex-col justify-between overflow-y-auto bg-primary">
         <div>
           <div className="p-10 pb-9">

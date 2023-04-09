@@ -19,62 +19,60 @@ export default function Page({ params }: pageProps) {
   const [appointment, setAppointment] = useState<any>();
   const jwtToken = localStorage.getItem('jwtToken') || '';
   const [exist, setExist] = useState(false);
-  const [roomName, setRoomName] = useState('test12345')
-  const roomProperties ={
-    name : roomName,
-    privacy: "private",
+  const [roomName, setRoomName] = useState('test12345');
+  const roomProperties = {
+    name: roomName,
+    privacy: 'private',
     properties: {
-      "start_audio_off": true,
-      "start_video_off": true
-    }
-  }
+      start_audio_off: true,
+      start_video_off: true,
+    },
+  };
 
-
-
-    const joinRoom = async (name: String) => {
-      //call api curl
-      console.log('create token');
-      console.log(name)
-      const data = fetch("https://api.daily.co/v1/meeting-tokens",{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer 31b1e44009c810a075699272ddcbc6d9544cadd81244a1f7d6a22a0d1db55950`,
+  const joinRoom = async (name: String) => {
+    //call api curl
+    console.log('create token');
+    console.log(name);
+    const data = fetch('https://api.daily.co/v1/meeting-tokens', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer 31b1e44009c810a075699272ddcbc6d9544cadd81244a1f7d6a22a0d1db55950`,
       },
       body: JSON.stringify({
         properties: {
           room_name: roomName,
-          user_name: "doctor"
-        }
-      })
-    }).then((response) => response.json())
-    .then((data) => {
-      console.log('Success:', data);
-    
-    }
-    )
-   }
-
-    const createRoom = async () => {
-      //call api curl
-      console.log('create room');
-      const data = fetch("https://api.daily.co/v1/rooms/",{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer 31b1e44009c810a075699272ddcbc6d9544cadd81244a1f7d6a22a0d1db55950`,
-      },
-      body: JSON.stringify(roomProperties)
-    }).then((response) => response.json())
-    .then((data) => {
-      console.log('Success:', data);
-      joinRoom(data.url)
-      window.open(data.url, "_blank")
+          user_name: 'doctor',
+        },
+      }),
     })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    }
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+      });
+  };
+
+  const createRoom = async () => {
+    //call api curl
+    console.log('create room');
+    const data = fetch('https://api.daily.co/v1/rooms/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer 31b1e44009c810a075699272ddcbc6d9544cadd81244a1f7d6a22a0d1db55950`,
+      },
+      body: JSON.stringify(roomProperties),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+        joinRoom(data.url);
+        window.open(data.url, '_blank');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 
   const approveAppointment = async (e: any) => {
     //save medical record using graphl
@@ -82,7 +80,8 @@ export default function Page({ params }: pageProps) {
     console.log('save');
     const data = {
       id: appointment.id,
-      active: true,
+      status: true,
+      active: false,
       condition: appointment.attributes.condition,
       generalPurpose: appointment.attributes.generalPurpose,
       notes: appointment.attributes.notes,
@@ -91,9 +90,7 @@ export default function Page({ params }: pageProps) {
     const response = await updateOneAppointment(appointment.id, jwtToken, data);
     console.log(response);
     showToastMessage('success', 'Appointment approved.');
-    createRoom()
-    
-
+    createRoom();
   };
 
   const declineAppointment = async (e: any) => {
@@ -102,6 +99,7 @@ export default function Page({ params }: pageProps) {
     console.log('save');
     const data = {
       id: appointment.id,
+      status: false,
       active: false,
       condition: appointment.attributes.condition,
       generalPurpose: appointment.attributes.generalPurpose,
@@ -120,6 +118,7 @@ export default function Page({ params }: pageProps) {
         jwtToken
       );
       setAppointment(response.appointments.data[0]);
+      console.log(response.appointments.data[0]);
     };
     getAppointment();
     const search = async () => {
@@ -139,28 +138,28 @@ export default function Page({ params }: pageProps) {
     }
   }, []);
 
-  const createPrescription = async (e: any) => {
-    //insert one prescription with only uid
-    e.preventDefault();
-    console.log('create prescription');
-    const data = {
-      appointment_id: appointment.id,
-      doctor_id: appointment.attributes.doctor.data.id,
-      patient_id: appointment.attributes.patient.data.id,
-    };
+  // const createPrescription = async (e: any) => {
+  //   //insert one prescription with only uid
+  //   e.preventDefault();
+  //   console.log('create prescription');
+  //   const data = {
+  //     appointment_id: appointment.id,
+  //     doctor_id: appointment.attributes.doctor.data.id,
+  //     patient_id: appointment.attributes.patient.data.id,
+  //   };
 
-    const response = await insertPrescriptionDoctor(
-      data.appointment_id,
-      data.doctor_id,
-      data.patient_id
-    );
-    console.log(response);
-    showToastMessage('success', 'Prescription created.');
-    setExist(true);
-    setTimeout(() => {
-      window.location.reload(), 2000;
-    });
-  };
+  //   const response = await insertPrescriptionDoctor(
+  //     data.appointment_id,
+  //     data.doctor_id,
+  //     data.patient_id
+  //   );
+  //   console.log(response);
+  //   showToastMessage('success', 'Prescription created.');
+  //   setExist(true);
+  //   setTimeout(() => {
+  //     window.location.reload(), 2000;
+  //   });
+  // };
 
   return (
     <div>
@@ -179,7 +178,7 @@ export default function Page({ params }: pageProps) {
           <div className="w-1/4 ">
             <button
               className={exist ? 'disabled-button' : 'continue-button'}
-              onClick={createPrescription}
+              //onClick={createPrescription}
               disabled={exist ? true : false}
             >
               Create Report
@@ -273,15 +272,22 @@ export default function Page({ params }: pageProps) {
             </div>
           </div>
         </div>
-        <div className="w-1/4 flex flex-row mb-8">
-          <button className="approve-button mr-8" onClick={approveAppointment}>
-            Approve
-          </button>
-          <button className="decline-button" onClick={declineAppointment}>
-            Decline
-          </button>
-          <ToastContainer />
-        </div>
+        {appointment?.attributes?.active === true ? (
+          <div className="w-1/4 flex flex-row mb-8">
+            <button
+              className="approve-button mr-8"
+              onClick={approveAppointment}
+            >
+              Approve
+            </button>
+            <button className="decline-button" onClick={declineAppointment}>
+              Decline
+            </button>
+            <ToastContainer />
+          </div>
+        ) : (
+          ' '
+        )}
       </div>
     </div>
   );

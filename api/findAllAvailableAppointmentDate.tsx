@@ -36,7 +36,7 @@ export const findAllAvailableAppointmentDate = async (patient_id: string) => {
               }
               appointmentDate
               typeOfVisit
-              active
+              status
               condition
             }
           }

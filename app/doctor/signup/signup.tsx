@@ -6,10 +6,10 @@ import Router from 'next/router';
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { uuid } from 'uuidv4';
-import showToastMessage from '../../utils/error';
-import { CreatePatientInput } from '../../utils/types';
+import showToastMessage from '../../../utils/error';
+import { CreateDoctorInput, CreatePatientInput } from '../../../utils/types';
 
-export default function Signup() {
+export default function DoctorSignup() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -19,43 +19,46 @@ export default function Signup() {
   const [status, setStatus] = useState(false);
   const uid = uuid();
 
-  const createPatient = async () => {
-    const medical_uuid = uuid();
-    const patient: CreatePatientInput = {
+  const createDoctor = async () => {
+    const doctor: CreateDoctorInput = {
       fullName: fullName,
       email: email,
-      address: address,
+      medicalId: '12345',
       status: true,
+      specialty: 'Dentist',
     };
     console.log(uid);
     const client = new ApolloClient({
       uri: 'http://127.0.0.1:1337/graphql',
       cache: new InMemoryCache(),
     });
-    console.log(patient);
+    console.log(doctor);
     const { data } = await client.mutate({
       variables: {
         fullName: fullName,
         email: email,
-        address: address,
+        medicalId: '12345',
         status: true,
+        specialty: 'Dentist',
         uid: uid,
       },
       mutation: gql`
         mutation (
           $fullName: String!
+          $specialty: String!
           $email: String!
-          $address: String!
+          $medicalId: String!
           $status: Boolean!
           $uid: String!
         ) {
-          createPatient(
+          createDoctor(
             data: {
               fullName: $fullName
               email: $email
-              address: $address
+              medicalId: $medicalId
               status: $status
               uid: $uid
+              specialty: $specialty
             }
           ) {
             data {
@@ -64,8 +67,9 @@ export default function Signup() {
                 uid
                 fullName
                 email
-                address
+                medicalId
                 status
+                specialty
               }
             }
           }
@@ -73,47 +77,7 @@ export default function Signup() {
       `,
     });
     console.log(data);
-    const record = await createMedicalRecord(data);
-    console.log(record);
 
-    return data;
-  };
-
-  const createMedicalRecord = async (patientRecord: any) => {
-    const medical_uuid = uuid();
-    const client = new ApolloClient({
-      uri: 'http://127.0.0.1:1337/graphql',
-      cache: new InMemoryCache(),
-    });
-    console.log(medical_uuid);
-    console.log(patientRecord.createPatient);
-    const { data } = await client.mutate({
-      variables: {
-        uid: medical_uuid,
-        patient: patientRecord.createPatient.data.id,
-      },
-      mutation: gql`
-        mutation ($uid: String!, $patient: ID!) {
-          createMedicalRedicord(data: { uid: $uid, patient: $patient }) {
-            data {
-              attributes {
-                uid
-                patient {
-                  data {
-                    id
-                    attributes {
-                      uid
-                      fullName
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      `,
-    });
-    console.log(data);
     return data;
   };
 
@@ -124,23 +88,23 @@ export default function Signup() {
         username: username,
         email: email,
         password: password,
-        level: 'patient',
+        level: 'doctor',
         uid: uid,
       })
       .then(async (response) => {
-        const res = await createPatient();
+        const res = await createDoctor();
         console.log('Well done!');
         console.log('User profile', response.data.user);
         console.log('User token', response.data.jwt);
         localStorage.setItem('jwtToken', response.data.jwt);
-        showToastMessage('success', 'Patient created successfully');
+        showToastMessage('success', 'Doctor created successfully');
         setTimeout(() => {
           router.push('/signin');
         }, 2000);
       })
       .catch((error) => {
         console.log('An error occurred:', error.response);
-        showToastMessage('error', "Error: Couldn't create patient");
+        showToastMessage('error', 'Error: Could not create doctor');
       });
   };
 

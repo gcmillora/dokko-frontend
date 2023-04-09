@@ -36,7 +36,7 @@ export default function Page({ params }: pageProps) {
           </p>
         </div>
       </div>
-      <div className="rounded-lg bg-white mt-12 border-form-stroke border">
+      <div className="rounded-lg bg-white mt-12 border-form-stroke border min-h-[472px]">
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
@@ -105,7 +105,7 @@ export default function Page({ params }: pageProps) {
                     </p>
                   </td>
                   <td className="py-5 px-4">
-                    {appointment.attributes.active ? (
+                    {appointment.attributes.status ? (
                       <span className="inline-flex h-8 items-center justify-center rounded bg-[#42B757] px-5 text-base text-white">
                         Accepted
                       </span>
@@ -154,7 +154,7 @@ export default function Page({ params }: pageProps) {
               </li>
               <li>
                 <button
-                  onClick={(event) => setPage(page)}
+                  onClick={(event) => setPage(pageNo)}
                   className="hover:text-primary flex h-9 w-9 items-center justify-center border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
                 >
                   {pageNo}

@@ -54,7 +54,7 @@ export const searchAppointmentByNameByDoctor = async (
               }
               appointmentDate
               typeOfVisit
-              active
+              status
               condition
             }
           }

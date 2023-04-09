@@ -19,11 +19,12 @@ export const updateOneAppointment = async (
   const { data } = await client.mutate({
     variables: {
       id: appointment_id,
-      active: appointment.active,
+      status: appointment.status,
       condition: appointment.condition,
       generalPurpose: appointment.generalPurpose,
       notes: appointment.notes,
       typeOfVisit: appointment.typeOfVisit,
+      active: appointment.active,
     },
     mutation: gql`
       mutation (
@@ -33,15 +34,17 @@ export const updateOneAppointment = async (
         $generalPurpose: String!
         $notes: String!
         $typeOfVisit: String!
+        $status: Boolean!
       ) {
         updateAppointment(
           id: $id
           data: {
-            active: $active
+            status: $status
             condition: $condition
             generalPurpose: $generalPurpose
             notes: $notes
             typeOfVisit: $typeOfVisit
+            active: $active
           }
         ) {
           data {
@@ -67,7 +70,7 @@ export const updateOneAppointment = async (
               }
               appointmentDate
               typeOfVisit
-              active
+              status
               condition
               generalPurpose
               notes

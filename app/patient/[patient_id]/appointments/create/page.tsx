@@ -144,9 +144,9 @@ export default function Page({ params }: pageProps) {
   };
 
   return (
-    <div className="items-center flex flex-row justify-center py-16">
+    <div className="flex flex-row justify-center py-16">
       <div className="w-[524px]">
-        <p className="text-center text-primary text-3xl font-black">
+        <p className="text-center text-color-black text-3xl font-black">
           Book an Appointment
         </p>
         <p className="text-center text-body-color">
@@ -163,15 +163,30 @@ export default function Page({ params }: pageProps) {
               ))}
             </select>
           </div>
-          <div>
+          <div className="mt-6">
             <label className="text-base text-body-color ">Doctor Name</label>
-            <select className="text-field-normal" onChange={handleDoctorChange}>
-              {doctors.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.attributes.fullName}
+            {doctors.length != 0 ? (
+              <select
+                className="text-field-normal"
+                onChange={handleDoctorChange}
+              >
+                {doctors.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.attributes.fullName}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <select
+                className="text-field-normal"
+                disabled
+                onChange={handleDoctorChange}
+              >
+                <option value="No doctors available">
+                  No doctors available
                 </option>
-              ))}
-            </select>
+              </select>
+            )}
           </div>
           <div className="mt-6">
             <label className="text-base text-body-color ">Condition</label>

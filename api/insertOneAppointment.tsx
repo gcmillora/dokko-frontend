@@ -53,6 +53,8 @@ export const insertOneAppointment = async (
             uid: $uid
             notes: $notes
             generalPurpose: $generalPurpose
+            report_generated: false
+            status: false
           }
         ) {
           data {
@@ -77,7 +79,7 @@ export const insertOneAppointment = async (
               }
               appointmentDate
               typeOfVisit
-              active
+              status
               condition
             }
           }
