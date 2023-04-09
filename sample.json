@@ -1,0 +1,19 @@
+{
+  "data": {
+    "id": 1,
+    "attributes": {
+      "patientName": "Juan Dela Cruz",
+      "age": "24",
+      "sex": "Male",
+
+      "doctorName": "Doctor Basilyo",
+      "specialty": "General Physician",
+      "diagnosis": "Test diagnosis",
+      "appointmentDate": "2018-01-01",
+      "email": "basilyo@test.com",
+      "contact": "09123456789",
+      "notes": "Test notes",
+      "prescription": "Test prescription"
+    }
+  }
+}

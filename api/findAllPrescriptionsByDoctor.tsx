@@ -10,6 +10,7 @@ export const findAllPrescriptionsByDoctor = async (
     uri: 'http://127.0.0.1:1337/graphql',
     cache: new InMemoryCache(),
   });
+  console.log(page);
   const { data } = await client.query({
     variables: {
       uid: doctor_id,
@@ -41,6 +42,19 @@ export const findAllPrescriptionsByDoctor = async (
                   }
                 }
               }
+              prescription
+              diagnosis
+              notes
+              appointment {
+                data {
+                  attributes {
+                    uid
+                    appointmentDate
+                    condition
+                    typeOfVisit
+                  }
+                }
+              }
             }
           }
           meta {
@@ -48,12 +62,10 @@ export const findAllPrescriptionsByDoctor = async (
               total
             }
           }
-          diagnosis
-          prescription
         }
       }
     `,
   });
-
+  console.log(data);
   return data;
 };

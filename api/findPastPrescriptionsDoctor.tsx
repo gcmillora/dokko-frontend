@@ -1,0 +1,66 @@
+//find past prescriptions of doctor using graphql limit 5
+
+import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
+
+export const findPastPrescriptionsDoctor = async (
+  doctor_id: string,
+  jwtToken: string
+) => {
+  const client = new ApolloClient({
+    uri: 'http://127.0.0.1:1337/graphql',
+    cache: new InMemoryCache(),
+    headers: {
+      Authorization: `Bearer ${jwtToken}`,
+    },
+  });
+
+  const { data } = await client.query({
+    variables: {
+      uid: doctor_id,
+    },
+    query: gql`
+      query ($uid: String!) {
+        prescriptions(
+          filters: { doctor: { uid: { eq: $uid } } }
+          pagination: { limit: 5 }
+        ) {
+          data {
+            id
+            attributes {
+              uid
+              patient {
+                data {
+                  attributes {
+                    uid
+                    fullName
+                  }
+                }
+              }
+              doctor {
+                data {
+                  attributes {
+                    uid
+                    fullName
+                  }
+                }
+              }
+              appointment {
+                data {
+                  attributes {
+                    uid
+                    appointmentDate
+                    condition
+                    typeOfVisit
+                  }
+                }
+              }
+              prescription
+            }
+          }
+        }
+      }
+    `,
+  });
+  console.log(data);
+  return data;
+};

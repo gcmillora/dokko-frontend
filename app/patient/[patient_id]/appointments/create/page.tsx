@@ -9,6 +9,8 @@ import { findDoctors } from '../../../../../api/findDoctors';
 import { findOnePatient } from '../../../../../api/findOnePatient';
 import { insertOneAppointment } from '../../../../../api/insertOneAppointment';
 import { findAllAppointmentsByDoctor } from '../../../../../api/findAllAppointmentsByDoctor';
+import showToastMessage from '../../../../../utils/error';
+import { ToastContainer } from 'react-toastify';
 
 interface pageProps {
   params: { patient_id: string };
@@ -45,6 +47,7 @@ export default function Page({ params }: pageProps) {
     if (jwtToken) {
       findDoctors(jwtToken, selectedSpecialty).then((data) => {
         setDoctors(data.doctors.data);
+        console.log('data: ', data);
         setSelectedDoctor(data.doctors.data[0]);
       });
       findOnePatient(params.patient_id).then((data) => {
@@ -63,6 +66,11 @@ export default function Page({ params }: pageProps) {
       });
     }
   }, [selectedDoctor]);
+
+  useEffect(() => {
+    setExcludedTimes(getExcludedTime(new Date()));
+    console.log('excludedTime: ', excludedTimes);
+  }, []);
 
   //update excluded times when date changes
   useEffect(() => {
@@ -107,7 +115,8 @@ export default function Page({ params }: pageProps) {
   };
 
   const handleDoctorChange = (e: any) => {
-    setSelectedDoctor(e.target.value);
+    const doctor = doctors.find((doctor) => doctor.id === e.target.value);
+    setSelectedDoctor(doctor);
   };
 
   const insertAppointment = async (e: any) => {
@@ -131,12 +140,15 @@ export default function Page({ params }: pageProps) {
       data.notes,
       data.generalPurpose
     );
+    console.log('response: ', response);
+    showToastMessage('success', 'Appointment booked successfully.');
+    setStartDate(new Date());
   };
 
   return (
-    <div className="items-center flex flex-row justify-center py-24">
+    <div className="flex flex-row justify-center py-16">
       <div className="w-[524px]">
-        <p className="text-center text-primary text-3xl font-bold">
+        <p className="text-center text-color-black text-3xl font-black">
           Book an Appointment
         </p>
         <p className="text-center text-body-color">
@@ -153,15 +165,30 @@ export default function Page({ params }: pageProps) {
               ))}
             </select>
           </div>
-          <div>
+          <div className="mt-6">
             <label className="text-base text-body-color ">Doctor Name</label>
-            <select className="text-field-normal" onChange={handleDoctorChange}>
-              {doctors.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.attributes.fullName}
+            {doctors.length != 0 ? (
+              <select
+                className="text-field-normal"
+                onChange={handleDoctorChange}
+              >
+                {doctors.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.attributes.fullName}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <select
+                className="text-field-normal"
+                disabled
+                onChange={handleDoctorChange}
+              >
+                <option value="No doctors available">
+                  No doctors available
                 </option>
-              ))}
-            </select>
+              </select>
+            )}
           </div>
           <div className="mt-6">
             <label className="text-base text-body-color ">Condition</label>
@@ -223,6 +250,7 @@ export default function Page({ params }: pageProps) {
           <button className="continue-button" onClick={insertAppointment}>
             Book
           </button>
+          <ToastContainer />
         </div>
       </div>
     </div>

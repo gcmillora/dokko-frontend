@@ -10,32 +10,32 @@ export default function PastAppointmentsTable({ data }: any) {
           <table className="w-full table-auto rounded-lg">
             <thead>
               <tr className="border-b border-stroke">
-                <th className="min-w-[260px] py-5 pr-4 pl-9">
+                <th className="min-w-[200px] py-5 pr-4 pl-9">
                   <p className="text-left text-base font-medium text-black">
                     Doctor
                   </p>
                 </th>
-                <th className="min-w-[260px] py-5 px-4">
+                <th className="min-w-[200px] py-5 px-4">
                   <p className="text-left text-base font-medium text-black">
                     Specialty
                   </p>
                 </th>
-                <th className="min-w-[160px] py-5 px-4">
+                <th className="min-w-[140px] py-5 px-4">
                   <p className="text-left text-base font-medium text-black">
                     Date
                   </p>
                 </th>
-                <th className="min-w-[170px] py-5 px-4">
+                <th className="min-w-[140px] py-5 px-4">
                   <p className="text-left text-base font-medium text-black">
                     Condition
                   </p>
                 </th>
-                <th className="min-w-[150px] py-5 px-4">
+                <th className="min-w-[100px] py-5 px-4">
                   <p className="text-left text-base font-medium text-black">
                     Prescription
                   </p>
                 </th>
-                <th className="min-w-[200px] py-5 pl-4 pr-9">
+                <th className="min-w-[100px] py-5 pl-4 pr-9">
                   <p className="text-right text-base font-medium text-black"></p>
                 </th>
               </tr>

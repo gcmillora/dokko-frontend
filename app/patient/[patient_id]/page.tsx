@@ -54,20 +54,20 @@ export default function Page({ params }: pageProps) {
         <p className="text-4xl font-black">Welcome, {patient.fullName}</p>
         <p className="text-body-color">{patient.address}</p>
         <div className="flex flex-row">
-          <div className="mt-6">
+          <div className="mt-4">
             <div className="grid grid-cols-3 gap-12">
-              <div className="w-90">
+              <div className="w-full h-full">
                 <p className="text-xl font-semibold py-4">Prescriptions</p>
                 <PrescriptionCard data={prescriptions} />
               </div>
-              <div className="w-90">
+              <div className="w-full">
                 <p className="text-xl font-semibold py-4 w-96">
                   Upcoming Appointments
                 </p>
 
                 <AppointmentCard data={upcomingApp} />
               </div>
-              <div>
+              <div className="w-full h-full">
                 <p className="text-xl font-semibold py-4">Book Appointment</p>
                 <CreateAppointmentCard patient_id={params.patient_id} />
               </div>

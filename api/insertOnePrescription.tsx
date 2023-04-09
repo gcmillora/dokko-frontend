@@ -10,16 +10,15 @@ export const insertOnePrescription = async (
   prescription: string,
   status: boolean,
   appointment_id: string,
-  notes: string
+  notes: string,
+  diagnosis: string
 ) => {
   const uid = uuid();
   const client = new ApolloClient({
     uri: 'http://127.0.0.1:1337/graphql',
     cache: new InMemoryCache(),
-    headers: {
-      Authorization: `Bearer ${jwtToken}`,
-    },
   });
+
   const { data } = await client.mutate({
     variables: {
       uid: uid,
@@ -29,6 +28,7 @@ export const insertOnePrescription = async (
       status: status,
       appointment_id: appointment_id,
       notes: notes,
+      diagnosis: diagnosis,
     },
     mutation: gql`
       mutation (
@@ -39,6 +39,7 @@ export const insertOnePrescription = async (
         $status: Boolean!
         $appointment_id: ID!
         $notes: String
+        $diagnosis: String
       ) {
         createPrescription(
           data: {
@@ -49,23 +50,15 @@ export const insertOnePrescription = async (
             status: $status
             appointment: $appointment_id
             notes: $notes
+            diagnosis: $diagnosis
           }
         ) {
           data {
             id
             attributes {
               uid
-              patient {
-                id
-              }
-              doctor {
-                id
-              }
               prescription
               status
-              appointment {
-                id
-              }
               notes
             }
           }

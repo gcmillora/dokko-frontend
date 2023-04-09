@@ -11,7 +11,7 @@ export default function AppointmentCard({ data }: any) {
     return (
       <div className="mx-auto">
         <div>
-          <div className="flex items-center border-stroke min-h-[358px] max-w-[370px] border bg-white py-[10px]">
+          <div className="flex items-center border-stroke min-h-[358px]  border bg-white py-[10px]">
             <div className="w-full">
               <p className="text-base font-medium text-body-color text-center">
                 No upcoming appointments
@@ -24,7 +24,7 @@ export default function AppointmentCard({ data }: any) {
   return (
     <div className="mx-auto">
       <div>
-        <div className="border-stroke min-h-[358px] max-w-[370px] border bg-white py-[10px]">
+        <div className="border-stroke min-h-[358px] border bg-white py-[10px]">
           {data.map((item: any) => {
             return (
               <div

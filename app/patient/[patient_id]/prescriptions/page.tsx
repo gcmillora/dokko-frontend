@@ -20,7 +20,7 @@ export default function Page({ params }: pageProps) {
   useEffect(() => {
     findAllPrescriptions(params.patient_id, page).then((data) => {
       setPrescriptions(data.prescriptions.data);
-      setCount(data.prescriptions.count);
+      setCount(data.prescriptions.meta.total);
     });
   }, [page]);
 
@@ -56,7 +56,7 @@ export default function Page({ params }: pageProps) {
         </div>
       </div>
       <div className="rounded-lg bg-white mt-12 border-form-stroke border">
-        <div className="max-w-full overflow-x-auto">
+        <div className="max-w-full overflow-x-auto min-h-[520px]">
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-[#F6F8FB]">
