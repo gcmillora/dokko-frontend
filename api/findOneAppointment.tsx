@@ -30,6 +30,7 @@ export const findOneAppointment = async (
                   attributes {
                     uid
                     fullName
+                    meeting_token
                   }
                 }
               }
@@ -39,6 +40,7 @@ export const findOneAppointment = async (
                   attributes {
                     uid
                     fullName
+                    meeting_token
                   }
                 }
               }
