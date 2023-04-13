@@ -27,11 +27,15 @@ export default function Page({ params }: pageProps) {
   return (
     <div className="px-16 mt-24">
       <div className="border-stroke border-b flex flex-row justify-between">
-        <div className="w-3/4">
-          <p className="mb-2 text-2xl font-semibold text-black">Appointments</p>
-          <p className="text-body-color mb-6 text-sm font-medium">
-            List of all your appointments with your doctors.
-          </p>
+        <div className="flex flex-row">
+          <div className="w-3/4">
+            <p className="mb-2 text-2xl font-semibold text-black">
+              Appointments
+            </p>
+            <p className="text-body-color mb-6 text-sm font-medium">
+              List of all your appointments with your doctors.
+            </p>
+          </div>
         </div>
         <div>
           <Link
@@ -93,7 +97,7 @@ export default function Page({ params }: pageProps) {
 
                 <th className="min-w-[150px] py-6 pl-4 pr-10">
                   <p className="text-right text-base font-medium text-body-color">
-                    Prescription
+                    Action
                   </p>
                 </th>
               </tr>
@@ -142,16 +146,12 @@ export default function Page({ params }: pageProps) {
                     )}
                   </td>
                   <td className="py-5 px-4">
-                    {appointment.attributes.prescription ? (
-                      <Link
-                        href={`/patient/${params.patient_id}/prescription/${appointment.attributes.prescription.data.attributes.uid}`}
-                        className="text-primary text-base font-medium"
-                      >
-                        View
-                      </Link>
-                    ) : (
-                      <p className="text-base text-body-color">-</p>
-                    )}
+                    <Link
+                      href={`/patient/${params.patient_id}/appointments/${appointment.attributes.uid}`}
+                      className="text-primary text-base font-medium"
+                    >
+                      View
+                    </Link>
                   </td>
                 </tr>
               ))}

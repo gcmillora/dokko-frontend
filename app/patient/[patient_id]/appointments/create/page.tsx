@@ -63,6 +63,7 @@ export default function Page({ params }: pageProps) {
         jwtToken
       ).then((data) => {
         setAppointmentsBooked(data.appointments.data);
+        console.log('these are app: ', data.appointments.data);
       });
     }
   }, [selectedDoctor]);
@@ -70,12 +71,12 @@ export default function Page({ params }: pageProps) {
   useEffect(() => {
     setExcludedTimes(getExcludedTime(new Date()));
     console.log('excludedTime: ', excludedTimes);
-  }, []);
+  }, [selectedDoctor, startDate]);
 
   //update excluded times when date changes
   useEffect(() => {
     setExcludedTimes(getExcludedTime(startDate));
-  }, [startDate]);
+  }, [selectedDoctor, startDate]);
 
   const getExcludedDates = () => {
     const excludedDates: Date[] = [];
@@ -146,15 +147,17 @@ export default function Page({ params }: pageProps) {
   };
 
   return (
-    <div className="flex flex-row justify-center py-16">
-      <div className="w-[524px]">
+    <div className="flex flex-col justify-center py-16 px-24">
+      <div className="w-full ">
         <p className="text-center text-color-black text-3xl font-black">
           Book an Appointment
         </p>
         <p className="text-center text-body-color">
           Please fill-in all the details with *.
         </p>
-        <div className="mt-6">
+      </div>
+      <div className="grid grid-cols-2 w-full gap-8">
+        <div className="">
           <div className="mt-6">
             <label className="text-base text-body-color ">Specialty</label>
             <select className="text-field-normal" onChange={handleChange}>
@@ -224,6 +227,8 @@ export default function Page({ params }: pageProps) {
               onChange={(e) => setTypeOfVisit(e.target.value)}
             />
           </div>
+        </div>
+        <div>
           <div className="mt-6">
             <label className="text-base text-body-color ">
               General Purpose
@@ -246,12 +251,12 @@ export default function Page({ params }: pageProps) {
             />
           </div>
         </div>
-        <div className="mt-12">
-          <button className="continue-button" onClick={insertAppointment}>
-            Book
-          </button>
-          <ToastContainer />
-        </div>
+      </div>
+      <div className="mt-12">
+        <button className="continue-button" onClick={insertAppointment}>
+          Book
+        </button>
+        <ToastContainer />
       </div>
     </div>
   );

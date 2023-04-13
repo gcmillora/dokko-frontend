@@ -25,8 +25,8 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <section className="h-full bg-white">
-      <div className="flex h-full min-h-screen w-full flex-col justify-between overflow-y-auto bg-primary">
+    <section x-data="{openDropDown: false}" className="h-full w-full bg-gray-2">
+      <div className="flex h-full max-h-full w-full flex-col justify-between overflow-y-scroll bg-white shadow-card">
         <div>
           <div className="p-10 pb-9">
             <a href="javascript:void(0)" className="block">
