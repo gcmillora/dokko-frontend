@@ -30,7 +30,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "app/patient/[patient_id]/loading.js"  ],
   "exclude": [
     "node_modules"
   ]

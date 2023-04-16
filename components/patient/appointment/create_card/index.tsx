@@ -49,13 +49,13 @@ export default function CreateAppointmentCard({ patient_id }: any) {
           />
         </svg>
       </div>
-      <h4 className="xs:text-2xl mb-3 text-xl font-bold text-black md:text-xl lg:text-2xl">
+      <h4 className="xs:text-2xl mb-3 text-xl md:text-xl lg:text-2xl">
         Create an <br />
         Appointment
       </h4>
       <p className="text-body-color mb-8 text-base font-medium"></p>
       <div className="flex items-center justify-center space-x-4">
-        <button className="bg-primary xs:px-8 inline-flex items-center justify-center rounded-md py-[10px] px-5 text-center text-base font-semibold text-white hover:bg-opacity-90">
+        <button className="border border-stroke  xs:px-8 inline-flex items-center justify-center rounded-md py-[10px] px-5 text-center text-base  hover:bg-primary hover:text-white">
           <Link href={`/patient/${patient_id}/appointments/create`}>
             Create
           </Link>

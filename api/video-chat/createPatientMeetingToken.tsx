@@ -1,8 +1,8 @@
 import { updatePatientMeetingToken } from './updatePatientMeetingToken';
 
 export const createPatientMeetingToken = async (
-  patientID: string,
   doctorUID: string,
+  appointmentID: string,
   appointmentDate: Date
 ) => {
   const data = fetch('https://api.daily.co/v1/meeting-tokens', {
@@ -23,7 +23,7 @@ export const createPatientMeetingToken = async (
     .then((data) => {
       console.log('Success:', data);
       console.log(data.token);
-      updatePatientMeetingToken(data.token, patientID);
+      updatePatientMeetingToken(data.token, appointmentID);
     })
     .catch((error) => {
       console.error('Error:', error);

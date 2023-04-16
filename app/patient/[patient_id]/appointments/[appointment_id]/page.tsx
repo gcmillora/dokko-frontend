@@ -47,7 +47,7 @@ export default function Page({ params }: pageProps) {
   }, []);
 
   const redirectToRoom = () => {
-    window.location.href = `https://dokko.daily.co/${appointment.attributes.doctor.data.attributes.uid}?t=${appointment.attributes.patient.data.attributes.meeting_token}`;
+    window.location.href = `https://dokko.daily.co/${appointment.attributes.doctor.data.attributes.uid}?t=${appointment.attributes.patient_tkn}`;
   };
 
   return (
@@ -104,6 +104,24 @@ export default function Page({ params }: pageProps) {
                     name="name"
                     value={
                       appointment?.attributes?.patient?.data?.attributes
+                        ?.fullName
+                    }
+                    className="text-field-normal"
+                    disabled
+                  ></input>
+                </div>
+                <div className="w-1/2 mt-4">
+                  <label
+                    htmlFor="name"
+                    className="text-body-color text-base font-medium mb-2"
+                  >
+                    Doctor Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={
+                      appointment?.attributes?.doctor?.data?.attributes
                         ?.fullName
                     }
                     className="text-field-normal"

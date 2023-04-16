@@ -41,8 +41,8 @@ export default function Page({ params }: pageProps) {
     showToastMessage('success', 'Appointment approved.');
     if (appointment.attributes.typeOfVisit === 'Virtual')
       createPatientMeetingToken(
-        appointment.attributes.patient.data.id,
         appointment.attributes.doctor.data.attributes.uid,
+        appointment.id,
         appointment.attributes.appointmentDate
       );
   };

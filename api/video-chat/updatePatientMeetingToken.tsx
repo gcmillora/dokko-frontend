@@ -2,7 +2,7 @@ import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 
 export const updatePatientMeetingToken = async (
   token: string,
-  patientID: string
+  appointmentID: string
 ) => {
   const client = new ApolloClient({
     uri: 'http://127.0.0.1:1337/graphql',
@@ -10,21 +10,21 @@ export const updatePatientMeetingToken = async (
   });
 
   console.log('updating patient meeting token');
-  console.log(patientID);
+  console.log(appointmentID);
 
   const { data } = await client.mutate({
     variables: {
-      id: patientID,
+      id: appointmentID,
       meeting_token: token,
     },
     mutation: gql`
       mutation ($id: ID!, $meeting_token: String!) {
-        updatePatient(id: $id, data: { meeting_token: $meeting_token }) {
+        updateAppointment(id: $id, data: { patient_tkn: $meeting_token }) {
           data {
             id
             attributes {
               uid
-              meeting_token
+              patient_tkn
             }
           }
         }

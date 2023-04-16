@@ -18,7 +18,38 @@ export default function Page({ params }: pageProps) {
   const [bloodtype, setBloodtype] = useState('A');
   const [allergies, setAllergies] = useState('');
   const [medicalRecord, setMedicalRecord] = useState<any>();
+  const [file, setFile] = useState<File>();
 
+  const handleFileChange = (e: any) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const uploadProfile = async (e: any) => {
+    if (file) {
+      var formdata = new FormData();
+      formdata.append('ref', 'api::patient.patient');
+      formdata.append('refId', '3');
+      formdata.append('field', 'profilepicture');
+      formdata.append('files', file, file?.name);
+
+      var requestOptions = {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow',
+      };
+
+      fetch('http://localhost:1337/api/upload', {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow',
+      })
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log('error', error));
+    } else alert('No file');
+  };
   const saveMedicalRecord = async (e: any) => {
     //save medical record using graphl
     e.preventDefault();

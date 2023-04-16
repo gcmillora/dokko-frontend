@@ -74,7 +74,7 @@ export default function Page({ params }: pageProps) {
                 </th>
                 <th className="min-w-[150px] py-6 px-4">
                   <p className="text-left text-base font-medium text-body-color">
-                    Specialty
+                    Condition
                   </p>
                 </th>
                 <th className="min-w-[250px] py-6 px-4">
@@ -116,10 +116,7 @@ export default function Page({ params }: pageProps) {
                   </td>
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
-                      {
-                        appointment?.attributes?.doctor?.data?.attributes
-                          ?.specialty
-                      }
+                      {appointment?.attributes?.condition}
                     </p>
                   </td>
                   <td className="py-5 px-4">
@@ -135,7 +132,7 @@ export default function Page({ params }: pageProps) {
                     </p>
                   </td>
                   <td className="py-5 px-4">
-                    {appointment.attributes.active ? (
+                    {appointment.attributes.status ? (
                       <span className="inline-flex h-8 items-center justify-center rounded bg-[#42B757] px-5 text-base text-white">
                         Accepted
                       </span>

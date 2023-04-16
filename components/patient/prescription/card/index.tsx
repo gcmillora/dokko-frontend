@@ -11,21 +11,21 @@ export default function PrescriptionCard({ data }: any) {
   return (
     <div className="mx-auto">
       <div>
-        <div className="border-stroke min-h-[358px] max-w-[370px] border bg-white py-[10px]">
+        <div className="border-stroke rounded-lg min-h-[358px] overflow-auto max-h-[358px] max-w-[370px] border bg-white">
+          <p className="text-base px-4 pt-4">Prescriptions</p>
           {data.map((item: any) => {
             return (
               <div
                 key={item.id}
-                className="flex items-center justify-between py-[18px] pl-8 pr-8 hover:bg-[#F5F5F5]"
+                className="flex items-center justify-between p-4 hover:bg-[#F5F5F5] border border-stroke rounded-md m-2 "
               >
                 <div className="flex items-center">
                   <div>
                     <h4 className="text-base font-medium text-black">
                       {item.attributes.doctor.data.attributes.fullName}
                     </h4>
-                    <p className="text-body-color text-base">
-                      {item.attributes.doctor.data.attributes.specialty ||
-                        'Digital marketer'}
+                    <p className="text-body-color text-xs">
+                      {item.attributes.condition}
                     </p>
                   </div>
                 </div>

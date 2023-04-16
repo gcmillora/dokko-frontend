@@ -51,6 +51,7 @@ export const findOneAppointment = async (
               condition
               generalPurpose
               notes
+              patient_tkn
             }
           }
         }
