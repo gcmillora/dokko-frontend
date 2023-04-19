@@ -1,4 +1,5 @@
 export type Patient = {
+  profilepicture: any;
   uid: string;
   fullName: string;
   email: string;

@@ -5,6 +5,10 @@
   @apply border-form-stroke text-base focus:outline-none focus:border-blue-200 focus:ring-1 focus:ring-blue-500 w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default border;
 }
 
+.text-field-slim {
+  @apply border-form-stroke text-base focus:outline-none focus:border-blue-200 focus:ring-1 focus:ring-blue-500 w-full rounded-lg border-[1.5px] py-1 px-3 font-medium outline-none transition disabled:cursor-default border;
+}
+
 .text-area-normal {
   @apply border-form-stroke text-base focus:outline-none focus:border-blue-200 focus:ring-1 focus:ring-blue-500 w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default;
 }
@@ -34,7 +38,7 @@
 }
 
 .decline-button {
-  @apply w-full bg-[#F87171] inline-flex items-center justify-center rounded-md py-4 px-8 text-center text-base font-normal text-white hover:bg-opacity-90;
+  @apply w-full bg-red-500 inline-flex items-center justify-center rounded-md py-4 px-8 text-center text-base font-normal text-white hover:bg-opacity-90;
 }
 
 .dropdown-input {

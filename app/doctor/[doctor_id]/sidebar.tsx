@@ -31,7 +31,7 @@ export default function Sidebar() {
           <div className="p-10 pb-9">
             <a href="javascript:void(0)" className="block">
               <img
-                src="https://res.cloudinary.com/ddfbgrq44/image/upload/v1669311884/dokko-white_xmz8y3.png"
+                src="doctor?.profilepicture.data.attributes.url"
                 alt="logo"
                 style={{ width: '40px', height: '40px' }}
               />

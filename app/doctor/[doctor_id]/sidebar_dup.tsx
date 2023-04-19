@@ -31,7 +31,7 @@ export default function Sidebar_dup() {
           <div className="flex items-center p-8">
             <div className="mr-4 h-[50px] w-full max-w-[50px] rounded-full">
               <img
-                src="https://cdn.tailgrids.com/2.0/image/assets/images/avatar/image-05.jpg"
+                src={doctor?.profilepicture.data.attributes.url}
                 alt="profile"
                 className="h-full w-full rounded-full object-cover object-center"
               />
