@@ -7,6 +7,9 @@ import { insertPrescriptionDoctor } from '../../../../../api/insertPrescriptionD
 import { updateOneAppointment } from '../../../../../api/updateOneAppointment';
 import { searchPrescription } from '../../../../../api/searchPrescription';
 import showToastMessage from '../../../../../utils/error';
+import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
+import { updatePatientMeetingToken } from '../../../../../api/video-chat/updatePatientMeetingToken';
+import { createPatientMeetingToken } from '../../../../../api/video-chat/createPatientMeetingToken';
 
 interface pageProps {
   params: {
@@ -19,60 +22,6 @@ export default function Page({ params }: pageProps) {
   const [appointment, setAppointment] = useState<any>();
   const jwtToken = localStorage.getItem('jwtToken') || '';
   const [exist, setExist] = useState(false);
-  const [roomName, setRoomName] = useState('test12345');
-  const roomProperties = {
-    name: roomName,
-    privacy: 'private',
-    properties: {
-      start_audio_off: true,
-      start_video_off: true,
-    },
-  };
-
-  const joinRoom = async (name: String) => {
-    //call api curl
-    console.log('create token');
-    console.log(name);
-    const data = fetch('https://api.daily.co/v1/meeting-tokens', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer 31b1e44009c810a075699272ddcbc6d9544cadd81244a1f7d6a22a0d1db55950`,
-      },
-      body: JSON.stringify({
-        properties: {
-          room_name: roomName,
-          user_name: 'doctor',
-        },
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data);
-      });
-  };
-
-  const createRoom = async () => {
-    //call api curl
-    console.log('create room');
-    const data = fetch('https://api.daily.co/v1/rooms/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer 31b1e44009c810a075699272ddcbc6d9544cadd81244a1f7d6a22a0d1db55950`,
-      },
-      body: JSON.stringify(roomProperties),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data);
-        joinRoom(data.url);
-        window.open(data.url, '_blank');
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
 
   const approveAppointment = async (e: any) => {
     //save medical record using graphl
@@ -90,7 +39,12 @@ export default function Page({ params }: pageProps) {
     const response = await updateOneAppointment(appointment.id, jwtToken, data);
     console.log(response);
     showToastMessage('success', 'Appointment approved.');
-    createRoom();
+    if (appointment.attributes.typeOfVisit === 'Virtual')
+      createPatientMeetingToken(
+        appointment.attributes.doctor.data.attributes.uid,
+        appointment.id,
+        appointment.attributes.appointmentDate
+      );
   };
 
   const declineAppointment = async (e: any) => {
@@ -161,6 +115,10 @@ export default function Page({ params }: pageProps) {
   //   });
   // };
 
+  const redirectToRoom = () => {
+    window.location.href = `https://dokko.daily.co/${appointment.attributes.doctor.data.attributes.uid}?t=${appointment.attributes.doctor.data.attributes.meeting_token}`;
+  };
+
   return (
     <div>
       <div className="px-16 mt-16">
@@ -178,10 +136,10 @@ export default function Page({ params }: pageProps) {
           <div className="w-1/4 ">
             <button
               className={exist ? 'disabled-button' : 'continue-button'}
-              //onClick={createPrescription}
+              onClick={redirectToRoom}
               disabled={exist ? true : false}
             >
-              Create Report
+              Open Virtual Room
             </button>
           </div>
         </div>

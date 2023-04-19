@@ -25,13 +25,13 @@ export default function Sidebar_dup() {
   }, []);
 
   return (
-    <section x-data="{openDropDown: false}" className="h-screen bg-gray-2">
-      <div className="flex h-screen w-full max-w-[280px] flex-col justify-between overflow-y-scroll bg-white shadow-card">
+    <section x-data="{openDropDown: false}" className="h-full w-full bg-gray-2">
+      <div className="flex h-full max-h-full w-full flex-col justify-between overflow-y-scroll bg-white shadow-card">
         <div>
           <div className="flex items-center p-8">
             <div className="mr-4 h-[50px] w-full max-w-[50px] rounded-full">
               <img
-                src="https://cdn.tailgrids.com/2.0/image/assets/images/avatar/image-05.jpg"
+                src={doctor?.profilepicture.data.attributes.url}
                 alt="profile"
                 className="h-full w-full rounded-full object-cover object-center"
               />
@@ -160,6 +160,34 @@ export default function Sidebar_dup() {
                       </span>
                       Messages
                     </span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    //go to daily co room
+                    href={`https://dokko.daily.co/${uid}?t=${doctor?.meeting_token}`}
+                    className="relative mb-[2px] flex items-center rounded py-[10px] px-4 text-base font-medium text-body-color duration-200 hover:bg-primary hover:text-white"
+                  >
+                    <span className="pr-[10px]">
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        className="fill-current"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M6.6877 1.82327C6.85337 2.20291 6.67991 2.64497 6.30027 2.81064C5.28972 3.25163 4.40257 3.93345 3.7164 4.79651C3.03023 5.65956 2.56593 6.67756 2.36408 7.76151C2.16223 8.84546 2.22898 9.96236 2.5585 11.0146C2.88802 12.0667 3.47028 13.0222 4.25436 13.7974C5.03844 14.5726 6.00048 15.1439 7.05637 15.4613C8.11226 15.7788 9.22984 15.8328 10.3114 15.6186C11.393 15.4044 12.4056 14.9285 13.2608 14.2325C14.116 13.5365 14.7876 12.6417 15.217 11.6261C15.3783 11.2446 15.8184 11.0661 16.1999 11.2275C16.5814 11.3888 16.7599 11.8288 16.5986 12.2103C16.0737 13.4515 15.2528 14.5453 14.2076 15.3959C13.1624 16.2466 11.9248 16.8282 10.6028 17.09C9.28092 17.3518 7.91498 17.2859 6.62445 16.8978C5.33393 16.5098 4.1581 15.8115 3.19977 14.8641C2.24145 13.9166 1.5298 12.7489 1.12706 11.4628C0.724309 10.1768 0.642721 8.81174 0.889426 7.48691C1.13613 6.16208 1.70362 4.91786 2.54227 3.86301C3.38092 2.80817 4.46521 1.97482 5.70033 1.43584C6.07997 1.27017 6.52203 1.44363 6.6877 1.82327Z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M8.46967 0.96967C8.61032 0.829018 8.80109 0.75 9 0.75C10.0834 0.75 11.1562 0.963393 12.1571 1.37799C13.1581 1.7926 14.0675 2.40029 14.8336 3.16637C15.5997 3.93245 16.2074 4.84192 16.622 5.84286C17.0366 6.8438 17.25 7.91659 17.25 9C17.25 9.41421 16.9142 9.75 16.5 9.75H9C8.58579 9.75 8.25 9.41421 8.25 9V1.5C8.25 1.30109 8.32902 1.11032 8.46967 0.96967ZM9.75 2.2918V8.25H15.7082C15.6379 7.62106 15.4793 7.00387 15.2362 6.41689C14.897 5.59794 14.3998 4.85382 13.773 4.22703C13.1462 3.60023 12.4021 3.10303 11.5831 2.76381C10.9961 2.52068 10.3789 2.36211 9.75 2.2918Z"
+                        />
+                      </svg>
+                    </span>
+                    Virtual Room
                   </a>
                 </li>
               </ul>

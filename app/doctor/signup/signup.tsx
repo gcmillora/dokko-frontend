@@ -62,10 +62,12 @@ export default function DoctorSignup() {
       }),
     })
       .then((response) => response.json())
-      .then((data) => {
+      .then(async (data) => {
         console.log('Success:', data);
         console.log(data.token);
+        createDoctor(data.token);
         setToken(data.token);
+        const res = await createDoctor(data.token);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -92,7 +94,7 @@ export default function DoctorSignup() {
       });
   };
 
-  const createDoctor = async () => {
+  const createDoctor = async (token: string) => {
     const doctor: CreateDoctorInput = {
       fullName: fullName,
       email: email,
@@ -101,7 +103,6 @@ export default function DoctorSignup() {
       specialty: specialty,
     };
     console.log(uid);
-    console.log(token);
     const client = new ApolloClient({
       uri: 'http://127.0.0.1:1337/graphql',
       cache: new InMemoryCache(),
@@ -176,8 +177,7 @@ export default function DoctorSignup() {
         localStorage.setItem('jwtToken', response.data.jwt);
         showToastMessage('success', 'Doctor created successfully');
         const room = await createRoom();
-        const token = await createMeetingToken();
-        const res = await createDoctor();
+        const tk = await createMeetingToken();
 
         setTimeout(() => {
           router.push('/signin');

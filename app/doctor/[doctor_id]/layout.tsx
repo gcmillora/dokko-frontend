@@ -11,11 +11,11 @@ export default function RootLayout({
 }) {
   return (
     <main className="">
-      <div className="grid grid-cols-4 w-full h-full">
-        <div className="col-span-1">
+      <div className="grid grid-cols-5 w-full h-screen">
+        <div className="col-span-1 h-full">
           <Sidebar_dup />
         </div>
-        <div className="col-span-3">{children}</div>
+        <div className="col-span-4">{children}</div>
       </div>
     </main>
   );

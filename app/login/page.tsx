@@ -6,6 +6,7 @@ import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 import { useRouter } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
 import showToastMessage from '../../utils/error';
+import LoginForm from '../../components/forms/loginValidation';
 
 export default function Page() {
   const router = useRouter();
@@ -13,142 +14,15 @@ export default function Page() {
   const [emailInfo, setEmailInfo] = useState('');
   const [passwordInfo, setPasswordInfo] = useState('');
 
-  const findOneDoctor = async () => {
-    const client = new ApolloClient({
-      uri: 'http://127.0.0.1:1337/graphql',
-      cache: new InMemoryCache(),
-    });
-    const { data } = await client.query({
-      variables: {
-        email: emailInfo,
-      },
-      query: gql`
-        query ($email: String!) {
-          doctors(filters: { email: { eq: $email } }) {
-            data {
-              attributes {
-                uid
-                fullName
-                email
-              }
-            }
-          }
-        }
-      `,
-    });
-    console.log(data);
-    return data;
-  };
-  const findOnePatient = async () => {
-    const client = new ApolloClient({
-      uri: 'http://127.0.0.1:1337/graphql',
-      cache: new InMemoryCache(),
-    });
-    const { data } = await client.query({
-      variables: {
-        email: emailInfo,
-      },
-      query: gql`
-        query ($email: String!) {
-          patients(filters: { email: { eq: $email } }) {
-            data {
-              attributes {
-                uid
-                fullName
-                email
-              }
-            }
-          }
-        }
-      `,
-    });
-    console.log(data);
-    return data;
-  };
-
-  const Login = async (e: any) => {
-    e.preventDefault();
-    axios
-      .post('http://localhost:1337/api/auth/local', {
-        identifier: emailInfo,
-        password: passwordInfo,
-      })
-      .then(async (response) => {
-        console.log('User profile', response.data.user);
-        console.log('User token', response.data.jwt);
-        localStorage.setItem('jwtToken', response.data.jwt);
-        if (response.data.user.level === 'patient') {
-          const patient = await findOnePatient();
-
-          localStorage.setItem('uid', patient.patients.data[0].attributes.uid);
-          router.push(`/patient/${patient.patients.data[0].attributes.uid}`);
-        } else if (response.data.user.level === 'doctor') {
-          const doctor = await findOneDoctor();
-
-          localStorage.setItem('uid', doctor.doctors.data[0].attributes.uid);
-          router.push(`/doctor/${doctor.doctors.data[0].attributes.uid}`);
-        }
-      })
-      .catch((error) => {
-        console.log('An error occurred:', error.response);
-        showToastMessage('error', 'An error occurred!');
-      });
-  };
-
   return (
     <div className="bg-white mt-24" suppressHydrationWarning={true}>
       <div className="flex flex-wrap items-stretch">
         <div className="w-full lg:w-1/2">
           <div className="w-full py-14 px-6 sm:p-[70px] sm:px-12 xl:px-[90px]">
-            <h2 className="mb-10 text-[32px] font-bold text-dark">Sign In</h2>
-            <form>
-              <div className="mb-8 flex flex-col">
-                <div suppressHydrationWarning={true}>
-                  <label
-                    suppressHydrationWarning={true}
-                    className="mb-3 text-body-color"
-                    htmlFor="name"
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    suppressHydrationWarning={true}
-                    type="email"
-                    name="name"
-                    value={emailInfo}
-                    onChange={(e) => setEmailInfo(e.target.value)}
-                    className="text-field-normal"
-                  />
-                </div>
-                <div suppressHydrationWarning={true}>
-                  <label
-                    className="mb-3 text-body-color"
-                    htmlFor="name"
-                    suppressHydrationWarning={true}
-                  >
-                    Your Password
-                  </label>
-                  <input
-                    suppressHydrationWarning={true}
-                    type="password"
-                    name="name"
-                    value={passwordInfo}
-                    onChange={(e) => setPasswordInfo(e.target.value)}
-                    className="text-field-normal"
-                  />
-                </div>
-              </div>
-              <div className="mb-8">
-                <button
-                  onClick={Login}
-                  className="w-full cursor-pointer rounded-md border border-primary bg-primary py-3 px-[14px] text-white transition hover:bg-opacity-90"
-                >
-                  Sign In
-                </button>
-
-                <ToastContainer />
-              </div>
-            </form>
+            <div>
+              <p className="mb-10 text-[32px] font-bold text-dark">Sign In</p>
+              <LoginForm />
+            </div>
             <div className="flex flex-wrap justify-between">
               <a
                 href="javascript:void(0)"
@@ -156,23 +30,21 @@ export default function Page() {
               >
                 Forget Password?
               </a>
-              <p className="mb-2 text-base text-[#adadad]">
-                Not a member yet?
-                <a href="/signup" className="text-primary hover:underline">
-                  Sign Up
-                </a>
-              </p>
+              <p className="mb-2 text-base text-[#adadad]">Not a member yet?</p>
+              <a href="/signup" className="text-primary hover:underline">
+                Sign Up
+              </a>
             </div>
           </div>
         </div>
         <div className="w-full lg:w-1/2">
           <div className="relative h-full w-full overflow-hidden bg-primary">
             <div className="flex h-full items-end p-8 sm:p-14">
-              <h3 className="text-2xl font-bold text-white">
+              <p className="text-2xl font-bold text-white">
                 Hey <br />
                 Welcome <br />
                 Back
-              </h3>
+              </p>
               <div>
                 <span className="absolute left-0 top-0">
                   <svg

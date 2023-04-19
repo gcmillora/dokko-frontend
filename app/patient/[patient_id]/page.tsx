@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { uuid, isUuid } from 'uuidv4';
 import { findOnePatient } from '../../../api/findOnePatient';
 import { findPastAppointments } from '../../../api/findPastAppointmentsPatient';
@@ -12,6 +13,7 @@ import AppointmentCard from '../../../components/patient/appointment/card';
 import CreateAppointmentCard from '../../../components/patient/appointment/create_card';
 import PastAppointmentsTable from '../../../components/patient/appointment/past_appointments';
 import PrescriptionCard from '../../../components/patient/prescription/card';
+import showToastMessage from '../../../utils/error';
 
 import { Patient } from '../../../utils/types';
 import { validateUser } from '../../../utils/validateUser';
@@ -32,7 +34,12 @@ export default function Page({ params }: pageProps) {
   useEffect(() => {
     if (isUuid(params.patient_id)) {
       findOnePatient(params.patient_id).then((data) => {
-        setPatient(data.patients.data[0].attributes);
+        if (data.patients.data.length === 0) {
+          showToastMessage('error', 'Invalid Patient ID');
+          setTimeout(() => {
+            router.push('/login');
+          }, 2000);
+        } else setPatient(data.patients.data[0].attributes);
       });
       findPrescriptions(params.patient_id).then((data) => {
         setPrescriptions(data.prescriptions.data);
@@ -57,18 +64,12 @@ export default function Page({ params }: pageProps) {
           <div className="mt-4">
             <div className="grid grid-cols-3 gap-12">
               <div className="w-full h-full">
-                <p className="text-xl font-semibold py-4">Prescriptions</p>
                 <PrescriptionCard data={prescriptions} />
               </div>
               <div className="w-full">
-                <p className="text-xl font-semibold py-4 w-96">
-                  Upcoming Appointments
-                </p>
-
                 <AppointmentCard data={upcomingApp} />
               </div>
               <div className="w-full h-full">
-                <p className="text-xl font-semibold py-4">Book Appointment</p>
                 <CreateAppointmentCard patient_id={params.patient_id} />
               </div>
             </div>
@@ -83,6 +84,7 @@ export default function Page({ params }: pageProps) {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

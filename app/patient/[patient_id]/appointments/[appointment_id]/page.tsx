@@ -46,30 +46,45 @@ export default function Page({ params }: pageProps) {
     }
   }, []);
 
+  const redirectToRoom = () => {
+    window.location.href = `https://dokko.daily.co/${appointment.attributes.doctor.data.attributes.uid}?t=${appointment.attributes.patient_tkn}`;
+  };
+
   return (
     <div>
       <div className="px-16 mt-16">
         <div className="border-stroke border-b flex flex-row ">
-          <div className="w-3/4">
-            <p className="mb-2 text-2xl font-semibold text-black">
-              Appointment # {appointment?.id}
-            </p>
-            <p className="text-body-color mb-4 text-sm font-medium">
-              Details of the appointment with the patient, including the
-              condition and general purpose of the appointment.
-            </p>
-            <div>
-              <div
-                className={
-                  appointment?.attributes?.status === false
-                    ? 'text-body-color font-bold mb-2'
-                    : 'text-secondary font-semibold mb-2'
-                }
-              >
-                {appointment?.attributes?.status === false
-                  ? 'Request Status: PENDING'
-                  : 'Request Status: CONFIRMED'}
+          <div className="flex flex-row">
+            <div className="w-3/4">
+              <p className="mb-2 text-2xl font-semibold text-black">
+                Appointment # {appointment?.id}
+              </p>
+              <p className="text-body-color mb-4 text-sm font-medium">
+                Details of the appointment with the patient, including the
+                condition and general purpose of the appointment.
+              </p>
+              <div>
+                <div
+                  className={
+                    appointment?.attributes?.status === false
+                      ? 'text-body-color font-bold mb-2'
+                      : 'text-secondary font-semibold mb-2'
+                  }
+                >
+                  {appointment?.attributes?.status === false
+                    ? 'Request Status: PENDING'
+                    : 'Request Status: CONFIRMED'}
+                </div>
               </div>
+            </div>
+            <div>
+              <button
+                className={exist ? 'disabled-button' : 'continue-button'}
+                onClick={redirectToRoom}
+                disabled={exist ? true : false}
+              >
+                Open Virtual Room
+              </button>
             </div>
           </div>
         </div>
@@ -89,6 +104,24 @@ export default function Page({ params }: pageProps) {
                     name="name"
                     value={
                       appointment?.attributes?.patient?.data?.attributes
+                        ?.fullName
+                    }
+                    className="text-field-normal"
+                    disabled
+                  ></input>
+                </div>
+                <div className="w-1/2 mt-4">
+                  <label
+                    htmlFor="name"
+                    className="text-body-color text-base font-medium mb-2"
+                  >
+                    Doctor Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={
+                      appointment?.attributes?.doctor?.data?.attributes
                         ?.fullName
                     }
                     className="text-field-normal"

@@ -9,6 +9,10 @@
   @apply text-base focus:outline-none focus:border-violet-200 focus:ring-1 focus:ring-violet-500 w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default;
 }
 
+.text-field-slim {
+  @apply text-base focus:outline-none focus:border-violet-200 focus:ring-1 focus:ring-violet-500 w-full rounded-lg border-[1.5px] py-1 px-3 font-medium outline-none transition disabled:cursor-default;
+}
+
 .text-area-normal {
   @apply text-base focus:outline-none focus:border-violet-200 focus:ring-1 focus:ring-violet-500 w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default;
 }
