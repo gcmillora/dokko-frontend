@@ -10,6 +10,7 @@ export const insertOneMessage = async (payload: string, jwtToken: string) => {
     },
   });
   const uid = uuid();
+
   const { data } = await client.mutate({
     variables: {
       payload: payload,
