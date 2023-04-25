@@ -81,18 +81,11 @@ export default function Page({ params }: pageProps) {
   }, []);
 
   const saveProfileChanges = async () => {
-    console.log('saveProfileChanges');
-    console.log('doctorID', doctorID);
-    console.log('jwtToken', jwtToken);
-    console.log('fullName', fullName);
-    console.log('email', email);
-    console.log('address', address);
     const response = await updateOneDoctor(doctorID, jwtToken, {
       fullName: fullName,
       email: email,
       address: address,
     });
-    console.log('done! ', response);
     if (file) uploadProfile();
     if (response) {
       showToastMessage('success', 'Profile updated successfully');

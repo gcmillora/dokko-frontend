@@ -17,6 +17,7 @@ export const findOneDoctor = async (doctor_id: string) => {
           data {
             id
             attributes {
+              address
               uid
               fullName
               email
