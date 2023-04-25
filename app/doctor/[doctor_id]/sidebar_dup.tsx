@@ -135,7 +135,7 @@ export default function Sidebar_dup() {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+                    href={`/doctor/${uid}/inbox`}
                     className="relative mb-[2px] flex items-center justify-between rounded py-[10px] px-4 text-base font-medium text-body-color duration-200 hover:bg-primary hover:text-white"
                   >
                     <span className="flex items-center">
@@ -158,7 +158,7 @@ export default function Sidebar_dup() {
                           />
                         </svg>
                       </span>
-                      Messages
+                      Inbox
                     </span>
                   </a>
                 </li>

@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { findOnePatient } from '../../../api/findOnePatient';
 import Image from 'next/image';
-import { findUser } from '../../../api/findUser';
 
 export default function Sidebar() {
   const router = useRouter();
@@ -173,7 +172,7 @@ export default function Sidebar() {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+                    href={`/patient/${uid}/inbox`}
                     className="relative mb-[2px] flex items-center justify-between rounded py-[10px] px-4 text-base font-medium text-body-color duration-200 hover:bg-primary hover:text-white"
                   >
                     <span className="flex items-center">
@@ -196,7 +195,7 @@ export default function Sidebar() {
                           />
                         </svg>
                       </span>
-                      Messages
+                      Inbox
                     </span>
                   </a>
                 </li>

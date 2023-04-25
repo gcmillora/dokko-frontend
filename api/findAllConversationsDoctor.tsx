@@ -1,10 +1,9 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
-export const findAllConversationsPatient = async (
-  patient_id: string,
+export const findAllConversationsDoctor = async (
+  doctor_id: string,
   jwtToken: string
 ) => {
-  console.log(patient_id);
   const client = new ApolloClient({
     uri: 'http://127.0.0.1:1337/graphql',
     cache: new InMemoryCache(),
@@ -12,12 +11,12 @@ export const findAllConversationsPatient = async (
 
   const { data } = await client.query({
     variables: {
-      uid: patient_id,
+      uid: doctor_id,
     },
     query: gql`
       query ($uid: String!) {
         conversations(
-          filters: { patient: { uid: { eq: $uid } } }
+          filters: { doctor: { uid: { eq: $uid } } }
           sort: "createdAt:desc"
         ) {
           data {
@@ -44,6 +43,14 @@ export const findAllConversationsPatient = async (
                   id
                   attributes {
                     fullName
+                    profilepicture {
+                      data {
+                        id
+                        attributes {
+                          url
+                        }
+                      }
+                    }
                   }
                 }
               }

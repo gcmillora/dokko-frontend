@@ -8,6 +8,7 @@ import showToastMessage from '../../../../utils/error';
 import { Patient } from '../../../../utils/types';
 import { toast, ToastContainer } from 'react-toastify';
 import { findOneDoctor } from '../../../../api/findOneDoctor';
+import { updateOneDoctor } from '../../../../api/updateOneDoctor';
 
 interface pageProps {
   params: {
@@ -19,7 +20,7 @@ export default function Page({ params }: pageProps) {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState('wercwercwj');
   const [file, setFile] = useState<File>();
   const [preview, setPreview] = useState<any>();
   const [doctorID, setDoctorID] = useState<string>('');
@@ -81,12 +82,17 @@ export default function Page({ params }: pageProps) {
 
   const saveProfileChanges = async () => {
     console.log('saveProfileChanges');
-    const response = await updateOnePatient(doctorID, jwtToken, {
+    console.log('doctorID', doctorID);
+    console.log('jwtToken', jwtToken);
+    console.log('fullName', fullName);
+    console.log('email', email);
+    console.log('address', address);
+    const response = await updateOneDoctor(doctorID, jwtToken, {
       fullName: fullName,
       email: email,
       address: address,
     });
-    console.log('response: ', response);
+    console.log('done! ', response);
     if (file) uploadProfile();
     if (response) {
       showToastMessage('success', 'Profile updated successfully');
@@ -193,6 +199,46 @@ export default function Page({ params }: pageProps) {
                           disabled
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
+                          className="h-[46px] w-full rounded-md border border-[#E0E0E0] pl-12 pr-5 text-base text-black outline-none focus:border-primary"
+                        />
+                        <span className="absolute left-[18px] top-1/2 -translate-y-1/2">
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g opacity="0.8">
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M3.33203 4.16667C2.8756 4.16667 2.4987 4.54357 2.4987 5V15C2.4987 15.4564 2.8756 15.8333 3.33203 15.8333H16.6654C17.1218 15.8333 17.4987 15.4564 17.4987 15V5C17.4987 4.54357 17.1218 4.16667 16.6654 4.16667H3.33203ZM0.832031 5C0.832031 3.6231 1.95513 2.5 3.33203 2.5H16.6654C18.0423 2.5 19.1654 3.6231 19.1654 5V15C19.1654 16.3769 18.0423 17.5 16.6654 17.5H3.33203C1.95513 17.5 0.832031 16.3769 0.832031 15V5Z"
+                                fill="#637381"
+                              />
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M0.982743 4.52154C1.24667 4.14449 1.76628 4.0528 2.14332 4.31673L9.99877 9.81554L17.8542 4.31673C18.2313 4.0528 18.7509 4.14449 19.0148 4.52154C19.2787 4.89858 19.187 5.41818 18.81 5.68211L10.4767 11.5154C10.1897 11.7163 9.80782 11.7163 9.52088 11.5154L1.18755 5.68211C0.81051 5.41818 0.718814 4.89858 0.982743 4.52154Z"
+                                fill="#637381"
+                              />
+                            </g>
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-full px-3">
+                    <div className="mb-[30px]">
+                      <label className="mb-[10px] block text-base font-medium text-black">
+                        Address
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          placeholder=""
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
                           className="h-[46px] w-full rounded-md border border-[#E0E0E0] pl-12 pr-5 text-base text-black outline-none focus:border-primary"
                         />
                         <span className="absolute left-[18px] top-1/2 -translate-y-1/2">

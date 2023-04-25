@@ -19,7 +19,12 @@ export const insertConversation = async (
       messageID: messageID,
     },
     mutation: gql`
-      mutation ($subject: String!, $patientID: ID!, $doctorID: ID!) {
+      mutation (
+        $subject: String!
+        $patientID: ID!
+        $doctorID: ID!
+        $messageID: ID
+      ) {
         createConversation(
           data: {
             subject: $subject
