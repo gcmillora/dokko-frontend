@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { findUpcomingAppointmentsDoctor } from '../../../api/findUpcomingAppointmentsDoctor';
+import { findUpcomingAppointmentsDoctor } from '../../../api/doctor/findUpcomingAppointmentsDoctor';
 
 export default function RecentAppointmentsDoctor({
   doctor_id,
