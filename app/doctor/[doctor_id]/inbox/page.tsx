@@ -2,8 +2,8 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { findAllConversationsDoctor } from '../../../../api/findAllConversationsDoctor';
-import { findAllConversationsPatient } from '../../../../api/findAllConversationsPatient';
+import { findAllConversationsDoctor } from '../../../../api/doctor/findAllConversationsDoctor';
+import { findAllConversationsPatient } from '../../../../api/patient/findAllConversationsPatient';
 import { findAllDoctors } from '../../../../api/findAllDoctors';
 import { findAllPatients } from '../../../../api/findAllPatients';
 import { findOneDoctor } from '../../../../api/findOneDoctor';

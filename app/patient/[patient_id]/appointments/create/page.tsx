@@ -8,7 +8,7 @@ import DatePicker from 'react-datepicker';
 import { findDoctors } from '../../../../../api/findDoctors';
 import { findOnePatient } from '../../../../../api/findOnePatient';
 import { insertOneAppointment } from '../../../../../api/insertOneAppointment';
-import { findAllAppointmentsByDoctor } from '../../../../../api/findAllAppointmentsByDoctor';
+import { findAllAppointmentsByDoctor } from '../../../../../api/doctor/findAllAppointmentsByDoctor';
 import showToastMessage from '../../../../../utils/error';
 import { ToastContainer } from 'react-toastify';
 import BookAppointment from '../../../../../components/forms/bookValidation';

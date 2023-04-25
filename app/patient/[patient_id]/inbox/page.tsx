@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { findAllConversationsPatient } from '../../../../api/findAllConversationsPatient';
+import { findAllConversationsPatient } from '../../../../api/patient/findAllConversationsPatient';
 import { findAllDoctors } from '../../../../api/findAllDoctors';
 import { findOnePatient } from '../../../../api/findOnePatient';
 import { insertConversation } from '../../../../api/insertConversation';
