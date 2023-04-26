@@ -10,7 +10,7 @@ import showToastMessage from '../../utils/error';
 import { useEffect, useState } from 'react';
 import { findOnePatient } from '../../api/findOnePatient';
 import { findDoctors } from '../../api/findDoctors';
-import { findAllAppointmentsByDoctor } from '../../api/findAllAppointmentsByDoctor';
+import { findAllAppointmentsByDoctor } from '../../api/doctor/findAllAppointmentsByDoctor';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import { insertOneAppointment } from '../../api/insertOneAppointment';

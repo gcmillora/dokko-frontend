@@ -1,7 +1,14 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { uuid } from 'uuidv4';
 
-export const insertOneMessage = async (payload: string, jwtToken: string) => {
+export const insertOneMessage = async (
+  payload: string,
+  sender_name: string,
+  recipient_name: string,
+  sender_uid: string,
+  recipient_uid: string,
+  jwtToken: string
+) => {
   const client = new ApolloClient({
     uri: 'http://127.0.0.1:1337/graphql',
     cache: new InMemoryCache(),
@@ -15,15 +22,39 @@ export const insertOneMessage = async (payload: string, jwtToken: string) => {
     variables: {
       payload: payload,
       uid: uid,
+      sender_name: sender_name,
+      recipient_name: recipient_name,
+      sender_uid: sender_uid,
+      recipient_uid: recipient_uid,
     },
     mutation: gql`
-      mutation ($payload: String!, $uid: String!) {
-        createMessage(data: { payload: $payload, uid: $uid }) {
+      mutation (
+        $payload: String!
+        $uid: String!
+        $sender_name: String!
+        $recipient_name: String!
+        $sender_uid: String!
+        $recipient_uid: String!
+      ) {
+        createMessage(
+          data: {
+            payload: $payload
+            uid: $uid
+            sender_name: $sender_name
+            recipient_name: $recipient_name
+            sender_uid: $sender_uid
+            recipient_uid: $recipient_uid
+          }
+        ) {
           data {
             id
             attributes {
               payload
               uid
+              sender_name
+              recipient_name
+              sender_uid
+              recipient_uid
             }
           }
         }

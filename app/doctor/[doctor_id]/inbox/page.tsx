@@ -1,24 +1,29 @@
 'use client';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import { findAllConversationsDoctor } from '../../../../api/doctor/findAllConversationsDoctor';
 import { findAllConversationsPatient } from '../../../../api/patient/findAllConversationsPatient';
 import { findAllDoctors } from '../../../../api/findAllDoctors';
+import { findAllPatients } from '../../../../api/findAllPatients';
+import { findOneDoctor } from '../../../../api/findOneDoctor';
 import { findOnePatient } from '../../../../api/findOnePatient';
 import { insertConversation } from '../../../../api/insertConversation';
 import { insertOneMessage } from '../../../../api/insertOneMessage';
 import { updateConversationMessages } from '../../../../api/updateConversationMessages';
+import showToastMessage from '../../../../utils/error';
 
 interface pageProps {
   params: {
-    patient_id: string;
+    doctor_id: string;
   };
 }
 
 export default function Page({ params }: pageProps) {
-  const [doctors, setDoctors] = useState<any[]>([]);
+  const [doctor, setDoctor] = useState<any>();
+  const [patients, setPatients] = useState<any[]>([]);
   const [replyPayload, setReplyPayload] = useState('');
-  const [selectedDoctor, setSelectedDoctor] = useState<any>();
-  const [patient, setPatient] = useState<any>();
+  const [selectedPatient, setSelectedPatient] = useState<any>();
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [selectedConversation, setSelectedConversation] = useState<any>();
@@ -27,10 +32,10 @@ export default function Page({ params }: pageProps) {
   const [messageIDs, setMessageIDs] = useState<any[]>([]);
   const [totalCount, setTotalCount] = useState(0);
 
-  const handleDoctorChange = (e: any) => {
-    const doctor = doctors.find((doctor) => doctor.id === e.target.value);
-    console.log(doctor);
-    setSelectedDoctor(doctor);
+  const handlePatientChange = (e: any) => {
+    const patient = patients.find((patient) => patient.id === e.target.value);
+    console.log(patient);
+    setSelectedPatient(patient);
   };
 
   const [showModal, setShowModal] = useState(false);
@@ -38,26 +43,27 @@ export default function Page({ params }: pageProps) {
   useEffect(() => {
     const jwtToken = localStorage.getItem('jwtToken') || '';
     const fetchDoctors = async () => {
-      const doctors = await findAllDoctors(jwtToken);
-      setDoctors(doctors.doctors.data);
-      setSelectedDoctor(doctors.doctors.data[0]);
-      console.log(doctors.doctors.data);
+      const patients = await findAllPatients(jwtToken);
+      setPatients(patients.patients.data);
+      setSelectedPatient(patients.patients.data[0]);
+      console.log(patients.patients.data);
     };
     fetchDoctors();
   }, []);
 
   useEffect(() => {
     const jwtToken = localStorage.getItem('jwtToken') || '';
-    findAllConversationsPatient(params.patient_id, jwtToken).then((data) => {
+    findAllConversationsDoctor(params.doctor_id, jwtToken).then((data) => {
       setConversations(data.conversations.data);
       setTotalCount(data.conversations.meta.pagination.total);
+
       console.log(data.conversations.data);
     });
   }, []);
 
   useEffect(() => {
-    findOnePatient(params.patient_id).then((data) => {
-      setPatient(data.patients.data[0]);
+    findOneDoctor(params.doctor_id).then((data) => {
+      setDoctor(data.doctors.data[0]);
     });
   }, []);
 
@@ -66,10 +72,10 @@ export default function Page({ params }: pageProps) {
     const jwtToken = localStorage.getItem('jwtToken') || '';
     const responseMessage = await insertOneMessage(
       replyPayload,
-      patient.attributes.fullName,
-      selectedDoctor.attributes.fullName,
-      patient.attributes.uid,
-      selectedDoctor.attributes.uid,
+      doctor.attributes.fullName,
+      selectedPatient.attributes.fullName,
+      doctor.attributes.uid,
+      selectedPatient.attributes.uid,
       jwtToken
     );
     let messages = messageIDs;
@@ -78,6 +84,7 @@ export default function Page({ params }: pageProps) {
       messages,
       selectedConversation.id
     );
+    showToastMessage('success', 'Message sent successfully');
     console.log(updateConversation);
   }
   async function handleMessageSubmit() {
@@ -85,18 +92,19 @@ export default function Page({ params }: pageProps) {
     const jwtToken = localStorage.getItem('jwtToken') || '';
     const responseMessage = await insertOneMessage(
       message,
-      patient.attributes.fullName,
-      selectedDoctor.attributes.fullName,
-      patient.attributes.uid,
-      selectedDoctor.attributes.uid,
+      doctor.attributes.fullName,
+      selectedPatient.attributes.fullName,
+      doctor.attributes.uid,
+      selectedPatient.attributes.uid,
       jwtToken
     );
     const responseConversation = await insertConversation(
       subject,
-      patient.id,
-      selectedDoctor.id,
+      selectedPatient.id,
+      doctor.id,
       responseMessage.createMessage.data.id
     );
+    showToastMessage('success', 'Message sent successfully');
     console.log(responseConversation);
   }
   const handleSelectedConversation = (conversationID: any) => {
@@ -120,7 +128,7 @@ export default function Page({ params }: pageProps) {
           <div className="flex  flex-col mt-4 pb-2 mb-4 ml-2 border-b border-stroke">
             <p className="text-3xl">Inbox</p>
             <p className="text-xs text-body-color">
-              Conversations: {totalCount}
+              Total Conversations: {totalCount}
             </p>
           </div>
           <button
@@ -150,12 +158,12 @@ export default function Page({ params }: pageProps) {
                         <p className="p-2">To: </p>
                         <select
                           className="text-field-slim"
-                          onChange={handleDoctorChange}
-                          onSelect={handleDoctorChange}
+                          onChange={handlePatientChange}
+                          onSelect={handlePatientChange}
                         >
-                          {doctors.map((doctor) => (
-                            <option value={doctor.id} key={doctor.id}>
-                              {doctor.attributes.fullName}
+                          {patients.map((patient) => (
+                            <option value={patient.id} key={patient.id}>
+                              {patient.attributes.fullName}
                             </option>
                           ))}
                         </select>
@@ -224,7 +232,7 @@ export default function Page({ params }: pageProps) {
                   alt="profile picture"
                   className="h-full w-full rounded-full object-cover object-center"
                   src={
-                    conversation.attributes.doctor.data.attributes
+                    conversation.attributes.patient.data.attributes
                       .profilepicture.data.attributes.url
                   }
                   width={50}
@@ -234,7 +242,7 @@ export default function Page({ params }: pageProps) {
               <div className="w-full">
                 <div className="flex flex-row justify-between">
                   <p className="text-xs text-body-color">
-                    {conversation.attributes.doctor.data.attributes.fullName}
+                    {conversation.attributes.patient.data.attributes.fullName}
                   </p>
                   <p className="text-xs">{`${new Date(
                     conversation.attributes.createdAt
@@ -261,7 +269,7 @@ export default function Page({ params }: pageProps) {
               <div className="flex flex-row">
                 <Image
                   src={
-                    selectedConversation.attributes.doctor.data.attributes
+                    selectedConversation.attributes.patient.data.attributes
                       .profilepicture.data.attributes.url
                   }
                   width={50}
@@ -271,10 +279,10 @@ export default function Page({ params }: pageProps) {
                 />
                 <div className="flex flex-row ml-4 items-center">
                   <p className="mr-2">
-                    {`${selectedConversation.attributes.doctor.data.attributes.fullName}`}
+                    {`${selectedConversation.attributes.patient.data.attributes.fullName}`}
                   </p>
                   <p className="text-body-color">
-                    {` to ${selectedConversation.attributes.patient.data.attributes.fullName}`}
+                    {` to ${selectedConversation.attributes.doctor.data.attributes.fullName}`}
                   </p>
                 </div>
               </div>
@@ -332,6 +340,7 @@ export default function Page({ params }: pageProps) {
           <p className="text-2xl">Select a conversation</p>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 }

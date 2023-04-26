@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { d_findAllNoReports } from '../../../../../api/d_findAllNoReports';
 import { insertOnePrescription } from '../../../../../api/insertOnePrescription';
+import PrescriptionForm from '../../../../../components/forms/prescriptionValidation';
 import showToastMessage from '../../../../../utils/error';
 
 interface pageProps {
@@ -34,36 +35,7 @@ export default function Page({ params }: pageProps) {
     console.log(sel);
     setSelectedApp(sel);
   };
-  const insertPrescription = async (e: any) => {
-    console.log('inserting prescription');
-    console.log(jwtToken);
-    const appID = nogen_apps.find(
-      (app: any) => app.attributes.uid === selectedApp.attributes.uid
-    ).id;
-
-    e.preventDefault();
-    const data = {
-      appointment_id: appID,
-      doctor_id: selectedApp.attributes.doctor.data.id,
-      patient_id: selectedApp.attributes.patient.data.id,
-      prescription: prescription,
-      notes: notes,
-      diagnosis: diagnoses,
-    };
-    console.log(data);
-    const response = await insertOnePrescription(
-      jwtToken,
-      data.patient_id,
-      data.doctor_id,
-      data.prescription,
-      true,
-      data.appointment_id,
-      data.notes,
-      data.diagnosis
-    );
-    console.log(response);
-    showToastMessage('success', 'Report generated successfully.');
-  };
+ 
 
   return (
     <div className="flex flex-row justify-center py-16">
@@ -93,32 +65,7 @@ export default function Page({ params }: pageProps) {
           disabled
           value={selectedApp?.attributes.generalPurpose}
         />
-        <form>
-          <p>Diagnoses</p>
-          <textarea
-            className="text-field-normal"
-            rows={3}
-            value={diagnoses}
-            onChange={(e) => setDiagnoses(e.target.value)}
-          />
-          <p>Prescription</p>
-          <textarea
-            className="text-field-normal"
-            rows={5}
-            value={prescription}
-            onChange={(e) => setPrescription(e.target.value)}
-          />
-          <p>Notes</p>
-          <textarea
-            className="text-field-normal"
-            rows={5}
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-          />
-          <button className="continue-button" onClick={insertPrescription}>
-            Generate Report
-          </button>
-        </form>
+        <PrescriptionForm {... {nogen_apps, selectedApp}} />
       </div>
     </div>
   );

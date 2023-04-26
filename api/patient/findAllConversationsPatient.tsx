@@ -51,6 +51,8 @@ export const findAllConversationsPatient = async (
                 data {
                   id
                   attributes {
+                    sender_name
+                    recipient_name
                     payload
                     uid
                     createdAt
@@ -59,6 +61,11 @@ export const findAllConversationsPatient = async (
               }
               createdAt
               subject
+            }
+          }
+          meta {
+            pagination {
+              total
             }
           }
         }
