@@ -19,27 +19,29 @@ export default function PastPrescriptionDoctor({
     if (!jwtToken) return;
     findPastPrescriptionsDoctor(doctor_id, jwtToken).then((data) => {
       setPastPrescriptions(data.prescriptions.data);
+      console.log('past prescriptions: ', data.prescriptions.data);
     });
   }, []);
 
   return (
     <div className="mx-auto">
       <div>
-        <div className="border-stroke min-h-[358px] border bg-white py-[10px]">
+        <div className="border-stroke rounded-lg  min-h-[358px] border bg-white py-[10px]">
+          <p className="text-base px-4 pt-4 font-semibold mb-4">Reports </p>
           {pastPrescriptions.map((item: any) => {
             return (
               <div
                 key={item.id}
-                className="flex items-center justify-between py-[18px] pl-8 pr-8 hover:bg-[#F5F5F5]"
+                className="flex items-center justify-between py-[18px] pl-8 pr-8 hover:bg-[#F5F5F5] border-t border-b border-stroke "
               >
                 <div className="flex items-center">
                   <div>
                     <h4 className="text-base font-medium text-black">
                       {item?.attributes?.patient?.data?.attributes?.fullName}
                     </h4>
-                    <p className="text-body-color text-base">
+                    <p className="text-body-color text-xs ">
                       {
-                        item?.attributes?.appointments?.data?.attributes?.appointmentDate?.split(
+                        item?.attributes?.appointment?.data?.attributes?.appointmentDate?.split(
                           'T'
                         )[0]
                       }
@@ -56,13 +58,13 @@ export default function PastPrescriptionDoctor({
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="1.5"
+                      strokeWidth="1.5"
                       stroke="currentColor"
                       className="w-6 h-6"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
                       />
                     </svg>

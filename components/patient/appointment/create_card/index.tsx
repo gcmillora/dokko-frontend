@@ -19,33 +19,33 @@ export default function CreateAppointmentCard({ patient_id }: any) {
             rx="2"
             fill="#2F88FF"
             stroke="#000000"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M14 6V14"
             stroke="#000000"
-            stroke-width="4"
-            stroke-linecap="round"
+            strokeWidth="4"
+            strokeLinecap="round"
           />
           <path
             d="M25 23L14 23"
             stroke="white"
-            stroke-width="4"
-            stroke-linecap="round"
+            strokeWidth="4"
+            strokeLinecap="round"
           />
           <path
             d="M34 31L14 31"
             stroke="white"
-            stroke-width="4"
-            stroke-linecap="round"
+            strokeWidth="4"
+            strokeLinecap="round"
           />
           <path
             d="M34 6V14"
             stroke="#000000"
-            stroke-width="4"
-            stroke-linecap="round"
+            strokeWidth="4"
+            strokeLinecap="round"
           />
         </svg>
       </div>
