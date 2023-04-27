@@ -3,7 +3,7 @@ import { Cookie } from '@next/font/google';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Router from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { uuid } from 'uuidv4';
 import showToastMessage from '../../utils/error';
@@ -19,6 +19,9 @@ export default function Signup() {
   const [status, setStatus] = useState(false);
   const uid = uuid();
 
+  useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_BACKEND_API_URL);
+  }, []);
   const createPatient = async () => {
     const medical_uuid = uuid();
     const patient: CreatePatientInput = {
@@ -29,7 +32,7 @@ export default function Signup() {
     };
     console.log(uid);
     const client = new ApolloClient({
-      uri: 'http://127.0.0.1:1337/graphql',
+      uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
       cache: new InMemoryCache(),
     });
     console.log(patient);
@@ -73,6 +76,7 @@ export default function Signup() {
       `,
     });
     console.log(data);
+    console.log('creating medical record...');
     const record = await createMedicalRecord(data);
     console.log(record);
 
@@ -82,7 +86,7 @@ export default function Signup() {
   const createMedicalRecord = async (patientRecord: any) => {
     const medical_uuid = uuid();
     const client = new ApolloClient({
-      uri: process.env.BACKEND_API_URL,
+      uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
       cache: new InMemoryCache(),
     });
     console.log(medical_uuid);
@@ -118,6 +122,7 @@ export default function Signup() {
   };
 
   const registerUser = async (e: any) => {
+    console.log(process.env.BACKEND_API_URL);
     e.preventDefault();
     axios
       .post('http://localhost:1337/api/auth/local/register', {
