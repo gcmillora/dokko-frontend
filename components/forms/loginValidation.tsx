@@ -16,7 +16,7 @@ export default function LoginForm() {
 
   const findOneDoctor = async (email: string) => {
     const client = new ApolloClient({
-      uri: 'http://127.0.0.1:1337/graphql',
+      uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
       cache: new InMemoryCache(),
     });
     const { data } = await client.query({
@@ -42,7 +42,7 @@ export default function LoginForm() {
 
   const findOnePatient = async (email: string) => {
     const client = new ApolloClient({
-      uri: 'http://127.0.0.1:1337/graphql',
+      uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
       cache: new InMemoryCache(),
     });
     const { data } = await client.query({
