@@ -18,17 +18,22 @@ export default function Page({ params }: pageProps) {
 
   const router = useRouter();
   useEffect(() => {
-    findAllPrescriptions(params.patient_id, page).then((data) => {
+    findAllPrescriptions(params.patient_id, pageNo).then((data) => {
       setPrescriptions(data.prescriptions.data);
-      setCount(data.prescriptions.meta.total);
+      setCount(data.prescriptions.meta.pagination.total);
     });
-  }, [page]);
+  }, [pageNo]);
 
   return (
     <div className="mx-auto px-16 mt-24">
       <div className="flex flex-row justify-between">
-        <div>
-          <p className="text-4xl font-bold text-body-color">Prescriptions</p>
+        <div className="w-3/4">
+          <p className="mb-2 text-2xl font-semibold text-black">
+            Medical Diagnoses and Prescriptions
+          </p>
+          <p className="text-body-color mb-6 text-sm font-medium">
+            List of all medical diagnoses and prescriptions.
+          </p>
         </div>
         <div>
           <Link
@@ -55,41 +60,37 @@ export default function Page({ params }: pageProps) {
           </Link>
         </div>
       </div>
-      <div className="rounded-lg bg-white mt-12 border-form-stroke border">
+      <div className="rounded-lg bg-white mt-4 border-form-stroke border">
         <div className="max-w-full overflow-x-auto min-h-[520px]">
           <table className="w-full table-auto">
             <thead>
-              <tr className="bg-[#F6F8FB]">
+              <tr className="bg-primary">
                 <th className="min-w-[210px] py-6 pl-10 pr-4">
-                  <p className="text-left text-base font-medium text-body-color">
+                  <p className="text-left text-base font-medium text-white">
                     Doctor
                   </p>
                 </th>
-                <th className="min-w-[150px] py-6 px-4">
-                  <p className="text-left text-base font-medium text-body-color">
-                    Specialty
-                  </p>
-                </th>
+
                 <th className="min-w-[250px] py-6 px-4">
-                  <p className="text-left text-base font-medium text-body-color">
+                  <p className="text-left text-base font-medium text-white">
                     Date
                   </p>
                 </th>
 
                 <th className="min-w-[130px] py-6 px-4">
-                  <p className="text-left text-base font-medium text-body-color">
+                  <p className="text-left text-base font-medium text-white">
                     Condition
                   </p>
                 </th>
 
                 <th className="min-w-[200px] py-6 px-4">
-                  <p className="text-left text-base font-medium text-body-color">
+                  <p className="text-left text-base font-medium text-white">
                     Prescription
                   </p>
                 </th>
 
                 <th className="min-w-[100px] py-6 pl-4 pr-10">
-                  <p className="text-right text-base font-medium text-body-color">
+                  <p className="text-center text-base font-medium text-white">
                     Action
                   </p>
                 </th>
@@ -101,21 +102,13 @@ export default function Page({ params }: pageProps) {
                 <tr key={index} className="border-b border-stroke">
                   <td className="py-5 pl-10 pr-3">
                     <div className="flex items-center space-x-4">
-                      <p className="text-body text-body-color">
+                      <p className="text-body ">
                         {
                           prescription?.attributes?.doctor?.data?.attributes
                             ?.fullName
                         }
                       </p>
                     </div>
-                  </td>
-                  <td className="py-5 px-4">
-                    <p className="text-base text-body-color">
-                      {
-                        prescription?.attributes?.doctor?.data?.attributes
-                          ?.specialty
-                      }
-                    </p>
                   </td>
                   <td className="py-5 px-4">
                     <p className="text-base text-body-color">
@@ -140,6 +133,9 @@ export default function Page({ params }: pageProps) {
                       {prescription.attributes?.prescription}
                     </Link>
                   </td>
+                  <td className="py-5 px-4">
+                    <p className="text-primary ">Download</p>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -148,11 +144,13 @@ export default function Page({ params }: pageProps) {
       </div>
       <div className="flex flex-row-reverse">
         <div className="text-center">
-          <div className="inline-flex rounded-xl border border-[#e4e4e4] bg-white p-4">
+          <div className="inline-flex rounded-xl border border-[#e4e4e4] bg-white ">
             <ul className="flex items-center">
               <li>
-                <a
-                  href="javascript:void(0)"
+                <button
+                  onClick={() => {
+                    if (pageNo != 1) setPageNo(pageNo - 1);
+                  }}
                   className="hover:text-primary flex h-9 w-9 items-center justify-center rounded-tl rounded-bl border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
                 >
                   <span>
@@ -168,14 +166,6 @@ export default function Page({ params }: pageProps) {
                       ></path>
                     </svg>
                   </span>
-                </a>
-              </li>
-              <li>
-                <button
-                  onClick={(event) => setPage(page)}
-                  className="hover:text-primary flex h-9 w-9 items-center justify-center border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
-                >
-                  {pageNo}
                 </button>
               </li>
               <li>
@@ -183,28 +173,17 @@ export default function Page({ params }: pageProps) {
                   onClick={(event) => setPage(pageNo + 1)}
                   className="hover:text-primary flex h-9 w-9 items-center justify-center border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
                 >
-                  {pageNo + 1}
+                  {pageNo}
                 </button>
               </li>
               <li>
                 <button
-                  onClick={(event) => setPage(pageNo + 2)}
-                  className="hover:text-primary flex h-9 w-9 items-center justify-center border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
-                >
-                  {pageNo + 2}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={(event) => setPage(pageNo + 3)}
-                  className="hover:text-primary flex h-9 w-9 items-center justify-center border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
-                >
-                  {pageNo + 3}
-                </button>
-              </li>
-              <li>
-                <a
-                  href="javascript:void(0)"
+                  onClick={(event) => {
+                    console.log(pageNo, count);
+                    if (pageNo * 8 <= count) {
+                      setPageNo(pageNo + 1);
+                    }
+                  }}
                   className="hover:text-primary flex h-9 w-9 items-center justify-center rounded-tr rounded-br border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
                 >
                   <span>
@@ -220,7 +199,7 @@ export default function Page({ params }: pageProps) {
                       ></path>
                     </svg>
                   </span>
-                </a>
+                </button>
               </li>
             </ul>
           </div>

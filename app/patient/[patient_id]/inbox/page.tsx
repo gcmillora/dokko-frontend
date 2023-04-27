@@ -7,6 +7,7 @@ import { findOnePatient } from '../../../../api/findOnePatient';
 import { insertConversation } from '../../../../api/insertConversation';
 import { insertOneMessage } from '../../../../api/insertOneMessage';
 import { updateConversationMessages } from '../../../../api/updateConversationMessages';
+import { doctorDefaultPhoto } from '../../../../utils/exports';
 
 interface pageProps {
   params: {
@@ -224,8 +225,9 @@ export default function Page({ params }: pageProps) {
                   alt="profile picture"
                   className="h-full w-full rounded-full object-cover object-center"
                   src={
-                    conversation.attributes.doctor.data.attributes
-                      .profilepicture.data.attributes.url
+                    conversation?.attributes?.doctor?.data?.attributes
+                      ?.profilepicture?.data?.attributes?.url ||
+                    doctorDefaultPhoto
                   }
                   width={50}
                   height={50}
@@ -261,8 +263,9 @@ export default function Page({ params }: pageProps) {
               <div className="flex flex-row">
                 <Image
                   src={
-                    selectedConversation.attributes.doctor.data.attributes
-                      .profilepicture.data.attributes.url
+                    selectedConversation?.attributes?.doctor?.data?.attributes
+                      ?.profilepicture?.data?.attributes?.url ||
+                    doctorDefaultPhoto
                   }
                   width={50}
                   height={50}

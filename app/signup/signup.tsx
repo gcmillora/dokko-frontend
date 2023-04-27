@@ -89,7 +89,7 @@ export default function Signup() {
     console.log(patientRecord.createPatient);
     const { data } = await client.mutate({
       variables: {
-        uid: medical_uuid,
+        uid: uid,
         patient: patientRecord.createPatient.data.id,
       },
       mutation: gql`

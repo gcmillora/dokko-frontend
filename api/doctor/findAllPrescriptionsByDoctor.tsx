@@ -20,7 +20,7 @@ export const findAllPrescriptionsByDoctor = async (
       query ($uid: String!, $page: Int!) {
         prescriptions(
           filters: { doctor: { uid: { eq: $uid } } }
-          pagination: { page: $page, pageSize: 10 }
+          pagination: { page: $page, pageSize: 8 }
         ) {
           data {
             id

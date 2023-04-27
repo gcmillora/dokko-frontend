@@ -18,14 +18,14 @@ export default function Page({ params }: pageProps) {
 
   const router = useRouter();
   useEffect(() => {
-    findAllAppointments(params.patient_id, page).then((data) => {
+    findAllAppointments(params.patient_id, pageNo).then((data) => {
       setAppointments(data.appointments.data);
-      setCount(data.appointments.meta.total);
+      setCount(data.appointments.meta.pagination.total);
     });
-  }, [page]);
+  }, [pageNo]);
 
   return (
-    <div className="px-16 mt-24">
+    <div className="px-16 mt-4">
       <div className="border-stroke border-b flex flex-row justify-between">
         <div className="flex flex-row">
           <div className="w-3/4">
@@ -62,41 +62,35 @@ export default function Page({ params }: pageProps) {
           </Link>
         </div>
       </div>
-      <div className="rounded-lg bg-white mt-12 border-form-stroke border">
-        <div className="max-w-full overflow-x-auto min-h-[520px]">
-          <table className="w-full table-auto">
+      <div className="rounded-lg bg-white mt-4 border-form-stroke border max-h-fit">
+        <div className="max-w-full overflow-x-auto overflow-auto">
+          <table className="w-full table-auto overflow-auto">
             <thead>
-              <tr className="bg-[#F6F8FB]">
+              <tr className="bg-primary">
                 <th className="min-w-[210px] py-6 pl-10 pr-4">
-                  <p className="text-left text-base font-medium text-body-color">
+                  <p className="text-left text-base font-medium text-white">
                     Doctor
                   </p>
                 </th>
                 <th className="min-w-[150px] py-6 px-4">
-                  <p className="text-left text-base font-medium text-body-color">
+                  <p className="text-left text-base font-medium text-white">
                     Condition
                   </p>
                 </th>
                 <th className="min-w-[250px] py-6 px-4">
-                  <p className="text-left text-base font-medium text-body-color">
+                  <p className="text-left text-base font-medium text-white">
                     Date
                   </p>
                 </th>
 
-                <th className="min-w-[130px] py-6 px-4">
-                  <p className="text-left text-base font-medium text-body-color">
-                    Type
-                  </p>
-                </th>
-
                 <th className="min-w-[150px] py-6 px-4">
-                  <p className="text-left text-base font-medium text-body-color">
+                  <p className="text-left text-base font-medium text-white">
                     Status
                   </p>
                 </th>
 
                 <th className="min-w-[150px] py-6 pl-4 pr-10">
-                  <p className="text-right text-base font-medium text-body-color">
+                  <p className="text-right text-base font-medium text-white">
                     Action
                   </p>
                 </th>
@@ -127,11 +121,6 @@ export default function Page({ params }: pageProps) {
                     </p>
                   </td>
                   <td className="py-5 px-4">
-                    <p className="text-base text-body-color">
-                      {appointment.attributes.typeOfVisit}
-                    </p>
-                  </td>
-                  <td className="py-5 px-4">
                     {appointment.attributes.status ? (
                       <span className="inline-flex h-8 items-center justify-center rounded bg-[#42B757] px-5 text-base text-white">
                         Accepted
@@ -142,7 +131,7 @@ export default function Page({ params }: pageProps) {
                       </span>
                     )}
                   </td>
-                  <td className="py-5 px-4">
+                  <td className="py-5 px-4 text-cetner">
                     <Link
                       href={`/patient/${params.patient_id}/appointments/${appointment.attributes.uid}`}
                       className="text-primary text-base font-medium"
@@ -158,11 +147,13 @@ export default function Page({ params }: pageProps) {
       </div>
       <div className="flex flex-row-reverse">
         <div className="text-center">
-          <div className="inline-flex rounded-xl border border-[#e4e4e4] bg-white p-4">
+          <div className="inline-flex rounded-xl border border-[#e4e4e4] bg-white ">
             <ul className="flex items-center">
               <li>
-                <a
-                  href="javascript:void(0)"
+                <button
+                  onClick={() => {
+                    if (pageNo != 1) setPageNo(pageNo - 1);
+                  }}
                   className="hover:text-primary flex h-9 w-9 items-center justify-center rounded-tl rounded-bl border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
                 >
                   <span>
@@ -178,14 +169,6 @@ export default function Page({ params }: pageProps) {
                       ></path>
                     </svg>
                   </span>
-                </a>
-              </li>
-              <li>
-                <button
-                  onClick={(event) => setPage(page)}
-                  className="hover:text-primary flex h-9 w-9 items-center justify-center border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
-                >
-                  {pageNo}
                 </button>
               </li>
               <li>
@@ -193,28 +176,17 @@ export default function Page({ params }: pageProps) {
                   onClick={(event) => setPage(pageNo + 1)}
                   className="hover:text-primary flex h-9 w-9 items-center justify-center border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
                 >
-                  {pageNo + 1}
+                  {pageNo}
                 </button>
               </li>
               <li>
                 <button
-                  onClick={(event) => setPage(pageNo + 2)}
-                  className="hover:text-primary flex h-9 w-9 items-center justify-center border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
-                >
-                  {pageNo + 2}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={(event) => setPage(pageNo + 3)}
-                  className="hover:text-primary flex h-9 w-9 items-center justify-center border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
-                >
-                  {pageNo + 3}
-                </button>
-              </li>
-              <li>
-                <a
-                  href="javascript:void(0)"
+                  onClick={(event) => {
+                    console.log(pageNo, count);
+                    if (pageNo * 8 <= count) {
+                      setPageNo(pageNo + 1);
+                    }
+                  }}
                   className="hover:text-primary flex h-9 w-9 items-center justify-center rounded-tr rounded-br border border-[#EDEFF1] text-base text-[#838995] hover:border-[#9CB3FF] hover:bg-[#F2F5FF]"
                 >
                   <span>
@@ -230,7 +202,7 @@ export default function Page({ params }: pageProps) {
                       ></path>
                     </svg>
                   </span>
-                </a>
+                </button>
               </li>
             </ul>
           </div>
