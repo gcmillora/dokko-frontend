@@ -2,15 +2,15 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { findAllConversationsDoctor } from '../../../../api/doctor/findAllConversationsDoctor';
-import { findAllConversationsPatient } from '../../../../api/patient/findAllConversationsPatient';
-import { findAllDoctors } from '../../../../api/findAllDoctors';
-import { findAllPatients } from '../../../../api/findAllPatients';
-import { findOneDoctor } from '../../../../api/findOneDoctor';
-import { findOnePatient } from '../../../../api/findOnePatient';
-import { insertConversation } from '../../../../api/insertConversation';
-import { insertOneMessage } from '../../../../api/insertOneMessage';
-import { updateConversationMessages } from '../../../../api/updateConversationMessages';
+import { findAllConversationsDoctor } from '../../../../query/doctor/findAllConversationsDoctor';
+import { findAllConversationsPatient } from '../../../../query/patient/findAllConversationsPatient';
+import { findAllDoctors } from '../../../../query/findAllDoctors';
+import { findAllPatients } from '../../../../query/findAllPatients';
+import { findOneDoctor } from '../../../../query/findOneDoctor';
+import { findOnePatient } from '../../../../query/findOnePatient';
+import { insertConversation } from '../../../../query/insertConversation';
+import { insertOneMessage } from '../../../../query/insertOneMessage';
+import { updateConversationMessages } from '../../../../query/updateConversationMessages';
 import showToastMessage from '../../../../utils/error';
 
 interface pageProps {

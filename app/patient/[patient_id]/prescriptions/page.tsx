@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { findAllPrescriptions } from '../../../../api/patient/findAllPrescriptionsByPatient';
+import { findAllPrescriptions } from '../../../../query/patient/findAllPrescriptionsByPatient';
 
 interface pageProps {
   params: {

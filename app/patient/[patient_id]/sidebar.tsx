@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { findOnePatient } from '../../../api/findOnePatient';
+import { findOnePatient } from '../../../query/findOnePatient';
 import Image from 'next/image';
 import { patientDefaultPhoto } from '../../../utils/exports';
 

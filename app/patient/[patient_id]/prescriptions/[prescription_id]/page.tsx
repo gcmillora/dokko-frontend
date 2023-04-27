@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { findOnePrescription } from '../../../../../api/patient/findOnePrescriptionByPatient';
+import { findOnePrescription } from '../../../../../query/patient/findOnePrescriptionByPatient';
 
 interface pageProps {
   params: {

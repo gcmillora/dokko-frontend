@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { findPastAppointmentsDoctor } from '../../../api/doctor/findPastAppointmentsDoctor';
+import { findPastAppointmentsDoctor } from '../../../query/doctor/findPastAppointmentsDoctor';
 
 export default function PastAppointmentsDoctorTable({
   doctor_id,

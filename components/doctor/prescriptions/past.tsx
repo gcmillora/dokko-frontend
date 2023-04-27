@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { findPastPrescriptionsDoctor } from '../../../api/doctor/findPastPrescriptionsDoctor';
+import { findPastPrescriptionsDoctor } from '../../../query/doctor/findPastPrescriptionsDoctor';
 
 export default function PastPrescriptionDoctor({
   doctor_id,

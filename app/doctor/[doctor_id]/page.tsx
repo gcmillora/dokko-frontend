@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { findOneDoctor } from '../../../api/findOneDoctor';
+import { findOneDoctor } from '../../../query/findOneDoctor';
 import PastAppointmentsDoctorTable from '../../../components/doctor/appointments/past';
 import RecentAppointmentsDoctor from '../../../components/doctor/appointments/recent';
 import PastPrescriptionsDoctor from '../../../components/doctor/prescriptions/past';

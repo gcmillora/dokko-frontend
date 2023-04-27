@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { findOneAppointment } from '../../../../../api/findOneAppointment';
-import { insertPrescriptionDoctor } from '../../../../../api/insertPrescriptionDoctor';
-import { updateOneAppointment } from '../../../../../api/updateOneAppointment';
-import { searchPrescription } from '../../../../../api/searchPrescription';
+import { findOneAppointment } from '../../../../../query/findOneAppointment';
+import { insertPrescriptionDoctor } from '../../../../../query/insertPrescriptionDoctor';
+import { updateOneAppointment } from '../../../../../query/updateOneAppointment';
+import { searchPrescription } from '../../../../../query/searchPrescription';
 import showToastMessage from '../../../../../utils/error';
 
 interface pageProps {

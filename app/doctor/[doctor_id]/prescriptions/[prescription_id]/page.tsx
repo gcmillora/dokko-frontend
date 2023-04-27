@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { findOnePrescription } from '../../../../../api/patient/findOnePrescriptionByPatient';
-import { updateOnePrescription } from '../../../../../api/updateOnePrescription';
+import { findOnePrescription } from '../../../../../query/patient/findOnePrescriptionByPatient';
+import { updateOnePrescription } from '../../../../../query/updateOnePrescription';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-toastify/dist/ReactToastify.min.css';
