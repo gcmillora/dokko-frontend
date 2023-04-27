@@ -7,6 +7,7 @@ import { findOnePatient } from '../../../../query/findOnePatient';
 import { insertConversation } from '../../../../query/insertConversation';
 import { insertOneMessage } from '../../../../query/insertOneMessage';
 import { updateConversationMessages } from '../../../../query/updateConversationMessages';
+import { doctorDefaultPhoto } from '../../../../utils/exports';
 
 interface pageProps {
   params: {
