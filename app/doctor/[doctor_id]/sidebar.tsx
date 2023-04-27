@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { findOneDoctor } from '../../../api/findOneDoctor';
+import { findOneDoctor } from '../../../query/findOneDoctor';
 
 export default function Sidebar() {
   const router = useRouter();

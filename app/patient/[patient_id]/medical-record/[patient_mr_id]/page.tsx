@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { ToastContainer } from 'react-toastify';
-import { findOneMedicalRecord } from '../../../../../api/findOneMedicalRecord';
-import { updateMedicalRecord } from '../../../../../api/updateOneMedicalRecord';
+import { findOneMedicalRecord } from '../../../../../query/findOneMedicalRecord';
+import { updateMedicalRecord } from '../../../../../query/updateOneMedicalRecord';
 import showToastMessage from '../../../../../utils/error';
 
 interface pageProps {

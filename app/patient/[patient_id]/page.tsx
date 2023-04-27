@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { uuid, isUuid } from 'uuidv4';
-import { findOnePatient } from '../../../api/findOnePatient';
-import { findPastAppointments } from '../../../api/patient/findPastAppointmentsPatient';
-import { findPrescriptions } from '../../../api/patient/findPrescriptionsPatients';
-import { findUpcomingAppointments } from '../../../api/patient/findUpcomingAppointmentsPatients';
+import { findOnePatient } from '../../../query/findOnePatient';
+import { findPastAppointments } from '../../../query/patient/findPastAppointmentsPatient';
+import { findPrescriptions } from '../../../query/patient/findPrescriptionsPatients';
+import { findUpcomingAppointments } from '../../../query/patient/findUpcomingAppointmentsPatients';
 
 import AppointmentCard from '../../../components/patient/appointment/card';
 import CreateAppointmentCard from '../../../components/patient/appointment/create_card';

@@ -2,8 +2,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { d_findAllNoReports } from '../../../../../api/d_findAllNoReports';
-import { insertOnePrescription } from '../../../../../api/insertOnePrescription';
+import { d_findAllNoReports } from '../../../../../query/d_findAllNoReports';
+import { insertOnePrescription } from '../../../../../query/insertOnePrescription';
 import PrescriptionForm from '../../../../../components/forms/prescriptionValidation';
 import showToastMessage from '../../../../../utils/error';
 
@@ -35,7 +35,6 @@ export default function Page({ params }: pageProps) {
     console.log(sel);
     setSelectedApp(sel);
   };
- 
 
   return (
     <div className="flex flex-row justify-center py-16">
@@ -65,7 +64,7 @@ export default function Page({ params }: pageProps) {
           disabled
           value={selectedApp?.attributes.generalPurpose}
         />
-        <PrescriptionForm {... {nogen_apps, selectedApp}} />
+        <PrescriptionForm {...{ nogen_apps, selectedApp }} />
       </div>
     </div>
   );

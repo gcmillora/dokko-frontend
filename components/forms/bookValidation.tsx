@@ -8,12 +8,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import showToastMessage from '../../utils/error';
 import { useEffect, useState } from 'react';
-import { findOnePatient } from '../../api/findOnePatient';
-import { findDoctors } from '../../api/findDoctors';
-import { findAllAppointmentsByDoctor } from '../../api/doctor/findAllAppointmentsByDoctor';
+import { findOnePatient } from '../../query/findOnePatient';
+import { findDoctors } from '../../query/findDoctors';
+import { findAllAppointmentsByDoctor } from '../../query/doctor/findAllAppointmentsByDoctor';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
-import { insertOneAppointment } from '../../api/insertOneAppointment';
+import { insertOneAppointment } from '../../query/insertOneAppointment';
 import { start } from 'repl';
 
 interface Props {

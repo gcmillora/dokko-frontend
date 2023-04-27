@@ -5,10 +5,10 @@ import setMinutes from 'date-fns/setMinutes';
 import moment from 'moment';
 
 import DatePicker from 'react-datepicker';
-import { findDoctors } from '../../../../../api/findDoctors';
-import { findOnePatient } from '../../../../../api/findOnePatient';
-import { insertOneAppointment } from '../../../../../api/insertOneAppointment';
-import { findAllAppointmentsByDoctor } from '../../../../../api/doctor/findAllAppointmentsByDoctor';
+import { findDoctors } from '../../../../../query/findDoctors';
+import { findOnePatient } from '../../../../../query/findOnePatient';
+import { insertOneAppointment } from '../../../../../query/insertOneAppointment';
+import { findAllAppointmentsByDoctor } from '../../../../../query/doctor/findAllAppointmentsByDoctor';
 import showToastMessage from '../../../../../utils/error';
 import { ToastContainer } from 'react-toastify';
 import BookAppointment from '../../../../../components/forms/bookValidation';

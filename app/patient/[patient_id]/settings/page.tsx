@@ -2,8 +2,8 @@
 import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { isUuid } from 'uuidv4';
-import { findOnePatient } from '../../../../api/findOnePatient';
-import { updateOnePatient } from '../../../../api/updateOnePatient';
+import { findOnePatient } from '../../../../query/findOnePatient';
+import { updateOnePatient } from '../../../../query/updateOnePatient';
 import showToastMessage from '../../../../utils/error';
 import { Patient } from '../../../../utils/types';
 import { toast, ToastContainer } from 'react-toastify';

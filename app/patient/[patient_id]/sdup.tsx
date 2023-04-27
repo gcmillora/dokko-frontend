@@ -1,8 +1,8 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { findOnePatient } from '../../../api/findOnePatient';
-import { findUser } from '../../../api/findUser';
+import { findOnePatient } from '../../../query/findOnePatient';
+import { findUser } from '../../../query/findUser';
 
 export default function Sbardup() {
   const router = useRouter();
