@@ -55,7 +55,7 @@ export default function Page({ params }: pageProps) {
     e.preventDefault();
     console.log('save');
     const data = {
-      id: medicalRecord.id,
+      id: medicalRecord.attributes.id,
       sex: sex,
       weight: weight,
       height: height,
@@ -79,6 +79,7 @@ export default function Page({ params }: pageProps) {
     const getMedicalRecord = async () => {
       const response = await findOneMedicalRecord(params.patient_mr_id);
       setMedicalRecord(response.medicalRedicords.data[0]);
+      console.log(response.medicalRedicords.data[0]);
     };
     getMedicalRecord();
   }, []);
@@ -117,106 +118,110 @@ export default function Page({ params }: pageProps) {
         <div>
           <div className="mt-8">
             <div className="mb-4">
-              <div className="flex flex-col">
-                <div className=" w-1/2">
-                  <label
-                    htmlFor="name"
-                    className="mb-2 block text-base font-semibold text-black"
-                  >
-                    Sex
-                  </label>
-                  <select
-                    className="text-field-normal"
-                    value={sex}
-                    onChange={(e) => setSex(e.target.value)}
-                  >
-                    <option>Male</option>
-                    <option>Female</option>
-                  </select>
-                </div>
-                <div className="w-1/2 grid grid-cols-2 mt-4 gap-6">
+              <div className="grid grid-cols-2 gap-8">
+                <div className="">
                   <div>
                     <label
                       htmlFor="name"
                       className="mb-2 block text-base font-semibold text-black"
                     >
-                      Weight (kg)
+                      Sex
                     </label>
-                    <input
-                      type="number"
-                      name="name"
-                      value={weight?.toString()}
-                      min="0"
-                      onChange={(e) => setWeight(parseInt(e.target.value))}
+                    <select
                       className="text-field-normal"
-                    />
+                      value={sex}
+                      onChange={(e) => setSex(e.target.value)}
+                    >
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
                   </div>
-                  <div>
+                  <div className="w-1/2 grid grid-cols-2 mt-4 gap-6">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="mb-2 block text-base font-semibold text-black"
+                      >
+                        Weight (kg)
+                      </label>
+                      <input
+                        type="number"
+                        name="name"
+                        value={weight?.toString()}
+                        min="0"
+                        onChange={(e) => setWeight(parseInt(e.target.value))}
+                        className="text-field-normal"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="mb-2 block text-base font-semibold text-black"
+                      >
+                        Height (cm)
+                      </label>
+                      <input
+                        type="number"
+                        name="name"
+                        value={height?.toString()}
+                        min="0"
+                        onChange={(e) => setHeight(parseInt(e.target.value))}
+                        className="text-field-normal"
+                      />
+                    </div>
+                  </div>
+                  <div className=" mt-4">
                     <label
                       htmlFor="name"
                       className="mb-2 block text-base font-semibold text-black"
                     >
-                      Height (cm)
+                      Birthdate
                     </label>
-                    <input
-                      type="number"
-                      name="name"
-                      value={height?.toString()}
-                      min="0"
-                      onChange={(e) => setHeight(parseInt(e.target.value))}
+                    <DatePicker
+                      selected={birthdate}
+                      onChange={(date) => setBirthdate(date || new Date())}
                       className="text-field-normal"
+                      maxDate={new Date()}
+                      minDate={new Date(1900, 1, 1)}
+                      dateFormat="Pp"
                     />
                   </div>
+
+                  <div className=" mt-4">
+                    <label
+                      htmlFor="name"
+                      className="mb-2 block text-base font-semibold text-black"
+                    >
+                      Blood Type
+                    </label>
+                    <select
+                      className="text-field-normal"
+                      value={bloodtype || 'A'}
+                      onChange={(e) => setBloodtype(e.target.value)}
+                    >
+                      <option>A</option>
+                      <option>B</option>
+                      <option>AB</option>
+                      <option>O</option>
+                    </select>
+                  </div>
                 </div>
-                <div className="w-1/2 mt-4">
-                  <label
-                    htmlFor="name"
-                    className="mb-2 block text-base font-semibold text-black"
-                  >
-                    Birthdate
-                  </label>
-                  <DatePicker
-                    selected={birthdate}
-                    onChange={(date) => setBirthdate(date || new Date())}
-                    className="text-field-normal"
-                    maxDate={new Date()}
-                    minDate={new Date(1900, 1, 1)}
-                    dateFormat="Pp"
-                  />
-                </div>
-                <div className="w-1/2 mt-4">
-                  <label
-                    htmlFor="name"
-                    className="mb-2 block text-base font-semibold text-black"
-                  >
-                    Blood Type
-                  </label>
-                  <select
-                    className="text-field-normal"
-                    value={bloodtype || 'A'}
-                    onChange={(e) => setBloodtype(e.target.value)}
-                  >
-                    <option>A</option>
-                    <option>B</option>
-                    <option>AB</option>
-                    <option>O</option>
-                  </select>
-                </div>
-                <div className="w-1/2 mt-4">
-                  <label
-                    className="mb-2 block text-base font-semibold text-black"
-                    htmlFor="name"
-                  >
-                    Allergies
-                  </label>
-                  <textarea
-                    value={allergies || ''}
-                    onChange={(e) => setAllergies(e.target.value)}
-                    className="text-field-normal"
-                    rows={5}
-                  >
-                    {''}
-                  </textarea>
+                <div>
+                  <div className="w-full">
+                    <label
+                      className="mb-2 block text-base font-semibold text-black"
+                      htmlFor="name"
+                    >
+                      Allergies
+                    </label>
+                    <textarea
+                      onChange={(e) => setAllergies(e.target.value)}
+                      className="text-field-normal"
+                      rows={5}
+                    >
+                      {allergies}
+                    </textarea>
+                  </div>
                 </div>
               </div>
             </div>

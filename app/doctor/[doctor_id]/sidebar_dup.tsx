@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { findOneDoctor } from '../../../api/findOneDoctor';
 import Image from 'next/image';
+import { doctorDefaultPhoto } from '../../../utils/exports';
 
 export default function Sidebar_dup() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function Sidebar_dup() {
               <Image
                 src={
                   doctor?.profilepicture?.data?.attributes?.url ||
-                  'https://res.cloudinary.com/dvou5ye9x/image/upload/v1682505943/default/doctor_t95qwg.png'
+                  doctorDefaultPhoto
                 }
                 width={50}
                 height={50}

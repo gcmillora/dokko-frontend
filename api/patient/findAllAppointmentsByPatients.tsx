@@ -16,7 +16,7 @@ export const findAllAppointments = async (patient_id: string, page: number) => {
       query ($uid: String!, $page: Int!) {
         appointments(
           filters: { patient: { uid: { eq: $uid } } }
-          pagination: { page: $page, pageSize: 10 }
+          pagination: { page: $page, pageSize: 8 }
           sort: "appointmentDate:desc"
         ) {
           data {

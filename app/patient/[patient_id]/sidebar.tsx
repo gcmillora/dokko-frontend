@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { findOnePatient } from '../../../api/findOnePatient';
 import Image from 'next/image';
+import { patientDefaultPhoto } from '../../../utils/exports';
 
 export default function Sidebar() {
   const router = useRouter();
@@ -28,9 +29,12 @@ export default function Sidebar() {
       <div className="flex h-full max-h-full w-full flex-col justify-between overflow-y-scroll bg-white shadow-card">
         <div>
           <div className="flex items-center p-8">
-            <div className="mr-4 h-[50px] w-full max-w-[50px] rounded-full">
+            <div className="mr-4 h-[50px] w-full max-w-[50px] rounded-full border-2 border-primary">
               <Image
-                src={patient?.profilepicture.data.attributes.url}
+                src={
+                  patient?.profilepicture?.data?.attributes?.url ||
+                  patientDefaultPhoto
+                }
                 alt="Icon"
                 width={50}
                 height={50}

@@ -175,12 +175,11 @@ export default function DoctorSignup() {
         console.log('User profile', response.data.user);
         console.log('User token', response.data.jwt);
         localStorage.setItem('jwtToken', response.data.jwt);
-        showToastMessage('success', 'Doctor created successfully');
         const room = await createRoom();
         const tk = await createMeetingToken();
-
+        showToastMessage('success', 'Doctor created successfully');
         setTimeout(() => {
-          router.push('/signin');
+          router.push('/login');
         }, 2000);
       })
       .catch((error) => {
