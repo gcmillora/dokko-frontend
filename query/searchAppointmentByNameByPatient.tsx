@@ -9,7 +9,7 @@ export const searchAppointmentByNameByDoctor = async (
   page: number
 ) => {
   const client = new ApolloClient({
-    uri: 'http://127.0.0.1:1337/graphql',
+    uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     cache: new InMemoryCache(),
     headers: {
       Authorization: `Bearer ${jwtToken}`,

@@ -3,7 +3,7 @@ import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 //add error handling for graphql
 export const findOnePatient = async (patient_id: string) => {
   const client = new ApolloClient({
-    uri: 'http://127.0.0.1:1337/graphql',
+    uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     cache: new InMemoryCache(),
   });
 

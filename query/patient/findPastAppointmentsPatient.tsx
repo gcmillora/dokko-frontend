@@ -3,7 +3,7 @@ import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 export const findPastAppointments = async (patient_id: string) => {
   const today = new Date();
   const client = new ApolloClient({
-    uri: 'http://127.0.0.1:1337/graphql',
+    uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     cache: new InMemoryCache(),
   });
   const { data } = await client.query({
