@@ -125,13 +125,16 @@ export default function Signup() {
     console.log(process.env.BACKEND_API_URL);
     e.preventDefault();
     axios
-      .post('http://localhost:1337/api/auth/local/register', {
-        username: username,
-        email: email,
-        password: password,
-        level: 'patient',
-        uid: uid,
-      })
+      .post(
+        `${process.env.NEXT_PUBLIC_BACKEND_STRAPI_RAW}/api/auth/local/register`,
+        {
+          username: username,
+          email: email,
+          password: password,
+          level: 'patient',
+          uid: uid,
+        }
+      )
       .then(async (response) => {
         const res = await createPatient();
         console.log('Well done!');
