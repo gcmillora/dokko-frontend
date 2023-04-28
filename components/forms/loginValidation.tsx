@@ -70,7 +70,7 @@ export default function LoginForm() {
   const onSubmit = (data: any) => {
     console.log(data);
     axios
-      .post('http://localhost:1337/api/auth/local', {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_STRAPI_RAW}/api/auth/local`, {
         identifier: data.email,
         password: data.password,
       })

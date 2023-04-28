@@ -163,13 +163,16 @@ export default function DoctorSignup() {
   const registerUser = async (e: any) => {
     e.preventDefault();
     axios
-      .post('http://localhost:1337/api/auth/local/register', {
-        username: username,
-        email: email,
-        password: password,
-        level: 'doctor',
-        uid: uid,
-      })
+      .post(
+        `${process.env.NEXT_PUBLIC_BACKEND_STRAPI_RAW}/api/auth/local/register`,
+        {
+          username: username,
+          email: email,
+          password: password,
+          level: 'doctor',
+          uid: uid,
+        }
+      )
       .then(async (response) => {
         console.log('Well done!');
         console.log('User profile', response.data.user);
