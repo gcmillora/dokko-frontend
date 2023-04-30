@@ -25,7 +25,7 @@ export default function Page({ params }: pageProps) {
   }, [pageNo]);
 
   return (
-    <div className="px-16 mt-4">
+    <div className="px-16 mt-24">
       <div className="border-stroke border-b flex flex-row justify-between">
         <div className="flex flex-row">
           <div className="w-3/4">
