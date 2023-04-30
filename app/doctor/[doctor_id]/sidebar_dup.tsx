@@ -13,7 +13,7 @@ export default function Sidebar_dup() {
   const logout = () => {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('uid');
-    router.push('/signin');
+    router.push('/login');
   };
 
   useEffect(() => {

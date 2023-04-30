@@ -12,7 +12,7 @@ export default function Sbardup() {
   const logout = () => {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('uid');
-    router.push('/signin');
+    router.push('/login');
   };
 
   useEffect(() => {

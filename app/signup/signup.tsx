@@ -143,7 +143,7 @@ export default function Signup() {
         localStorage.setItem('jwtToken', response.data.jwt);
         showToastMessage('success', 'Patient created successfully');
         setTimeout(() => {
-          router.push('/signin');
+          router.push('/login');
         }, 2000);
       })
       .catch((error) => {

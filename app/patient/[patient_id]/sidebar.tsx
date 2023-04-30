@@ -13,7 +13,7 @@ export default function Sidebar() {
   const logout = () => {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('uid');
-    router.push('/signin');
+    router.push('/login');
   };
 
   useEffect(() => {

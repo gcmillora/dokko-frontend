@@ -50,7 +50,7 @@ export default function Page() {
             <div className="justify-end w-1/5 ">
               <button
                 onClick={() => {
-                  router.push('/signin');
+                  router.push('/login');
                 }}
                 className="continue-button"
               >
