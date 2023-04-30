@@ -9,7 +9,7 @@ export default function Page() {
     <div className="h-screen flex flex-col">
       <div className="absolute left-0 top-0 z-50 w-full">
         <div className="container mx-auto">
-          <div className="relative z-40 -mx-4 flex items-center justify-between">
+          <div className="relative z-40 -mx-4 mt-6 flex items-center justify-between">
             <div className="w-60 max-w-full px-4">
               <a href="javascript:void(0)" className="block w-full py-5">
                 <Image
@@ -68,7 +68,7 @@ export default function Page() {
       <div className="relative z-10 overflow-hidden bg-white pt-[120px] pb-[110px] md:pt-[150px] lg:pt-[180px] h-full">
         <div className="container mx-auto">
           <div className="-mx-4 flex flex-wrap justify-center">
-            <div className="w-full px-4">
+            <div className="w-full px-4 mt-6">
               <div className="hero-content mx-auto max-w-[666px] text-center">
                 <span className="text-primary mb-5 block text-base font-bold sm:text-lg md:text-xl">
                   Your Medical Practice Management System
