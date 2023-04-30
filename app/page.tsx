@@ -1,5 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import logo from '../assets/logo/banner-logo.svg';
+import Image from 'next/image';
 
 export default function Page() {
   const router = useRouter();
@@ -10,20 +12,22 @@ export default function Page() {
           <div className="relative z-40 -mx-4 flex items-center justify-between">
             <div className="w-60 max-w-full px-4">
               <a href="javascript:void(0)" className="block w-full py-5">
-                <img
-                  src="https://cdn.tailgrids.com/2.0/image/assets/images/logo/logo.svg"
+                <Image
+                  src={logo}
                   alt="logo"
+                  width={140}
+                  height={60}
                   className="w-full"
                 />
               </a>
             </div>
             <div className="flex w-full items-center justify-between px-4">
-              <nav className="absolute right-4 top-full z-40 w-full max-w-[250px] rounded-lg bg-white py-5 px-6 shadow lg:static lg:block lg:w-full lg:max-w-full lg:bg-transparent lg:shadow-none">
+              <nav className="absolute text-body-color right-4 top-full z-40 w-full max-w-[250px] rounded-lg bg-white py-5 px-6 shadow lg:static lg:block lg:w-full lg:max-w-full lg:bg-transparent lg:shadow-none">
                 <ul className="block lg:flex">
                   <li>
                     <a
                       href="javascript:void(0)"
-                      className="text-dark hover:text-primary flex py-2 text-base font-medium lg:ml-12 lg:inline-flex"
+                      className="text-body-color hover:text-primary flex py-2 text-base font-medium lg:ml-12 lg:inline-flex"
                     >
                       About Us
                     </a>
@@ -31,7 +35,7 @@ export default function Page() {
                   <li>
                     <a
                       href="javascript:void(0)"
-                      className="text-dark hover:text-primary flex py-2 text-base font-medium lg:ml-12 lg:inline-flex"
+                      className="text-body-color hover:text-primary flex py-2 text-base font-medium lg:ml-12 lg:inline-flex"
                     >
                       Services
                     </a>
@@ -39,7 +43,7 @@ export default function Page() {
                   <li>
                     <a
                       href="javascript:void(0)"
-                      className="text-dark hover:text-primary flex py-2 text-base font-medium lg:ml-12 lg:inline-flex"
+                      className="text-body-color hover:text-primary flex py-2 text-base font-medium lg:ml-12 lg:inline-flex"
                     >
                       Contact
                     </a>

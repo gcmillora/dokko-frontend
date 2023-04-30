@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
 import showToastMessage from '../../utils/error';
 import LoginForm from '../../components/forms/loginValidation';
+import Image from 'next/image';
+import logo from '../../assets/logo/banner-logo.svg';
 
 export default function Page() {
   const router = useRouter();
@@ -20,7 +22,9 @@ export default function Page() {
         <div className="w-full lg:w-1/2">
           <div className="w-full py-14 px-6 sm:p-[70px] sm:px-12 xl:px-[90px]">
             <div>
-              <p className="mb-10 text-[32px] font-bold text-dark">Sign In</p>
+              <p className="mb-10 text-[32px] font-bold text-dark">
+                Welcome back! 👋
+              </p>
               <LoginForm />
             </div>
             <div className="flex flex-wrap justify-between">
@@ -41,9 +45,9 @@ export default function Page() {
           <div className="relative h-full w-full overflow-hidden bg-primary">
             <div className="flex h-full items-end p-8 sm:p-14">
               <p className="text-2xl font-bold text-white">
-                Hey <br />
-                Welcome <br />
-                Back
+                dokko <br />
+                join us <br />
+                now!
               </p>
               <div>
                 <span className="absolute left-0 top-0">
