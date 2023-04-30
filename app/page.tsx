@@ -78,7 +78,7 @@ export default function Page() {
                 </h1>
                 <p className="text-body-color mb-12 text-base font-medium md:text-lg">
                   Preserve and expand your services, increase revenue, and
-                  enhance the patient experience with Dokko’s management
+                  enhance the patient experience with dokko’s management
                   platform.
                 </p>
                 <ul className="flex flex-wrap items-center justify-center">
