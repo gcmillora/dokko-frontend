@@ -58,7 +58,7 @@ export default function Page() {
                 }}
                 className="continue-button"
               >
-                Sign In
+                Get started
               </button>
             </div>
           </div>
