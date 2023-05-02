@@ -26,7 +26,7 @@ export default function Page({ params }: pageProps) {
   const approveAppointment = async (e: any) => {
     //save medical record using graphl
     e.preventDefault();
-    console.log('save');
+
     const data = {
       id: appointment.id,
       status: true,
@@ -37,7 +37,7 @@ export default function Page({ params }: pageProps) {
       typeOfVisit: appointment.attributes.typeOfVisit,
     };
     const response = await updateOneAppointment(appointment.id, jwtToken, data);
-    console.log(response);
+
     showToastMessage('success', 'Appointment approved.');
     if (appointment.attributes.typeOfVisit === 'Virtual')
       createPatientMeetingToken(
@@ -50,7 +50,7 @@ export default function Page({ params }: pageProps) {
   const declineAppointment = async (e: any) => {
     //save medical record using graphl
     e.preventDefault();
-    console.log('save');
+
     const data = {
       id: appointment.id,
       status: false,
@@ -61,7 +61,7 @@ export default function Page({ params }: pageProps) {
       typeOfVisit: appointment.attributes.typeOfVisit,
     };
     const response = await updateOneAppointment(appointment.id, jwtToken, data);
-    console.log(response);
+
     showToastMessage('error', 'Appointment declined.');
   };
 
@@ -72,12 +72,11 @@ export default function Page({ params }: pageProps) {
         jwtToken
       );
       setAppointment(response.appointments.data[0]);
-      console.log(response.appointments.data[0]);
     };
     getAppointment();
     const search = async () => {
       const response = await searchPrescription(params.appointment_id);
-      console.log(response);
+
       if (response.prescriptions.data.length > 0) {
         setExist(true);
       }
@@ -86,7 +85,6 @@ export default function Page({ params }: pageProps) {
   }, []);
 
   useEffect(() => {
-    console.log(appointment);
     if (exist) {
       setExist(true);
     }
@@ -95,7 +93,7 @@ export default function Page({ params }: pageProps) {
   // const createPrescription = async (e: any) => {
   //   //insert one prescription with only uid
   //   e.preventDefault();
-  //   console.log('create prescription');
+  //
   //   const data = {
   //     appointment_id: appointment.id,
   //     doctor_id: appointment.attributes.doctor.data.id,
@@ -107,7 +105,7 @@ export default function Page({ params }: pageProps) {
   //     data.doctor_id,
   //     data.patient_id
   //   );
-  //   console.log(response);
+  //
   //   showToastMessage('success', 'Prescription created.');
   //   setExist(true);
   //   setTimeout(() => {

@@ -19,7 +19,6 @@ export default function PastPrescriptionDoctor({
     if (!jwtToken) return;
     findPastPrescriptionsDoctor(doctor_id, jwtToken).then((data) => {
       setPastPrescriptions(data.prescriptions.data);
-      console.log('past prescriptions: ', data.prescriptions.data);
     });
   }, []);
 

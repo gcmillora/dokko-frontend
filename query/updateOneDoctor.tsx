@@ -5,7 +5,6 @@ export const updateOneDoctor = async (
   jwtToken: string,
   doctor: any
 ) => {
-  console.log('jwtToken: ', jwtToken);
   const client = new ApolloClient({
     uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     cache: new InMemoryCache(),
@@ -45,6 +44,6 @@ export const updateOneDoctor = async (
       }
     `,
   });
-  console.log('data: ', data);
+
   return data;
 };

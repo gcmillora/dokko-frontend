@@ -7,7 +7,6 @@ export const findOnePrescription = async (uid: string) => {
     uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     cache: new InMemoryCache(),
   });
-  console.log('uid test:', uid);
 
   const { data } = await client.query({
     variables: {
@@ -69,6 +68,6 @@ export const findOnePrescription = async (uid: string) => {
       }
     `,
   });
-  console.log('medical record: ', data);
+
   return data;
 };

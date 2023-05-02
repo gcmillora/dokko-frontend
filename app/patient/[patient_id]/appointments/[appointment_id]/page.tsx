@@ -31,7 +31,7 @@ export default function Page({ params }: pageProps) {
     getAppointment();
     const search = async () => {
       const response = await searchPrescription(params.appointment_id);
-      console.log(response);
+
       if (response.prescriptions.data.length > 0) {
         setExist(true);
       }
@@ -40,7 +40,6 @@ export default function Page({ params }: pageProps) {
   }, []);
 
   useEffect(() => {
-    console.log(appointment);
     if (exist) {
       setExist(true);
     }

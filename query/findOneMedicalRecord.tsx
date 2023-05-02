@@ -30,6 +30,6 @@ export const findOneMedicalRecord = async (medical_id: string) => {
       }
     `,
   });
-  console.log(data);
+
   return data;
 };

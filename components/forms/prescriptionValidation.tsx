@@ -27,7 +27,6 @@ export default function PrescriptionForm({
       (app: any) => app.attributes.uid === selectedApp.attributes.uid
     ).id;
 
-    console.log(data);
     const response = await insertOnePrescription(
       jwtToken,
       selectedApp.attributes.patient.data.id,
@@ -38,7 +37,7 @@ export default function PrescriptionForm({
       data.notes,
       data.diagnosis
     );
-    console.log(response);
+
     showToastMessage('success', 'Report generated successfully.');
   };
 

@@ -1,8 +1,6 @@
 import Link from 'next/link';
 
 export default function PastAppointmentsTable({ data }: any) {
-  console.log(data);
-
   return (
     <div className="mx-auto ">
       <div className="rounded-lg border border-stroke bg-white">

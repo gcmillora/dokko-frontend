@@ -57,6 +57,6 @@ export const findAllAppointmentsDoctorPgn = async (
       }
     `,
   });
-  console.log(data);
+
   return data;
 };

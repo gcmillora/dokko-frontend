@@ -19,9 +19,6 @@ export default function Signup() {
   const [status, setStatus] = useState(false);
   const uid = uuid();
 
-  useEffect(() => {
-    console.log(process.env.NEXT_PUBLIC_BACKEND_API_URL);
-  }, []);
   const createPatient = async () => {
     const medical_uuid = uuid();
     const patient: CreatePatientInput = {
@@ -30,12 +27,12 @@ export default function Signup() {
       address: address,
       status: true,
     };
-    console.log(uid);
+
     const client = new ApolloClient({
       uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
       cache: new InMemoryCache(),
     });
-    console.log(patient);
+
     const { data } = await client.mutate({
       variables: {
         fullName: fullName,
@@ -75,10 +72,8 @@ export default function Signup() {
         }
       `,
     });
-    console.log(data);
-    console.log('creating medical record...');
+
     const record = await createMedicalRecord(data);
-    console.log(record);
 
     return data;
   };
@@ -89,8 +84,7 @@ export default function Signup() {
       uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
       cache: new InMemoryCache(),
     });
-    console.log(medical_uuid);
-    console.log(patientRecord.createPatient);
+
     const { data } = await client.mutate({
       variables: {
         uid: uid,
@@ -117,12 +111,11 @@ export default function Signup() {
         }
       `,
     });
-    console.log(data);
+
     return data;
   };
 
   const registerUser = async (e: any) => {
-    console.log(process.env.BACKEND_API_URL);
     e.preventDefault();
     axios
       .post(
@@ -137,9 +130,7 @@ export default function Signup() {
       )
       .then(async (response) => {
         const res = await createPatient();
-        console.log('Well done!');
-        console.log('User profile', response.data.user);
-        console.log('User token', response.data.jwt);
+
         localStorage.setItem('jwtToken', response.data.jwt);
         showToastMessage('success', 'Patient created successfully');
         setTimeout(() => {
@@ -147,7 +138,6 @@ export default function Signup() {
         }, 2000);
       })
       .catch((error) => {
-        console.log('An error occurred:', error.response);
         showToastMessage('error', "Error: Couldn't create patient");
       });
   };

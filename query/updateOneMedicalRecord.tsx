@@ -7,7 +7,7 @@ export const updateMedicalRecord = async (medical: any) => {
     uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     cache: new InMemoryCache(),
   });
-  console.log(medical);
+
   const { data } = await client.mutate({
     variables: {
       id: medical.id,

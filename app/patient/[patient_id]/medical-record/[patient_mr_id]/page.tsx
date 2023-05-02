@@ -46,14 +46,18 @@ export default function Page({ params }: pageProps) {
         redirect: 'follow',
       })
         .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.log('error', error));
+        .then((result) =>
+          showToastMessage('success', 'Profile picture updated.')
+        )
+        .catch((error) =>
+          showToastMessage('error', 'Profile picture not updated.')
+        );
     } else alert('No file');
   };
   const saveMedicalRecord = async (e: any) => {
     //save medical record using graphl
     e.preventDefault();
-    console.log('save');
+
     const data = {
       id: medicalRecord.attributes.id,
       sex: sex,
@@ -64,22 +68,12 @@ export default function Page({ params }: pageProps) {
       allergies: allergies,
     };
     const response = await updateMedicalRecord(data);
-    console.log(
-      data.id,
-      data.sex,
-      data.weight,
-      data.height,
-      data.birthdate,
-      data.bloodtype,
-      data.allergies
-    );
     if (response) showToastMessage('success', 'Medical record updated.');
   };
   useEffect(() => {
     const getMedicalRecord = async () => {
       const response = await findOneMedicalRecord(params.patient_mr_id);
       setMedicalRecord(response.medicalRedicords.data[0]);
-      console.log(response.medicalRedicords.data[0]);
     };
     getMedicalRecord();
   }, []);

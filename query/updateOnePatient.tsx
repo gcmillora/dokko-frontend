@@ -5,7 +5,6 @@ export const updateOnePatient = async (
   jwtToken: string,
   patient: any
 ) => {
-  console.log('jwtToken: ', jwtToken);
   const client = new ApolloClient({
     uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     cache: new InMemoryCache(),
@@ -13,8 +12,7 @@ export const updateOnePatient = async (
       Authorization: `Bearer ${jwtToken}`,
     },
   });
-  console.log('patient: ', patient_id);
-  console.log('patient: ', patient);
+
   const { data } = await client.mutate({
     variables: {
       id: patient_id,
@@ -53,6 +51,6 @@ export const updateOnePatient = async (
       }
     `,
   });
-  console.log('data: ', data);
+
   return data;
 };

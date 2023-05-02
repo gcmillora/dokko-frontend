@@ -47,6 +47,6 @@ export const insertPrescriptionDoctor = async (
       }
     `,
   });
-  console.log(data);
+
   return data;
 };

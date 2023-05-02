@@ -1,36 +1,32 @@
-//find all appointments with pagination using graphql for a patient
+//find all appointments of a doctor with pagination using graphql
 
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 
-export const findAllAppointments = async (patient_id: string, page: number) => {
+export const findAllActiveBookedAppointmentsByDoctor = async (
+  doctor_id: string,
+  jwtToken: string
+) => {
   const client = new ApolloClient({
     uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     cache: new InMemoryCache(),
+    headers: {
+      Authorization: `Bearer ${jwtToken}`,
+    },
   });
+
   const { data } = await client.query({
     variables: {
-      uid: patient_id,
-      page: page,
+      uid: doctor_id,
     },
     query: gql`
-      query ($uid: String!, $page: Int!) {
+      query ($uid: String!) {
         appointments(
-          filters: { patient: { uid: { eq: $uid } } }
-          pagination: { page: $page, pageSize: 8 }
-          sort: "appointmentDate:desc"
+          filters: { doctor: { uid: { eq: $uid } }, active: { eq: true } }
         ) {
           data {
             id
             attributes {
               uid
-              patient {
-                data {
-                  attributes {
-                    uid
-                    fullName
-                  }
-                }
-              }
               doctor {
                 data {
                   attributes {
@@ -43,11 +39,6 @@ export const findAllAppointments = async (patient_id: string, page: number) => {
               typeOfVisit
               status
               condition
-            }
-          }
-          meta {
-            pagination {
-              total
             }
           }
         }

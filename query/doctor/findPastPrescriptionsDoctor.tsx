@@ -61,6 +61,6 @@ export const findPastPrescriptionsDoctor = async (
       }
     `,
   });
-  console.log(data);
+
   return data;
 };

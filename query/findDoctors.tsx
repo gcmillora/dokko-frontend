@@ -10,7 +10,7 @@ export const findDoctors = async (jwtToken: string, selected: string) => {
       Authorization: `Bearer ${jwtToken}`,
     },
   });
-  console.log(selected);
+
   const { data } = await client.query({
     variables: {
       specialty: selected,

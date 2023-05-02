@@ -13,10 +13,7 @@ export const updateOnePrescription = async (
     uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     cache: new InMemoryCache(),
   });
-  console.log('prescription: ', prescription_id);
-  console.log('prescription: ', diagnosis);
-  console.log('prescription: ', prescription);
-  console.log('prescription: ', notes);
+
   const { data } = await client.mutate({
     variables: {
       id: prescription_id,
@@ -52,6 +49,6 @@ export const updateOnePrescription = async (
       }
     `,
   });
-  console.log(data);
+
   return data;
 };

@@ -22,7 +22,6 @@ export default function Page({ params }: pageProps) {
     findAllPrescriptionsByDoctor(params.doctor_id, pageNo).then((response) => {
       setPrescriptions(response.prescriptions.data);
       setCount(response.prescriptions.meta.pagination.total);
-      console.log(response.prescriptions.data[0]);
     });
   }, [pageNo]);
 
@@ -201,9 +200,7 @@ export default function Page({ params }: pageProps) {
               <li>
                 <button
                   onClick={(event) => {
-                    console.log(pageNo, count);
                     if (pageNo * 8 <= count) {
-                      console.log('going next page');
                       setPageNo(pageNo + 1);
                     }
                   }}

@@ -58,8 +58,13 @@ export default function Page({ params }: pageProps) {
         redirect: 'follow',
       })
         .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.log('error', error));
+        .then((result) =>
+          showToastMessage('success', 'Profile picture updated.')
+        )
+
+        .catch((error) =>
+          showToastMessage('error', 'Profile picture not updated.')
+        );
     } else alert('No file');
   };
 
@@ -85,14 +90,13 @@ export default function Page({ params }: pageProps) {
   }, []);
 
   const saveProfileChanges = async () => {
-    console.log('saveProfileChanges');
     const response = await updateOnePatient(patientID, jwtToken, {
       fullName: fullName,
       email: email,
       phoneNumber: phone,
       address: address,
     });
-    console.log('response: ', response);
+
     if (file) uploadProfile();
     if (response) {
       showToastMessage('success', 'Profile updated successfully');

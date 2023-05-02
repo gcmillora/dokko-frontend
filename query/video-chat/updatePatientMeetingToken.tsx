@@ -9,9 +9,6 @@ export const updatePatientMeetingToken = async (
     cache: new InMemoryCache(),
   });
 
-  console.log('updating patient meeting token');
-  console.log(appointmentID);
-
   const { data } = await client.mutate({
     variables: {
       id: appointmentID,
@@ -31,6 +28,6 @@ export const updatePatientMeetingToken = async (
       }
     `,
   });
-  console.log(data);
+
   return data;
 };

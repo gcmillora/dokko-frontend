@@ -64,6 +64,6 @@ export const findAllPrescriptions = async (
       }
     `,
   });
-  console.log('prescription data: ', data);
+
   return data;
 };

@@ -15,6 +15,7 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import { insertOneAppointment } from '../../query/insertOneAppointment';
 import { start } from 'repl';
+import { findAllActiveBookedAppointmentsByDoctor } from '../../query/doctor/findAllBookedAppointmentsByDoctor';
 
 interface Props {
   patient_id: string;
@@ -75,7 +76,7 @@ export default function BookAppointment(props: { patient_id: string }) {
 
   useEffect(() => {
     if (jwtToken && selectedDoctor) {
-      findAllAppointmentsByDoctor(
+      findAllActiveBookedAppointmentsByDoctor(
         selectedDoctor?.attributes.uid,
         jwtToken
       ).then((data) => {
@@ -125,18 +126,52 @@ export default function BookAppointment(props: { patient_id: string }) {
   };
 
   const onSubmit = async (data: any) => {
-    const response = await insertOneAppointment(
-      jwtToken as string,
-      patient.id,
-      selectedDoctor?.id,
-      startDate,
-      data.typeOfVisit,
-      data.condition,
-      data.additionalNotes,
-      data.generalPurpose
-    );
-    showToastMessage('success', 'Appointment booked successfully.');
-    setStartDate(date);
+    if (startDate == undefined) {
+      showToastMessage('error', 'Please select a date.');
+      return;
+    }
+    if (startDate < new Date()) {
+      showToastMessage('error', 'Please select a valid date.');
+      return;
+    }
+    if (selectedDoctor == undefined) {
+      showToastMessage('error', 'Please select a doctor.');
+      return;
+    }
+    let shouldSkip = false;
+
+    appointmentsBooked.forEach((appointment: any) => {
+      if (shouldSkip) {
+        return;
+      }
+      if (
+        new Date(appointment.attributes.appointmentDate).toDateString() ===
+          startDate.toDateString() &&
+        new Date(appointment.attributes.appointmentDate).getHours() ===
+          startDate.getHours() &&
+        new Date(appointment.attributes.appointmentDate).getMinutes() ===
+          startDate.getMinutes()
+      ) {
+        shouldSkip = true;
+        showToastMessage('error', 'This time slot is already booked.');
+        return;
+      }
+    });
+
+    if (!shouldSkip) {
+      const response = await insertOneAppointment(
+        jwtToken as string,
+        patient.id,
+        selectedDoctor?.id,
+        startDate,
+        data.typeOfVisit,
+        data.condition,
+        data.additionalNotes,
+        data.generalPurpose
+      );
+      showToastMessage('success', 'Appointment booked successfully.');
+      setStartDate(date);
+    }
   };
 
   return (

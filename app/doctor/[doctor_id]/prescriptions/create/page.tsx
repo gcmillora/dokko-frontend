@@ -26,13 +26,12 @@ export default function Page({ params }: pageProps) {
     d_findAllNoReports(params.doctor_id, jwtToken).then((response) => {
       setNogenApps(response.appointments.data);
       setSelectedApp(response.appointments.data[0]);
-      console.log(response.appointments.data);
     });
   }, []);
 
   const handleAppChange = (e: any) => {
     const sel = nogen_apps.find((app: any) => app.id === e.target.value);
-    console.log(sel);
+
     setSelectedApp(sel);
   };
 

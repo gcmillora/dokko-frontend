@@ -54,8 +54,12 @@ export default function Page({ params }: pageProps) {
         redirect: 'follow',
       })
         .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.log('error', error));
+        .then((result) =>
+          showToastMessage('success', 'Profile picture uploaded successfully')
+        )
+        .catch((error) => {
+          showToastMessage('error', 'Error uploading profile picture');
+        });
     } else alert('No file');
   };
 
@@ -69,7 +73,7 @@ export default function Page({ params }: pageProps) {
           }, 2000);
         } else {
           setDoctor(data.doctors.data[0].attributes);
-          console.log(data.doctors.data[0].attributes);
+
           setDoctorID(data.doctors.data[0].id);
           setFullName(data.doctors.data[0].attributes.fullName);
           setEmail(data.doctors.data[0].attributes.email);

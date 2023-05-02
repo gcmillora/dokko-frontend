@@ -39,6 +39,6 @@ export const updateOneConversation = async (
       }
     `,
   });
-  console.log('data: ', data);
+
   return data;
 };

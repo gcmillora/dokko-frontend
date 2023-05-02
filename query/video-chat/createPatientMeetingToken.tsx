@@ -21,8 +21,6 @@ export const createPatientMeetingToken = async (
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('Success:', data);
-      console.log(data.token);
       updatePatientMeetingToken(data.token, appointmentID);
     })
     .catch((error) => {

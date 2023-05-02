@@ -48,7 +48,6 @@ export default function DoctorSignup() {
   };
 
   const createMeetingToken = async () => {
-    console.log('creating meeting token for doctor');
     const data = fetch('https://api.daily.co/v1/meeting-tokens', {
       method: 'POST',
       headers: {
@@ -63,8 +62,6 @@ export default function DoctorSignup() {
     })
       .then((response) => response.json())
       .then(async (data) => {
-        console.log('Success:', data);
-        console.log(data.token);
         createDoctor(data.token);
         setToken(data.token);
         const res = await createDoctor(data.token);
@@ -76,7 +73,7 @@ export default function DoctorSignup() {
 
   const createRoom = async () => {
     //call api curl
-    console.log('creating room');
+
     const data = fetch('https://api.daily.co/v1/rooms/', {
       method: 'POST',
       headers: {
@@ -87,7 +84,9 @@ export default function DoctorSignup() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Success:', data);
+        setTimeout(() => {
+          showToastMessage('success', 'Room created successfully');
+        }, 2000);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -102,12 +101,12 @@ export default function DoctorSignup() {
       status: true,
       specialty: specialty,
     };
-    console.log(uid);
+
     const client = new ApolloClient({
       uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
       cache: new InMemoryCache(),
     });
-    console.log(doctor);
+
     const { data } = await client.mutate({
       variables: {
         fullName: fullName,
@@ -155,7 +154,6 @@ export default function DoctorSignup() {
         }
       `,
     });
-    console.log(data);
 
     return data;
   };
@@ -174,9 +172,6 @@ export default function DoctorSignup() {
         }
       )
       .then(async (response) => {
-        console.log('Well done!');
-        console.log('User profile', response.data.user);
-        console.log('User token', response.data.jwt);
         localStorage.setItem('jwtToken', response.data.jwt);
         const room = await createRoom();
         const tk = await createMeetingToken();
@@ -186,7 +181,6 @@ export default function DoctorSignup() {
         }, 2000);
       })
       .catch((error) => {
-        console.log('An error occurred:', error.response);
         showToastMessage('error', 'Error: Could not create doctor');
       });
   };

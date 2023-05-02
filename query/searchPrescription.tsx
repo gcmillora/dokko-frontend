@@ -22,6 +22,6 @@ export const searchPrescription = async (appointment_id: string) => {
       }
     `,
   });
-  console.log(data);
+
   return data;
 };

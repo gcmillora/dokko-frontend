@@ -63,20 +63,17 @@ export default function LoginForm() {
         }
       `,
     });
-    console.log(data);
+
     return data;
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
     axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND_STRAPI_RAW}/api/auth/local`, {
         identifier: data.email,
         password: data.password,
       })
       .then(async (response) => {
-        console.log('User profile', response.data.user);
-        console.log('User token', response.data.jwt);
         localStorage.setItem('jwtToken', response.data.jwt);
         if (response.data.user.level === 'patient') {
           const patient = await findOnePatient(data.email);
@@ -91,7 +88,6 @@ export default function LoginForm() {
         }
       })
       .catch((error) => {
-        console.log('An error occurred:', error.response);
         showToastMessage('error', 'Invalid e-mail or password!');
       });
   };

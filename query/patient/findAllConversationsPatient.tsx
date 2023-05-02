@@ -4,7 +4,6 @@ export const findAllConversationsPatient = async (
   patient_id: string,
   jwtToken: string
 ) => {
-  console.log(patient_id);
   const client = new ApolloClient({
     uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     cache: new InMemoryCache(),

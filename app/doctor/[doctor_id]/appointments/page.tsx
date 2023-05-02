@@ -163,7 +163,6 @@ export default function Page({ params }: pageProps) {
               <li>
                 <button
                   onClick={(event) => {
-                    console.log(pageNo, count);
                     if (pageNo * 8 <= count) {
                       setPageNo(pageNo + 1);
                     }

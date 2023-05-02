@@ -10,7 +10,7 @@ export const findAllPrescriptionsByDoctor = async (
     uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,
     cache: new InMemoryCache(),
   });
-  console.log(page);
+
   const { data } = await client.query({
     variables: {
       uid: doctor_id,
@@ -66,6 +66,6 @@ export const findAllPrescriptionsByDoctor = async (
       }
     `,
   });
-  console.log(data);
+
   return data;
 };

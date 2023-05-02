@@ -20,7 +20,6 @@ export default function Sidebar() {
     setUid(localStorage.getItem('uid') || '');
     findOnePatient(localStorage.getItem('uid') || '').then((data) => {
       setPatient(data.patients.data[0].attributes);
-      console.log(data.patients.data[0].attributes);
     });
   }, []);
 

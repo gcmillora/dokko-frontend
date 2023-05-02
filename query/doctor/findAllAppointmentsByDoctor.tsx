@@ -13,8 +13,7 @@ export const findAllAppointmentsByDoctor = async (
       Authorization: `Bearer ${jwtToken}`,
     },
   });
-  console.log('doctor_id: ', doctor_id);
-  console.log(jwtToken);
+
   const { data } = await client.query({
     variables: {
       uid: doctor_id,
@@ -44,6 +43,6 @@ export const findAllAppointmentsByDoctor = async (
       }
     `,
   });
-  console.log('appointments of a doctor: ', data);
+
   return data;
 };

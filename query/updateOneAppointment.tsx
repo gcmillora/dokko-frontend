@@ -14,8 +14,7 @@ export const updateOneAppointment = async (
       Authorization: `Bearer ${jwtToken}`,
     },
   });
-  console.log('appointment: ', appointment_id);
-  console.log('appointment: ', appointment);
+
   const { data } = await client.mutate({
     variables: {
       id: appointment_id,

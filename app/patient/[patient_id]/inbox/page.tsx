@@ -30,7 +30,7 @@ export default function Page({ params }: pageProps) {
 
   const handleDoctorChange = (e: any) => {
     const doctor = doctors.find((doctor) => doctor.id === e.target.value);
-    console.log(doctor);
+
     setSelectedDoctor(doctor);
   };
 
@@ -42,7 +42,6 @@ export default function Page({ params }: pageProps) {
       const doctors = await findAllDoctors(jwtToken);
       setDoctors(doctors.doctors.data);
       setSelectedDoctor(doctors.doctors.data[0]);
-      console.log(doctors.doctors.data);
     };
     fetchDoctors();
   }, []);
@@ -52,7 +51,6 @@ export default function Page({ params }: pageProps) {
     findAllConversationsPatient(params.patient_id, jwtToken).then((data) => {
       setConversations(data.conversations.data);
       setTotalCount(data.conversations.meta.pagination.total);
-      console.log(data.conversations.data);
     });
   }, []);
 
@@ -63,7 +61,6 @@ export default function Page({ params }: pageProps) {
   }, []);
 
   async function handleReplySubmit() {
-    console.log('message submitted');
     const jwtToken = localStorage.getItem('jwtToken') || '';
     const responseMessage = await insertOneMessage(
       replyPayload,
@@ -79,10 +76,8 @@ export default function Page({ params }: pageProps) {
       messages,
       selectedConversation.id
     );
-    console.log(updateConversation);
   }
   async function handleMessageSubmit() {
-    console.log('message submitted');
     const jwtToken = localStorage.getItem('jwtToken') || '';
     const responseMessage = await insertOneMessage(
       message,
@@ -98,19 +93,16 @@ export default function Page({ params }: pageProps) {
       selectedDoctor.id,
       responseMessage.createMessage.data.id
     );
-    console.log(responseConversation);
   }
   const handleSelectedConversation = (conversationID: any) => {
     const conversation = conversations.find(
       (conversation) => conversation.id === conversationID
     );
-    console.log(conversation);
+
     setMessageIDs(
       conversation.attributes.messages.data.map((message: any) => message.id)
     );
-    console.log(
-      conversation.attributes.messages.data.map((message: any) => message.id)
-    );
+
     setSelectedConversation(conversation);
   };
 

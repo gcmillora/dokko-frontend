@@ -15,7 +15,6 @@ export default function PastAppointmentsDoctorTable({
   useEffect(() => {
     if (!jwtToken) return;
     findPastAppointmentsDoctor(doctor_id, jwtToken).then((data) => {
-      console.log('past appointments: ', data);
       setpastAppointments(data.appointments.data);
     });
   }, []);

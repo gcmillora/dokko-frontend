@@ -1,6 +1,4 @@
 export default function RequestForm(props: any) {
-  console.log(props);
-
   return (
     <div className="mt-10 divide-y-2 divide-slate-200">
       <div className="flex flex-row justify-between px-5 py-6">

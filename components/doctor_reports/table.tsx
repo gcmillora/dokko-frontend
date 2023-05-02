@@ -1,5 +1,4 @@
 export default function ReportsTable(props: any) {
-  console.log(props.data);
   return (
     <div className="container">
       <div className="text-2xl px-6 py-6 font-semibold">Reports</div>

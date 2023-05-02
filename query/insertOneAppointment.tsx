@@ -11,8 +11,6 @@ export const insertOneAppointment = async (
   notes: string,
   generalPurpose: string
 ) => {
-  console.log(patient_id);
-  console.log(doctor_id);
   const uid = uuid();
   const client = new ApolloClient({
     uri: process.env.NEXT_PUBLIC_BACKEND_API_URL,

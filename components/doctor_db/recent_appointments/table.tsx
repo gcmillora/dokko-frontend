@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Router, { useRouter } from 'next/navigation';
 
 export default function RecentAppointments(props: any) {
-  console.log(props.data);
   const router = useRouter();
   function actionChange(e: React.ChangeEvent<HTMLSelectElement>) {
     router.push(`/doctor/request/${e.target.value}`);

@@ -20,7 +20,6 @@ export default function Page({ params }: pageProps) {
   const [prescription, setPrescription] = useState<any>();
 
   const showToastMessage = () => {
-    console.log('show alert');
     toast.success('Prescription saved !', {
       position: toast.POSITION.TOP_CENTER,
     });
@@ -57,7 +56,6 @@ export default function Page({ params }: pageProps) {
     if (response.errors) {
       alert('error');
     } else showToastMessage();
-    console.log(response);
   };
   return (
     <div>

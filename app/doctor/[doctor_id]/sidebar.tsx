@@ -19,7 +19,6 @@ export default function Sidebar() {
     if (localStorage.getItem('uid')) {
       findOneDoctor(localStorage.getItem('uid') || '').then((data) => {
         setDoctor(data.doctors.data[0].attributes);
-        console.log(data.doctors.data[0].attributes);
       });
     }
   }, []);

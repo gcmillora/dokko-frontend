@@ -16,7 +16,6 @@ export default function Page({ params }: pageProps) {
   useEffect(() => {
     findOnePrescription(params.prescription_id).then((data) => {
       setPrescription(data.prescriptions.data[0]);
-      console.log(data);
     });
   }, [params.prescription_id]);
 
