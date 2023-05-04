@@ -36,34 +36,46 @@ export default function Page({ params }: pageProps) {
   };
 
   return (
-    <div className="flex flex-row justify-center py-16">
-      <div className="w-[524px]">
-        <p>Select appointment: </p>
-        <select
-          className="text-field-normal"
-          onChange={handleAppChange}
-          onClick={handleAppChange}
-        >
-          {nogen_apps.map((app: any) => (
-            <option value={app.id} key={app}>
-              #{app.id} - {app.attributes.patient.data.attributes.fullName} -{' '}
-              {app.attributes.typeOfVisit}
-            </option>
-          ))}
-        </select>
-        <p>Condition</p>
-        <input
-          className="text-field-normal"
-          disabled
-          value={selectedApp?.attributes.condition}
-        />
-        <p>General Purpose</p>
-        <input
-          className="text-field-normal"
-          disabled
-          value={selectedApp?.attributes.generalPurpose}
-        />
-        <PrescriptionForm {...{ nogen_apps, selectedApp }} />
+    <div className="flex flex-col justify-center py-16">
+      <div className="w-full ">
+        <p className="text-center text-color-black text-2xl font-black">
+          Create Report{' '}
+        </p>
+        <p className="text-center text-body-color">
+          Please fill-in all the details with *.
+        </p>
+      </div>
+      <div className="flex flex-row justify-center pt-8 w-full">
+        <div className="w-3/4 grid grid-cols-2 gap-8">
+          <div className="flex flex-col">
+            <p>Select appointment: </p>
+            <select
+              className="text-field-normal"
+              onChange={handleAppChange}
+              onClick={handleAppChange}
+            >
+              {nogen_apps.map((app: any) => (
+                <option value={app.id} key={app}>
+                  #{app.id} - {app.attributes.patient.data.attributes.fullName}{' '}
+                  - {app.attributes.typeOfVisit}
+                </option>
+              ))}
+            </select>
+            <p>Condition</p>
+            <input
+              className="text-field-normal"
+              disabled
+              value={selectedApp?.attributes.condition}
+            />
+            <p>General Purpose</p>
+            <input
+              className="text-field-normal"
+              disabled
+              value={selectedApp?.attributes.generalPurpose}
+            />
+          </div>
+          <PrescriptionForm {...{ nogen_apps, selectedApp }} />
+        </div>
       </div>
     </div>
   );

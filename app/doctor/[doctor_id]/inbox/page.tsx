@@ -12,6 +12,7 @@ import { insertConversation } from '../../../../query/insertConversation';
 import { insertOneMessage } from '../../../../query/insertOneMessage';
 import { updateConversationMessages } from '../../../../query/updateConversationMessages';
 import showToastMessage from '../../../../utils/error';
+import { patientDefaultPhoto } from '../../../../utils/exports';
 
 interface pageProps {
   params: {
@@ -222,8 +223,9 @@ export default function Page({ params }: pageProps) {
                   alt="profile picture"
                   className="h-full w-full rounded-full object-cover object-center"
                   src={
-                    conversation.attributes.patient.data.attributes
-                      .profilepicture.data.attributes.url
+                    conversation?.attributes?.patient?.data?.attributes
+                      ?.profilepicture?.data?.attributes?.url ||
+                    patientDefaultPhoto
                   }
                   width={50}
                   height={50}
@@ -259,8 +261,9 @@ export default function Page({ params }: pageProps) {
               <div className="flex flex-row">
                 <Image
                   src={
-                    selectedConversation.attributes.patient.data.attributes
-                      .profilepicture.data.attributes.url
+                    selectedConversation?.attributes?.patient?.data?.attributes
+                      ?.profilepicture?.data?.attributes?.url ||
+                    patientDefaultPhoto
                   }
                   width={50}
                   height={50}

@@ -62,7 +62,7 @@ export default function PrescriptionForm({
           rows={5}
           {...register('notes', { required: true })}
         />
-        <button className="continue-button" type="submit">
+        <button className="mt-4 continue-button" type="submit">
           Generate Report
         </button>
       </form>
