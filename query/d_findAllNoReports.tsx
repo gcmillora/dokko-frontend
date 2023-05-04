@@ -24,6 +24,8 @@ export const d_findAllNoReports = async (
           filters: {
             doctor: { uid: { eq: $uid } }
             report_generated: { eq: false }
+            active: { eq: true }
+            status: { eq: true }
           }
         ) {
           data {
