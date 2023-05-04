@@ -30,29 +30,23 @@ export default function Page({ params }: pageProps) {
   const [upcomingApp, setUpcomingApp] = useState([]);
   const [pastApp, setPastApp] = useState([]);
   const [validate, setValidate] = useState(false);
+  const jwtExist = validateUser('patient', params.patient_id);
+
+  if (!jwtExist) router.push('/login');
 
   useEffect(() => {
-    if (isUuid(params.patient_id)) {
-      findOnePatient(params.patient_id).then((data) => {
-        if (data.patients.data.length === 0) {
-          showToastMessage('error', 'Invalid Patient ID');
-          setTimeout(() => {
-            router.push('/login');
-          }, 2000);
-        } else setPatient(data.patients.data[0].attributes);
-      });
-      findPrescriptions(params.patient_id).then((data) => {
-        setPrescriptions(data.prescriptions.data);
-      });
-      findUpcomingAppointments(params.patient_id).then((data) => {
-        setUpcomingApp(data.appointments.data);
-      });
-      findPastAppointments(params.patient_id).then((data) => {
-        setPastApp(data.appointments.data);
-      });
-    } else {
-      alert('Invalid Patient ID');
-    }
+    findOnePatient(params.patient_id).then((data) => {
+      setPatient(data.patients.data[0].attributes);
+    });
+    findPrescriptions(params.patient_id).then((data) => {
+      setPrescriptions(data.prescriptions.data);
+    });
+    findUpcomingAppointments(params.patient_id).then((data) => {
+      setUpcomingApp(data.appointments.data);
+    });
+    findPastAppointments(params.patient_id).then((data) => {
+      setPastApp(data.appointments.data);
+    });
   }, []);
 
   return (
@@ -60,30 +54,30 @@ export default function Page({ params }: pageProps) {
       <div className="">
         <p className="text-4xl font-black">Welcome, {patient.fullName}</p>
         <p className="text-body-color">{patient.address}</p>
-        <div className="flex flex-row">
-          <div className="mt-4  ">
-            <div className="grid grid-cols-3 gap-12">
-              <div className="w-full h-full  ">
-                <PrescriptionCard data={prescriptions} />
-              </div>
-              <div className="w-full">
-                <AppointmentCard data={upcomingApp} />
-              </div>
-              <div className="w-full h-full">
-                <CreateAppointmentCard patient_id={params.patient_id} />
-              </div>
+
+        <div className="mt-4">
+          <div className="grid grid-cols-3 gap-12 auto-cols-auto w-full">
+            <div className="w-full h-full">
+              <PrescriptionCard data={prescriptions} />
             </div>
-            <div className="mt-6">
-              <p className="text-xl  font-semibold py-4">Past Appointments</p>
-              {pastApp.length === 0 ? (
-                <p className="text-body-color">No past appointments</p>
-              ) : (
-                <PastAppointmentsTable data={pastApp} />
-              )}
+            <div className="w-full">
+              <AppointmentCard data={upcomingApp} />
             </div>
+            <div className="w-full h-full">
+              <CreateAppointmentCard patient_id={params.patient_id} />
+            </div>
+          </div>
+          <div className="mt-6">
+            <p className="text-xl  font-semibold py-4">Past Appointments</p>
+            {pastApp.length === 0 ? (
+              <p className="text-body-color">No past appointments</p>
+            ) : (
+              <PastAppointmentsTable data={pastApp} />
+            )}
           </div>
         </div>
       </div>
+
       <ToastContainer />
     </div>
   );

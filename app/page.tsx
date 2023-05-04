@@ -2,9 +2,11 @@
 import { useRouter } from 'next/navigation';
 import logo from '../assets/logo/banner-logo.svg';
 import Image from 'next/image';
+import { validateUser } from '../utils/validateUser';
 
 export default function Page() {
   const router = useRouter();
+
   return (
     <div className="h-screen flex flex-col">
       <div className="absolute left-0 top-0 z-50 w-full">

@@ -4,24 +4,28 @@ import { findOneDoctor } from '../../../query/findOneDoctor';
 import PastAppointmentsDoctorTable from '../../../components/doctor/appointments/past';
 import RecentAppointmentsDoctor from '../../../components/doctor/appointments/recent';
 import PastPrescriptionsDoctor from '../../../components/doctor/prescriptions/past';
+import { validateUser } from '../../../utils/validateUser';
+import { useRouter } from 'next/navigation';
 
 interface pageProps {
   params: { doctor_id: string };
 }
 
-export default function Page({ params }: pageProps) {
+export default async function Page({ params }: pageProps) {
+  const router = useRouter();
   const doctor_id = params.doctor_id;
   const jwtToken = localStorage.getItem('jwtToken');
   const [doctor, setDoctor] = useState<any>();
+  const jwtExist = await validateUser('doctor', params.doctor_id);
+
+  if (!jwtExist) {
+    router.push('/login');
+  }
 
   useEffect(() => {
-    if (!jwtToken) {
-      window.location.href = '/login';
-    } else {
-      findOneDoctor(doctor_id).then((response) => {
-        setDoctor(response.doctors.data[0]);
-      });
-    }
+    findOneDoctor(doctor_id).then((response) => {
+      setDoctor(response.doctors.data[0]);
+    });
   }, []);
 
   return (
