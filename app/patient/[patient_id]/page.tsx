@@ -30,9 +30,9 @@ export default function Page({ params }: pageProps) {
   const [upcomingApp, setUpcomingApp] = useState([]);
   const [pastApp, setPastApp] = useState([]);
   const [validate, setValidate] = useState(false);
-  const jwtExist = validateUser('patient', params.patient_id);
+  // const jwtExist = validateUser('patient', params.patient_id);
 
-  if (!jwtExist) router.push('/login');
+  // if (!jwtExist) router.push('/login');
 
   useEffect(() => {
     findOnePatient(params.patient_id).then((data) => {
