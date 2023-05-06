@@ -1,9 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { uuid, isUuid } from 'uuidv4';
 import { findOnePatient } from '../../../query/findOnePatient';
 import { findPastAppointments } from '../../../query/patient/findPastAppointmentsPatient';
 import { findPrescriptions } from '../../../query/patient/findPrescriptionsPatients';
@@ -13,7 +12,6 @@ import AppointmentCard from '../../../components/patient/appointment/card';
 import CreateAppointmentCard from '../../../components/patient/appointment/create_card';
 import PastAppointmentsTable from '../../../components/patient/appointment/past_appointments';
 import PrescriptionCard from '../../../components/patient/prescription/card';
-import showToastMessage from '../../../utils/error';
 
 import { Patient } from '../../../utils/types';
 import { validateUser } from '../../../utils/validateUser';
